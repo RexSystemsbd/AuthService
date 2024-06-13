@@ -1,0 +1,112 @@
+[
+  {
+    "ContainingType": "AuthMicroservice.Controller.ApplicationController",
+    "Method": "RegisterApplication",
+    "RelativePath": "Application/register",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "name",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuthMicroservice.Controller.ApplicationController",
+    "Method": "ValidateApplication",
+    "RelativePath": "Application/validate",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "app",
+        "Type": "Application",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuthMicroservice.Controller.UserController",
+    "Method": "LoginUser",
+    "RelativePath": "User/login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "AuthMicroservice.Controller.LoginRequest",
+        "IsRequired": true
+      },
+      {
+        "Name": "AppKey",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "AppSecret",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuthMicroservice.Controller.UserController",
+    "Method": "RegisterUser",
+    "RelativePath": "User/register",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "AuthMicroservice.Controller.RegisterUserRequest",
+        "IsRequired": true
+      },
+      {
+        "Name": "AppKey",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "AppSecret",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuthMicroservice.Controller.UserController",
+    "Method": "ResetPassword",
+    "RelativePath": "User/reset-password",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "AuthMicroservice.Controller.ResetPasswordRequest",
+        "IsRequired": true
+      },
+      {
+        "Name": "AppKey",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "AppSecret",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  }
+]
