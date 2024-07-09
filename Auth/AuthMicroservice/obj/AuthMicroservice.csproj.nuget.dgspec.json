@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Auth\\AuthMicroservice\\AuthMicroservice.csproj": {}
+    "E:\\AuthService\\Auth\\AuthMicroservice\\AuthMicroservice.csproj": {}
   },
   "projects": {
-    "E:\\Auth\\AuthMicroservice\\AuthMicroservice.csproj": {
+    "E:\\AuthService\\Auth\\AuthMicroservice\\AuthMicroservice.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Auth\\AuthMicroservice\\AuthMicroservice.csproj",
+        "projectUniqueName": "E:\\AuthService\\Auth\\AuthMicroservice\\AuthMicroservice.csproj",
         "projectName": "AuthMicroservice",
-        "projectPath": "E:\\Auth\\AuthMicroservice\\AuthMicroservice.csproj",
+        "projectPath": "E:\\AuthService\\Auth\\AuthMicroservice\\AuthMicroservice.csproj",
         "packagesPath": "C:\\Users\\sajidur.ASABD\\.nuget\\packages\\",
-        "outputPath": "E:\\Auth\\AuthMicroservice\\obj\\",
+        "outputPath": "E:\\AuthService\\Auth\\AuthMicroservice\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

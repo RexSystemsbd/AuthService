@@ -1,4 +1,5 @@
 ﻿using AuthMicroservice.Model;
+using AuthMicroservice.Repository;
 using Microsoft.AspNetCore.Identity;
 
 namespace AuthMicroservice.Service
@@ -13,10 +14,14 @@ namespace AuthMicroservice.Service
     {
         private readonly List<User> _users = new();
         private readonly IPasswordHasher<User> _passwordHasher = new PasswordHasher<User>();
-
+        private readonly IUserRepository _userRepository;
+        public UserService(IUserRepository userRepository)
+        {
+            _userRepository = userRepository;
+        }
         public User RegisterUser(Guid applicationId, string email, string mobileNumber, string password)
         {
-            if (_users.Any(u => u.Email == email && u.ApplicationId == applicationId))
+            if (_userRepository.FindAsync(a=>a.Email==email||a.PhoneNumber==mobileNumber).Result.Any())
             {
                 throw new Exception("User already exists.");
             }
@@ -30,7 +35,7 @@ namespace AuthMicroservice.Service
                 ApplicationId = applicationId
             };
 
-            _users.Add(user);
+            var res=_userRepository.AddAsync(user).Result;
             return user;
         }
 
