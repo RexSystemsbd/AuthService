@@ -3,40 +3,32 @@
   "WorkspaceRootPath": "E:\\AuthService\\Auth\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|e:\\authservice\\auth\\authmicroservice\\service\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|solutionrelative:authmicroservice\\service\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|E:\\AuthService\\Auth\\authmicroservice\\controller\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|solutionrelative:authmicroservice\\controller\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|E:\\AuthService\\Auth\\authmicroservice\\service\\applicationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|solutionrelative:authmicroservice\\service\\applicationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|E:\\AuthService\\Auth\\authmicroservice\\repository\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|solutionrelative:authmicroservice\\repository\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|E:\\AuthService\\Auth\\authmicroservice\\controller\\applicationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|solutionrelative:authmicroservice\\controller\\applicationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|E:\\AuthService\\Auth\\authmicroservice\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|solutionrelative:authmicroservice\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|e:\\authservice\\auth\\authmicroservice\\service\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|solutionrelative:authmicroservice\\service\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|E:\\AuthService\\Auth\\authmicroservice\\repository\\applicationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|solutionrelative:authmicroservice\\repository\\applicationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|E:\\AuthService\\Auth\\authmicroservice\\repository\\userdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|solutionrelative:authmicroservice\\repository\\userdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|E:\\AuthService\\Auth\\authmicroservice\\repository\\genericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|solutionrelative:authmicroservice\\repository\\genericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|E:\\AuthService\\Auth\\authmicroservice\\controller\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|solutionrelative:authmicroservice\\controller\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|E:\\AuthService\\Auth\\authmicroservice\\model\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|solutionrelative:authmicroservice\\model\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5CEF3C6D-2BBB-4B78-BDAA-A63AD722D861}|Solution Items{5CEF3C6D-2BBB-4B78-BDAA-A63AD722D861}|E:\\AuthService\\Auth\\Redme.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{5CEF3C6D-2BBB-4B78-BDAA-A63AD722D861}|Solution Items{5CEF3C6D-2BBB-4B78-BDAA-A63AD722D861}|solutionrelative:Redme.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|E:\\AuthService\\Auth\\authmicroservice\\model\\baseentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -47,8 +39,8 @@
       "RelativeMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|solutionrelative:authmicroservice\\model\\application.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|E:\\AuthService\\Auth\\authmicroservice\\repository\\userdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|solutionrelative:authmicroservice\\repository\\userdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{5CEF3C6D-2BBB-4B78-BDAA-A63AD722D861}|Solution Items{5CEF3C6D-2BBB-4B78-BDAA-A63AD722D861}|E:\\AuthService\\Auth\\Redme.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{5CEF3C6D-2BBB-4B78-BDAA-A63AD722D861}|Solution Items{5CEF3C6D-2BBB-4B78-BDAA-A63AD722D861}|solutionrelative:Redme.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|E:\\AuthService\\Auth\\authmicroservice\\servicecollectionextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -59,12 +51,24 @@
       "RelativeMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|solutionrelative:authmicroservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|E:\\AuthService\\Auth\\authmicroservice\\authmicroservice.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|solutionrelative:authmicroservice\\authmicroservice.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+      "AbsoluteMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|e:\\authservice\\auth\\authmicroservice\\authmicroservice.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}",
+      "RelativeMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|solutionrelative:authmicroservice\\authmicroservice.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|E:\\AuthService\\Auth\\authmicroservice\\repository\\genericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|solutionrelative:authmicroservice\\repository\\genericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|E:\\AuthService\\Auth\\authmicroservice\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|solutionrelative:authmicroservice\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|E:\\AuthService\\Auth\\authmicroservice\\repository\\applicationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|solutionrelative:authmicroservice\\repository\\applicationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|E:\\AuthService\\Auth\\authmicroservice\\repository\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|solutionrelative:authmicroservice\\repository\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|E:\\AuthService\\Auth\\authmicroservice\\authmicroservice.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|solutionrelative:authmicroservice\\authmicroservice.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     }
   ],
   "DocumentGroupContainers": [
@@ -74,7 +78,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Bookmark",
@@ -86,141 +90,46 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "ApplicationRepository.cs",
-              "DocumentMoniker": "E:\\AuthService\\Auth\\AuthMicroservice\\Repository\\ApplicationRepository.cs",
-              "RelativeDocumentMoniker": "AuthMicroservice\\Repository\\ApplicationRepository.cs",
-              "ToolTip": "E:\\AuthService\\Auth\\AuthMicroservice\\Repository\\ApplicationRepository.cs",
-              "RelativeToolTip": "AuthMicroservice\\Repository\\ApplicationRepository.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAADAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-29T06:45:23.602Z"
+              "DocumentIndex": 9,
+              "Title": "Redme.txt",
+              "DocumentMoniker": "E:\\AuthService\\Auth\\Redme.txt",
+              "RelativeDocumentMoniker": "Redme.txt",
+              "ToolTip": "E:\\AuthService\\Auth\\Redme.txt",
+              "RelativeToolTip": "Redme.txt",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
+              "WhenOpened": "2024-05-30T08:39:30.262Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "ApplicationService.cs",
-              "DocumentMoniker": "E:\\AuthService\\Auth\\AuthMicroservice\\Service\\ApplicationService.cs",
-              "RelativeDocumentMoniker": "AuthMicroservice\\Service\\ApplicationService.cs",
-              "ToolTip": "E:\\AuthService\\Auth\\AuthMicroservice\\Service\\ApplicationService.cs",
-              "RelativeToolTip": "AuthMicroservice\\Service\\ApplicationService.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAAEAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-26T06:26:11.774Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "Application.cs",
-              "DocumentMoniker": "E:\\AuthService\\Auth\\AuthMicroservice\\Model\\Application.cs",
-              "RelativeDocumentMoniker": "AuthMicroservice\\Model\\Application.cs",
-              "ToolTip": "E:\\AuthService\\Auth\\AuthMicroservice\\Model\\Application.cs",
-              "RelativeToolTip": "AuthMicroservice\\Model\\Application.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAqwAIAAAAeAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-26T06:26:06.958Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "E:\\AuthService\\Auth\\AuthMicroservice\\appsettings.json",
-              "RelativeDocumentMoniker": "AuthMicroservice\\appsettings.json",
-              "ToolTip": "E:\\AuthService\\Auth\\AuthMicroservice\\appsettings.json",
-              "RelativeToolTip": "AuthMicroservice\\appsettings.json",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-06-13T09:26:14.316Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
               "Title": "UserService.cs",
               "DocumentMoniker": "E:\\AuthService\\Auth\\AuthMicroservice\\Service\\UserService.cs",
               "RelativeDocumentMoniker": "AuthMicroservice\\Service\\UserService.cs",
-              "ToolTip": "E:\\AuthService\\Auth\\AuthMicroservice\\Service\\UserService.cs \u2B24",
-              "RelativeToolTip": "AuthMicroservice\\Service\\UserService.cs \u2B24",
-              "ViewState": "AQIAAAsAAAAAAAAAAAAgwCYAAAAXAAAA",
+              "ToolTip": "E:\\AuthService\\Auth\\AuthMicroservice\\Service\\UserService.cs",
+              "RelativeToolTip": "AuthMicroservice\\Service\\UserService.cs",
+              "ViewState": "AQIAAAEAAAAAAAAAAAAAABwAAAAdAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-05-29T08:27:01.024Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "UserRepository.cs",
-              "DocumentMoniker": "E:\\AuthService\\Auth\\AuthMicroservice\\Repository\\UserRepository.cs",
-              "RelativeDocumentMoniker": "AuthMicroservice\\Repository\\UserRepository.cs",
-              "ToolTip": "E:\\AuthService\\Auth\\AuthMicroservice\\Repository\\UserRepository.cs",
-              "RelativeToolTip": "AuthMicroservice\\Repository\\UserRepository.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-30T13:37:58.028Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "UserController.cs",
-              "DocumentMoniker": "E:\\AuthService\\Auth\\AuthMicroservice\\Controller\\UserController.cs",
-              "RelativeDocumentMoniker": "AuthMicroservice\\Controller\\UserController.cs",
-              "ToolTip": "E:\\AuthService\\Auth\\AuthMicroservice\\Controller\\UserController.cs",
-              "RelativeToolTip": "AuthMicroservice\\Controller\\UserController.cs",
-              "ViewState": "AQIAAAwAAAAAAAAAAAAAACcAAAAuAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-29T06:33:51.312Z",
+              "DocumentIndex": 12,
+              "Title": "AuthMicroservice.http",
+              "DocumentMoniker": "E:\\AuthService\\Auth\\AuthMicroservice\\AuthMicroservice.http",
+              "RelativeDocumentMoniker": "AuthMicroservice\\AuthMicroservice.http",
+              "ToolTip": "E:\\AuthService\\Auth\\AuthMicroservice\\AuthMicroservice.http",
+              "RelativeToolTip": "AuthMicroservice\\AuthMicroservice.http",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
+              "WhenOpened": "2024-07-09T03:31:40.257Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "ApplicationController.cs",
-              "DocumentMoniker": "E:\\AuthService\\Auth\\AuthMicroservice\\Controller\\ApplicationController.cs",
-              "RelativeDocumentMoniker": "AuthMicroservice\\Controller\\ApplicationController.cs",
-              "ToolTip": "E:\\AuthService\\Auth\\AuthMicroservice\\Controller\\ApplicationController.cs",
-              "RelativeToolTip": "AuthMicroservice\\Controller\\ApplicationController.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABsAAAAuAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-26T10:31:32.681Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "BaseEntity.cs",
-              "DocumentMoniker": "E:\\AuthService\\Auth\\AuthMicroservice\\Model\\BaseEntity.cs",
-              "RelativeDocumentMoniker": "AuthMicroservice\\Model\\BaseEntity.cs",
-              "ToolTip": "E:\\AuthService\\Auth\\AuthMicroservice\\Model\\BaseEntity.cs",
-              "RelativeToolTip": "AuthMicroservice\\Model\\BaseEntity.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAAAwAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-26T10:14:56.244Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "Redme.txt",
-              "DocumentMoniker": "E:\\AuthService\\Auth\\Redme.txt",
-              "RelativeDocumentMoniker": "Redme.txt",
-              "ToolTip": "E:\\AuthService\\Auth\\Redme.txt",
-              "RelativeToolTip": "Redme.txt",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
-              "WhenOpened": "2024-05-30T08:39:30.262Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "ServiceCollectionExtensions.cs",
-              "DocumentMoniker": "E:\\AuthService\\Auth\\AuthMicroservice\\ServiceCollectionExtensions.cs",
-              "RelativeDocumentMoniker": "AuthMicroservice\\ServiceCollectionExtensions.cs",
-              "ToolTip": "E:\\AuthService\\Auth\\AuthMicroservice\\ServiceCollectionExtensions.cs",
-              "RelativeToolTip": "AuthMicroservice\\ServiceCollectionExtensions.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABMAAAAzAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-29T06:36:08.805Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 3,
               "Title": "UserDbContext.cs",
               "DocumentMoniker": "E:\\AuthService\\Auth\\AuthMicroservice\\Repository\\UserDbContext.cs",
               "RelativeDocumentMoniker": "AuthMicroservice\\Repository\\UserDbContext.cs",
@@ -228,11 +137,168 @@
               "RelativeToolTip": "AuthMicroservice\\Repository\\UserDbContext.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAqwBUAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-26T10:10:27.426Z"
+              "WhenOpened": "2024-05-26T10:10:27.426Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "GenericRepository.cs",
+              "DocumentMoniker": "E:\\AuthService\\Auth\\AuthMicroservice\\Repository\\GenericRepository.cs",
+              "RelativeDocumentMoniker": "AuthMicroservice\\Repository\\GenericRepository.cs",
+              "ToolTip": "E:\\AuthService\\Auth\\AuthMicroservice\\Repository\\GenericRepository.cs",
+              "RelativeToolTip": "AuthMicroservice\\Repository\\GenericRepository.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACsAAAAMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-29T06:43:35.063Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 14,
+              "Title": "ApplicationRepository.cs",
+              "DocumentMoniker": "E:\\AuthService\\Auth\\AuthMicroservice\\Repository\\ApplicationRepository.cs",
+              "RelativeDocumentMoniker": "AuthMicroservice\\Repository\\ApplicationRepository.cs",
+              "ToolTip": "E:\\AuthService\\Auth\\AuthMicroservice\\Repository\\ApplicationRepository.cs",
+              "RelativeToolTip": "AuthMicroservice\\Repository\\ApplicationRepository.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAADAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-29T06:45:23.602Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ApplicationService.cs",
+              "DocumentMoniker": "E:\\AuthService\\Auth\\AuthMicroservice\\Service\\ApplicationService.cs",
+              "RelativeDocumentMoniker": "AuthMicroservice\\Service\\ApplicationService.cs",
+              "ToolTip": "E:\\AuthService\\Auth\\AuthMicroservice\\Service\\ApplicationService.cs",
+              "RelativeToolTip": "AuthMicroservice\\Service\\ApplicationService.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAIAxwCUAAAAMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-26T06:26:11.774Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ApplicationController.cs",
+              "DocumentMoniker": "E:\\AuthService\\Auth\\AuthMicroservice\\Controller\\ApplicationController.cs",
+              "RelativeDocumentMoniker": "AuthMicroservice\\Controller\\ApplicationController.cs",
+              "ToolTip": "E:\\AuthService\\Auth\\AuthMicroservice\\Controller\\ApplicationController.cs",
+              "RelativeToolTip": "AuthMicroservice\\Controller\\ApplicationController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABQAAAAyAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-26T10:31:32.681Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "UserController.cs",
+              "DocumentMoniker": "E:\\AuthService\\Auth\\AuthMicroservice\\Controller\\UserController.cs",
+              "RelativeDocumentMoniker": "AuthMicroservice\\Controller\\UserController.cs",
+              "ToolTip": "E:\\AuthService\\Auth\\AuthMicroservice\\Controller\\UserController.cs",
+              "RelativeToolTip": "AuthMicroservice\\Controller\\UserController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAnwCIAAAAQAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-29T06:33:51.312Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "User.cs",
+              "DocumentMoniker": "E:\\AuthService\\Auth\\AuthMicroservice\\Model\\User.cs",
+              "RelativeDocumentMoniker": "AuthMicroservice\\Model\\User.cs",
+              "ToolTip": "E:\\AuthService\\Auth\\AuthMicroservice\\Model\\User.cs",
+              "RelativeToolTip": "AuthMicroservice\\Model\\User.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAqwA0AAAAaAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-13T11:17:00.748Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "BaseEntity.cs",
+              "DocumentMoniker": "E:\\AuthService\\Auth\\AuthMicroservice\\Model\\BaseEntity.cs",
+              "RelativeDocumentMoniker": "AuthMicroservice\\Model\\BaseEntity.cs",
+              "ToolTip": "E:\\AuthService\\Auth\\AuthMicroservice\\Model\\BaseEntity.cs",
+              "RelativeToolTip": "AuthMicroservice\\Model\\BaseEntity.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAAAwAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-26T10:14:56.244Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Application.cs",
+              "DocumentMoniker": "E:\\AuthService\\Auth\\AuthMicroservice\\Model\\Application.cs",
+              "RelativeDocumentMoniker": "AuthMicroservice\\Model\\Application.cs",
+              "ToolTip": "E:\\AuthService\\Auth\\AuthMicroservice\\Model\\Application.cs",
+              "RelativeToolTip": "AuthMicroservice\\Model\\Application.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAqwAkAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-26T06:26:06.958Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Program.cs",
+              "DocumentMoniker": "E:\\AuthService\\Auth\\AuthMicroservice\\Program.cs",
+              "RelativeDocumentMoniker": "AuthMicroservice\\Program.cs",
+              "ToolTip": "E:\\AuthService\\Auth\\AuthMicroservice\\Program.cs",
+              "RelativeToolTip": "AuthMicroservice\\Program.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABcAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-26T10:05:03.503Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "ServiceCollectionExtensions.cs",
+              "DocumentMoniker": "E:\\AuthService\\Auth\\AuthMicroservice\\ServiceCollectionExtensions.cs",
+              "RelativeDocumentMoniker": "AuthMicroservice\\ServiceCollectionExtensions.cs",
+              "ToolTip": "E:\\AuthService\\Auth\\AuthMicroservice\\ServiceCollectionExtensions.cs",
+              "RelativeToolTip": "AuthMicroservice\\ServiceCollectionExtensions.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABMAAAAzAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-29T06:36:08.805Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "UserRepository.cs",
+              "DocumentMoniker": "E:\\AuthService\\Auth\\AuthMicroservice\\Repository\\UserRepository.cs",
+              "RelativeDocumentMoniker": "AuthMicroservice\\Repository\\UserRepository.cs",
+              "ToolTip": "E:\\AuthService\\Auth\\AuthMicroservice\\Repository\\UserRepository.cs",
+              "RelativeToolTip": "AuthMicroservice\\Repository\\UserRepository.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-30T13:37:58.028Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "E:\\AuthService\\Auth\\AuthMicroservice\\appsettings.json",
+              "RelativeDocumentMoniker": "AuthMicroservice\\appsettings.json",
+              "ToolTip": "E:\\AuthService\\Auth\\AuthMicroservice\\appsettings.json",
+              "RelativeToolTip": "AuthMicroservice\\appsettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-06-13T09:26:14.316Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
               "Title": "AuthMicroservice.csproj",
               "DocumentMoniker": "E:\\AuthService\\Auth\\AuthMicroservice\\AuthMicroservice.csproj",
               "RelativeDocumentMoniker": "AuthMicroservice\\AuthMicroservice.csproj",
@@ -241,42 +307,6 @@
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABgAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
               "WhenOpened": "2024-05-30T13:23:52.793Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "User.cs",
-              "DocumentMoniker": "E:\\AuthService\\Auth\\AuthMicroservice\\Model\\User.cs",
-              "RelativeDocumentMoniker": "AuthMicroservice\\Model\\User.cs",
-              "ToolTip": "E:\\AuthService\\Auth\\AuthMicroservice\\Model\\User.cs",
-              "RelativeToolTip": "AuthMicroservice\\Model\\User.cs",
-              "ViewState": "AQIAAAMAAAAAAAAAAAAAABIAAAAvAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-13T11:17:00.748Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "Program.cs",
-              "DocumentMoniker": "E:\\AuthService\\Auth\\AuthMicroservice\\Program.cs",
-              "RelativeDocumentMoniker": "AuthMicroservice\\Program.cs",
-              "ToolTip": "E:\\AuthService\\Auth\\AuthMicroservice\\Program.cs",
-              "RelativeToolTip": "AuthMicroservice\\Program.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABcAAAABAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-26T10:05:03.503Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "GenericRepository.cs",
-              "DocumentMoniker": "E:\\AuthService\\Auth\\AuthMicroservice\\Repository\\GenericRepository.cs",
-              "RelativeDocumentMoniker": "AuthMicroservice\\Repository\\GenericRepository.cs",
-              "ToolTip": "E:\\AuthService\\Auth\\AuthMicroservice\\Repository\\GenericRepository.cs",
-              "RelativeToolTip": "AuthMicroservice\\Repository\\GenericRepository.cs",
-              "ViewState": "AQIAACQAAAAAAAAAAAAYwCwAAAAIAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-29T06:43:35.063Z"
             }
           ]
         }
