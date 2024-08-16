@@ -12,11 +12,14 @@ namespace AuthMicroservice.Model
         public string? LastName { get; set; }
         public DateTime? DateOfBirth { get; set; }
         public string? Address { get; set; }
+        public string? MobileNumber {  get; set; }
         public string? City { get; set; }
         public string? State { get; set; }
         public string? Country { get; set; }
         public string? PostalCode { get; set; }
         public Guid ApplicationId { get; set; }
+        public string? UserName { get; set; }
+
     }
 
 }
