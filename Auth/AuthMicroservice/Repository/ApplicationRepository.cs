@@ -10,7 +10,7 @@ namespace AuthMicroservice.Repository
     public class ApplicationRepository : GenericRepository<Application>, IApplicationRepository
     {
         public ApplicationRepository(UserDbContext context) : base(context)
-        {
+        { 
         }
 
         // Implement any additional methods specific to the Application entity

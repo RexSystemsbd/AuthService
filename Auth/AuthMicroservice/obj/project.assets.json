@@ -4592,23 +4592,26 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\sajidur.ASABD\\.nuget\\packages\\": {},
+    "C:\\Users\\oscil\\.nuget\\packages\\": {},
+    "C:\\Program Files\\DevExpress 23.2\\Components\\Offline Packages": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\AuthService\\Auth\\AuthMicroservice\\AuthMicroservice.csproj",
+      "projectUniqueName": "D:\\Projetct\\RexSystems AuthService\\Auth\\AuthMicroservice\\AuthMicroservice.csproj",
       "projectName": "AuthMicroservice",
-      "projectPath": "E:\\AuthService\\Auth\\AuthMicroservice\\AuthMicroservice.csproj",
-      "packagesPath": "C:\\Users\\sajidur.ASABD\\.nuget\\packages\\",
-      "outputPath": "E:\\AuthService\\Auth\\AuthMicroservice\\obj\\",
+      "projectPath": "D:\\Projetct\\RexSystems AuthService\\Auth\\AuthMicroservice\\AuthMicroservice.csproj",
+      "packagesPath": "C:\\Users\\oscil\\.nuget\\packages\\",
+      "outputPath": "D:\\Projetct\\RexSystems AuthService\\Auth\\AuthMicroservice\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
+        "C:\\Program Files\\DevExpress 23.2\\Components\\Offline Packages",
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\sajidur.ASABD\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\oscil\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 23.2.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -4616,7 +4619,7 @@
         "net8.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\DevExpress 23.2\\Components\\System\\Components\\Packages": {},
         "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
@@ -4630,11 +4633,6 @@
         "warnAsError": [
           "NU1605"
         ]
-      },
-      "restoreAuditProperties": {
-        "enableAudit": "true",
-        "auditLevel": "low",
-        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -4699,7 +4697,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

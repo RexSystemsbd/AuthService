@@ -15,7 +15,7 @@ builder.Services.AddControllers();
 builder.Services.AddApplicationServices();
 builder.Services.AddDbContext<UserDbContext>(options =>
     options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
-    new MySqlServerVersion(new Version(8, 0, 21))));
+    new MySqlServerVersion(new Version(8, 0, 21))),ServiceLifetime.Scoped);
 
 var app = builder.Build();
 
@@ -36,6 +36,6 @@ app.MapControllers();
 using (var serviceScope = app.Services.GetService<IServiceScopeFactory>().CreateScope())
 {
     var context = serviceScope.ServiceProvider.GetRequiredService<UserDbContext>();
-    context.Database.Migrate();
+    //context.Database.Migrate();
 }
 app.Run();

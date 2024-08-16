@@ -15,22 +15,34 @@ namespace AuthMicroservice.Controller
             _applicationService = applicationService;
         }
 
+
         [HttpPost("register")]
-        public IActionResult RegisterApplication([FromBody] string name)
+        public async Task<IActionResult> RegisterApplication([FromBody] string name)
         {
-            var app = _applicationService.RegisterApplication(name);
-            return Ok(app.Result);
+            if (string.IsNullOrEmpty(name))
+            {
+                return BadRequest("Application name cannot be null or empty.");
+            }
+
+            var app = await _applicationService.RegisterApplicationAsync(name);
+
+            return Ok(app);
         }
 
         [HttpPost("validate")]
-        public IActionResult ValidateApplication([FromBody] Application app)
+        public async Task<IActionResult> ValidateApplication([FromBody] Application app)
         {
-            if (_applicationService.ValidateAppKeyAndSecret(app.AppKey, app.AppSecret))
+            // Validate the application key and secret asynchronously
+            if (await _applicationService.ValidateAppKeyAndSecretAsync(app.AppKey, app.AppSecret))
             {
                 return Ok();
             }
             return Unauthorized();
         }
+
+
+
+
     }
 
 }

@@ -19,25 +19,26 @@ namespace AuthMicroservice.Controller
 
 
         [HttpPost("register")]
-        public IActionResult RegisterUser([FromBody] RegisterUserRequest request,
-        [FromHeader(Name = "AppKey")] string appKey,
-        [FromHeader(Name = "AppSecret")] string appSecret)
+        public async Task<IActionResult> RegisterUser([FromBody] RegisterUserRequest request,
+       [FromHeader(Name = "AppKey")] string appKey,
+       [FromHeader(Name = "AppSecret")] string appSecret)
         {
-
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var app = _applicationService.GetApplication(appKey).Result.FirstOrDefault();
-            if (app == null || !_applicationService.ValidateAppKeyAndSecret(appKey, appSecret))
+            var applications = await _applicationService.GetApplicationsAsync(appKey);
+            var app = applications.FirstOrDefault(a => a.AppKey == appKey);
+
+            if (app == null || !await _applicationService.ValidateAppKeyAndSecretAsync(appKey, appSecret))
             {
                 return Unauthorized();
             }
 
             try
             {
-                var user = _userService.RegisterUser(app.Id, request.Email, request.MobileNumber, request.Password);
+                var user = await _userService.RegisterUserAsync(app.Id, request.Email, request.MobileNumber, request.Password);
                 return Ok(user);
             }
             catch (Exception ex)
@@ -46,45 +47,61 @@ namespace AuthMicroservice.Controller
             }
         }
 
-        [HttpPost("login")]
-        public IActionResult LoginUser([FromBody] LoginRequest request,
-            [FromHeader(Name = "AppKey")] string appKey,
-            [FromHeader(Name = "AppSecret")] string appSecret)
-        {
 
-            var app = _applicationService.GetApplication(appKey).Result.FirstOrDefault();
-            if (app == null || !_applicationService.ValidateAppKeyAndSecret(appKey, appSecret))
+
+        [HttpPost("login")]
+        public async Task<IActionResult> LoginUser([FromBody] LoginRequest request,
+    [FromHeader(Name = "AppKey")] string appKey,
+    [FromHeader(Name = "AppSecret")] string appSecret)
+        {
+            // Fetch applications asynchronously
+            var applications = await _applicationService.GetApplicationsAsync(appKey);
+            var app = applications.FirstOrDefault(a => a.AppKey == appKey);
+
+            // Validate the application key and secret asynchronously
+            if (app == null || !await _applicationService.ValidateAppKeyAndSecretAsync(appKey, appSecret))
             {
                 return Unauthorized();
             }
 
-            var user = _userService.AuthenticateUser(app.Id, request.Email, request.Password);
+            // Authenticate the user asynchronously
+            var user = await _userService.AuthenticateUserAsync(app.Id, request.Email, request.Password);
             if (user != null)
             {
-                // Generate JWT token here
+                // Generate JWT token here (assuming you have a method for this)
+                // var token = GenerateJwtToken(user);
+
                 return Ok(user);
             }
+
             return Unauthorized();
         }
 
         [HttpPost("reset-password")]
-        public IActionResult ResetPassword([FromBody] ResetPasswordRequest request,
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest request,
             [FromHeader(Name = "AppKey")] string appKey,
             [FromHeader(Name = "AppSecret")] string appSecret)
         {
+            // Fetch applications asynchronously
+            var applications = await _applicationService.GetApplicationsAsync(appKey);
+            var app = applications.FirstOrDefault(a => a.AppKey == appKey);
 
-            var app = _applicationService.GetApplication(appKey).Result.FirstOrDefault();
-            if (app == null || !_applicationService.ValidateAppKeyAndSecret(appKey, appSecret))
+            // Validate the application key and secret asynchronously
+            if (app == null || !await _applicationService.ValidateAppKeyAndSecretAsync(appKey, appSecret))
             {
                 return Unauthorized();
             }
 
-            if (_userService.ResetPassword(app.Id, request.Email, request.NewPassword))
+            // Reset the password asynchronously
+            var success = await _userService.ResetPasswordAsync(app.Id, request.Email, request.NewPassword);
+            if (success)
             {
                 return Ok();
             }
+
             return BadRequest("Password reset failed.");
         }
+
     }
 
     public class RegisterUserRequest
