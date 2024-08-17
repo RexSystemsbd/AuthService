@@ -1,5 +1,6 @@
 using AuthMicroservice;
 using AuthMicroservice.Repository;
+using AuthMicroservice.Service;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +11,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<UserDbContext>();
 //builder.Services.AddAuthorization();
+// Register your application-specific services
+builder.Services.AddScoped<ILoginService, LoginService>(); // Register ILoginService and its implementation
 
 builder.Services.AddControllers();
 builder.Services.AddApplicationServices();
