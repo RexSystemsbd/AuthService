@@ -76,3 +76,5 @@ $RECYCLE.BIN/
 /.vs/IDoctorBackend/FileContentIndex
 /AuthMicroservice/obj/Debug/net8.0/IDoctorBackend.GeneratedMSBuildEditorConfig.editorconfig
 /.vs/IDoctorBackend/v17/.suo
+/Auth/AuthMicroservice/bin/Debug/net8.0/AuthMicroservice.dll
+/Auth/.vs/AuthMicroservice/DesignTimeBuild/.dtbcache.v2
