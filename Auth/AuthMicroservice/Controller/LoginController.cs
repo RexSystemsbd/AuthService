@@ -21,8 +21,7 @@ namespace AuthMicroservice.Controller
         }
 
         [HttpPost("login")]
-        public async  Task<IActionResult> Login([FromBody] LoginModel model, [FromHeader(Name = "AppKey")] string appKey,
-       [FromHeader(Name = "AppSecret")] string appSecret)
+        public async  Task<IActionResult> Login([FromBody] LoginModel model, [FromHeader(Name = "AppKey")] string appKey)
         {
             if (!ModelState.IsValid)
             {
@@ -33,15 +32,12 @@ namespace AuthMicroservice.Controller
             var applications = await _applicationService.GetApplicationsAsync(appKey);
             var app = applications.FirstOrDefault(a => a.AppKey == appKey);
 
-            if (app == null || !await _applicationService.ValidateAppKeyAndSecretAsync(appKey, appSecret))
-            {
-                return Unauthorized();
-            }
-            // Validate the application key 
+
             if (app == null)
             {
                 return Unauthorized();
             }
+            // Validate the application key 
             //if (model.AppKey != _configuration["Jwt:AppKey"])
             //{
             //    return Unauthorized("Invalid appKey.");
@@ -51,10 +47,8 @@ namespace AuthMicroservice.Controller
             var user=await _loginService.AuthenticateLoginUserAsync(model.Username, model.Password);
             if (user!=null)
             {
-                _configuration["Jwt:AppSecretKey"]= appKey;
+                var key = Encoding.ASCII.GetBytes(app.AppSecret);
                 var tokenHandler = new JwtSecurityTokenHandler();
-                var key = Encoding.ASCII.GetBytes(_configuration["Jwt:AppSecretKey"]);
-
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
                     Subject = new ClaimsIdentity(new[]
