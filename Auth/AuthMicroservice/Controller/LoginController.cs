@@ -30,7 +30,7 @@ namespace AuthMicroservice.Controller
             // Verify the appKey
             // Fetch applications asynchronously
             var applications = await _applicationService.GetApplicationsAsync(appKey);
-            var app = applications.FirstOrDefault(a => a.AppKey == appKey);
+            var app = applications.FirstOrDefault();
 
 
             if (app == null)
@@ -55,7 +55,9 @@ namespace AuthMicroservice.Controller
                     {
                     new Claim(ClaimTypes.Name, model.Username)
                 }),
-                    Expires = DateTime.UtcNow.AddHours(1),
+                    Expires = DateTime.UtcNow.AddHours(12),
+                    Audience = "your-audience-here",  // Set your audience here
+                    Issuer = "your-issuer-here",  // Set your issuer here
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
                 };
 
