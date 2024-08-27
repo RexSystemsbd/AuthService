@@ -61,6 +61,14 @@ namespace AuthMicroservice.Controller
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
                 };
 
+                tokenDescriptor.Claims.Add("Id", user.Id);
+                tokenDescriptor.Claims.Add("ApplicationId", user.ApplicationId);
+                tokenDescriptor.Claims.Add("UserName", user.UserName);
+                tokenDescriptor.Claims.Add("FirstName", user.FirstName);
+                tokenDescriptor.Claims.Add("LastName", user.LastName);
+                tokenDescriptor.Claims.Add("Email", user.Email);
+                tokenDescriptor.Claims.Add("PhoneNumber", user.PhoneNumber);
+
                 var token = tokenHandler.CreateToken(tokenDescriptor);
                 var tokenString = tokenHandler.WriteToken(token);
 
