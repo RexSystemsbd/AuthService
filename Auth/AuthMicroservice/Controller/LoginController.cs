@@ -55,6 +55,7 @@ namespace AuthMicroservice.Controller
                     {
                     new Claim(ClaimTypes.Name, model.Username)
                 }),
+                    Claims=new Dictionary<string,object>(),
                     Expires = DateTime.UtcNow.AddHours(12),
                     Audience = "your-audience-here",  // Set your audience here
                     Issuer = "your-issuer-here",  // Set your issuer here
