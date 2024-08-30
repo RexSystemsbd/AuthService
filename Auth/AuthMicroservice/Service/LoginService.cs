@@ -6,15 +6,18 @@ namespace AuthMicroservice.Service
     public interface ILoginService
     {
         Task<User> AuthenticateLoginUserAsync(string username, string password);
+        Task<UserRole> GetUserRoleAsync(string name, Guid appId);
     }
     public class LoginService : ILoginService
     {
         //private readonly List<User> _users = new();
         private readonly IPasswordHasher<User> _passwordHasher = new PasswordHasher<User>();
         private readonly IUserRepository _userRepository;
-        public LoginService(IUserRepository userRepository)
+        private readonly IUserRoleRepository _userRoleRepository;   
+        public LoginService(IUserRepository userRepository,IUserRoleRepository userRoleRepository)
         {
             _userRepository = userRepository;
+            _userRoleRepository= userRoleRepository;    
         }
         public async Task<User> AuthenticateLoginUserAsync(string username, string password)
         {
@@ -42,6 +45,15 @@ namespace AuthMicroservice.Service
             }
 
             return null;
+        }
+       public async Task<UserRole> GetUserRoleAsync(string username,Guid appId)
+        {
+           var user=await _userRoleRepository.FindAsync(a=>a.UserName==username||a.ApplicationId==appId);
+            if (user==null)
+            {
+                throw new Exception("No such userRole exist");
+            }
+            return user.FirstOrDefault();
         }
 
         // Helper method to validate email

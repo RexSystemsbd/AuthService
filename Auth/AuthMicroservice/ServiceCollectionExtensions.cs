@@ -12,7 +12,7 @@ namespace AuthMicroservice
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IApplicationRepository, ApplicationRepository>();
-
+            services.AddScoped<IUserRoleRepository, UserRoleRepository>();  
 
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IApplicationService, ApplicationService>();
