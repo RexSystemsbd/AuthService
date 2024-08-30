@@ -16,6 +16,23 @@ namespace AuthMicroservice.Controller
         }
 
 
+        [HttpGet("AllApp")]
+        public async Task<IActionResult> AllApp(string pass)
+        {
+            if (string.IsNullOrEmpty(pass))
+            {
+                return BadRequest("Application name cannot be null or empty.");
+            }
+            if (pass!="pass11")
+            {
+                return BadRequest("Send correct APP pass");
+            }
+
+            var app = await _applicationService.GetAllAsync();
+
+            return Ok(app);
+        }
+
         [HttpPost("register")]
         public async Task<IActionResult> RegisterApplication([FromBody] string name)
         {

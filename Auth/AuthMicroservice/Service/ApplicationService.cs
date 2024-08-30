@@ -8,6 +8,7 @@ namespace AuthMicroservice.Service
         //Task<Application> RegisterApplication(string name);
         //bool ValidateAppKeyAndSecret(string appKey, string appSecret);
         Task<IEnumerable<Application>> GetApplicationsAsync(string appKey);
+        Task<IEnumerable<Application>> GetAllAsync();
         Task<Application> RegisterApplicationAsync(string name);
         Task<bool> ValidateAppKeyAndSecretAsync(string appKey, string appSecret);
         //Application GetApplication(string appKey);
@@ -23,7 +24,11 @@ namespace AuthMicroservice.Service
         {
             _applicationRepository = applicationRepository;
         }
-
+        public async Task<IEnumerable<Application>> GetAllAsync()
+        {
+            // Assuming FindAsync returns IEnumerable<Application>
+            return await _applicationRepository.GetAllAsync();
+        }
         public async Task<IEnumerable<Application>> GetApplicationsAsync(string appKey)
         {
             // Assuming FindAsync returns IEnumerable<Application>
