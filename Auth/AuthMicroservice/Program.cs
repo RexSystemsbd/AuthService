@@ -21,8 +21,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<UserDbContext>();
 //builder.Services.AddAuthorization();
-// Register your application-specific services
-builder.Services.AddScoped<ILoginService, LoginService>(); // Register ILoginService and its implementation
+//builder.Services.AddScoped<ILoginService, LoginService>(); // Register ILoginService and its implementation
 
 builder.Services.AddControllers();
 builder.Services.AddApplicationServices();
@@ -50,6 +49,6 @@ app.MapControllers();
 using (var serviceScope = app.Services.GetService<IServiceScopeFactory>().CreateScope())
 {
     var context = serviceScope.ServiceProvider.GetRequiredService<UserDbContext>();
-    //context.Database.Migrate();
+    context.Database.Migrate();
 }
 app.Run();

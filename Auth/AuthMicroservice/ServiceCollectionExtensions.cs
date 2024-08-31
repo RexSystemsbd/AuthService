@@ -7,17 +7,20 @@ namespace AuthMicroservice
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
-            // Register your application services here
+
             // Register the generic repository and the specific repository
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IApplicationRepository, ApplicationRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserRoleRepository, UserRoleRepository>();
 
+            // Add service registrations here
 
+            services.AddScoped<ILoginService,LoginService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IApplicationService, ApplicationService>();
 
-            // Add other service registrations here
+          
 
             return services;
         }

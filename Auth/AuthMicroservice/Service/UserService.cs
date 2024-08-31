@@ -1,45 +1,75 @@
-﻿using AuthMicroservice.Model;
+﻿using AuthMicroservice.Controller;
+using AuthMicroservice.Model;
 using AuthMicroservice.Repository;
 using Microsoft.AspNetCore.Identity;
-
+using static System.Net.Mime.MediaTypeNames;
 namespace AuthMicroservice.Service
 {
     public interface IUserService
     {
-        Task<User> RegisterUserAsync(Guid applicationId, string email, string mobileNumber, string password);
+        Task<User> RegisterUserAsync(Guid applicationId, RegisterUserRequest req);
+        Task<UserRole> RegisterUserRoleAsync(Guid AppId, string appName, string role, string n);
         Task<User> AuthenticateUserAsync(Guid applicationId, string email, string password);
-        Task<bool> ResetPasswordAsync(Guid applicationId, string email, string newPassword);    }
+        Task<bool> ResetPasswordAsync(Guid applicationId, string email, string newPassword);
+        Task<bool> isExistUserAsync(string u);
 
+    }
+    
     public class UserService : IUserService
     {
         private readonly List<User> _users = new();
         private readonly IPasswordHasher<User> _passwordHasher = new PasswordHasher<User>();
         private readonly IUserRepository _userRepository;
-        public UserService(IUserRepository userRepository)
+        private readonly IUserRoleRepository _userRoleRepository;
+        public UserService(IUserRepository userRepository, IUserRoleRepository userRoleRepository)
         {
             _userRepository = userRepository;
+            _userRoleRepository = userRoleRepository;   
+             
         }
-        public async Task<User> RegisterUserAsync(Guid applicationId, string email, string mobileNumber, string password)
+        public async Task<bool> isExistUserAsync(string userName)
         {
-            if (_userRepository.FindAsync(a => a.Email == email || a.PhoneNumber == mobileNumber).Result.Any())
-            {
-                throw new Exception("User already exists.");
-            }
+            var user=await _userRepository.FindAsync(a=>a.Email== userName || a.PhoneNumber== userName || a.FirstName+" "+a.LastName==userName);
+            if(user.Any()) return true;
+            return false;
+        }
+        public async Task<User> RegisterUserAsync(Guid applicationId, RegisterUserRequest req)
+        {
+
 
             var user = new User
             {
                 Id = Guid.NewGuid().ToString(),
-                Email = email,
-                PhoneNumber = mobileNumber,
-                PasswordHash = _passwordHasher.HashPassword(null, password),
+                Email = req.userName.Email,
+                FirstName= req.userName.FirstName,
+                LastName= req.userName.LastName,
+                UserName=req.userName.FirstName+" "+req.userName.LastName,
+                PhoneNumber = req.userName.MobileNumber,
+                PasswordHash = _passwordHasher.HashPassword(null, req.Password),
                 ApplicationId = applicationId
             };
+          
 
             await _userRepository.AddAsync(user);
+           
             return user;
         }
 
+        public async Task<UserRole> RegisterUserRoleAsync(Guid AppId,string appName, string role,string name)
+        {
+            var userRole = new UserRole
+            {
+                Id = Guid.NewGuid(),
+                ApplicationId = AppId,
+                RoleName = role,
+                UserName=name,
+                ApplicationName = appName,
+                CreatedDate = DateTime.Now
 
+            };
+            await _userRoleRepository.AddAsync(userRole);
+            return userRole;    
+        }
         public async Task<User> AuthenticateUserAsync(Guid applicationId, string email, string password)
         {
             // Fetch the user asynchronously

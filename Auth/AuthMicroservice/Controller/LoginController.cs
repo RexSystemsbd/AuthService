@@ -45,7 +45,10 @@ namespace AuthMicroservice.Controller
 
             // Replace this with your user authentication logic
             var user=await _loginService.AuthenticateLoginUserAsync(model.Username, model.Password);
-            if (user!=null)
+            //If any userRole exist?
+            var userRole = await _loginService.GetUserRoleAsync(model.Username,app.Id);
+
+            if (user!=null&&userRole!=null)
             {
                 var key = Encoding.ASCII.GetBytes(app.AppSecret);
                 var tokenHandler = new JwtSecurityTokenHandler();
@@ -72,12 +75,16 @@ namespace AuthMicroservice.Controller
 
                 var token = tokenHandler.CreateToken(tokenDescriptor);
                 var tokenString = tokenHandler.WriteToken(token);
-
+                var role = userRole.RoleName;
+                //userName may be Email or MobileNumber or FistName&LastName
                 return Ok(new
                 {
                     UserId = user.Id,
                     FirstName = user.FirstName,
                     LastName = user.LastName,
+                    Email= user.Email,
+                    Role= role, 
+                    MobileNumber=user.PhoneNumber, 
                     Token = tokenString
                 });
             }
