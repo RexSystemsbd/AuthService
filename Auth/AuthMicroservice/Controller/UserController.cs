@@ -1,4 +1,5 @@
-﻿using AuthMicroservice.Repository;
+﻿using AuthMicroservice.Model;
+using AuthMicroservice.Repository;
 using AuthMicroservice.Service;
 using Google.Protobuf.WellKnownTypes;
 using Microsoft.AspNetCore.Http;
@@ -47,7 +48,7 @@ namespace AuthMicroservice.Controller
                 string name=request.userName.FirstName+" "+request.userName.LastName;
                 if(name==null)
                 {
-                    if(request.userName.MobileNumber == null) { name=request.userName.Email; }  
+                   if(request.userName.MobileNumber == null) { name=request.userName.Email; }  
                    else{name=request.userName.MobileNumber;  }
                 }
                 if(name==null) { throw new Exception("Invalid Input..Write correct userName"); }
@@ -130,21 +131,26 @@ namespace AuthMicroservice.Controller
 
     public class RegisterUserRequest
     {
-        [Required]  
+        [Required]
         public UserName userName { get; set; }
-       
+
         [Required]
         public string Password { get; set; }
+
         [Required]
         public string UserRole { get; set; }
     }
+
+    [AtLeastOneRequired] // Apply the custom validation attribute here
     public class UserName
     {
-        public string Email { get; set; }
-        public string MobileNumber { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string Email { get; set; }
+        public string MobileNumber { get; set; }
+       
     }
+
 
     public class LoginRequest
     {

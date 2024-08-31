@@ -67,13 +67,15 @@ namespace AuthMicroservice.Controller
                 var token = tokenHandler.CreateToken(tokenDescriptor);
                 var tokenString = tokenHandler.WriteToken(token);
                 var role = userRole.RoleName;
+                //userName may be Email or MobileNumber or FistName&LastName
                 return Ok(new
                 {
                     UserId = user.Id,
                     FirstName = user.FirstName,
                     LastName = user.LastName,
                     Email= user.Email,
-                    role= role, 
+                    Role= role, 
+                    MobileNumber=user.PhoneNumber, 
                     Token = tokenString
                 });
             }

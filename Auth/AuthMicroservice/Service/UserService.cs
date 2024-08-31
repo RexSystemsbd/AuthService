@@ -35,8 +35,7 @@ namespace AuthMicroservice.Service
         }
         public async Task<User> RegisterUserAsync(Guid applicationId, RegisterUserRequest req)
         {
-           
-          
+
 
             var user = new User
             {
@@ -44,7 +43,7 @@ namespace AuthMicroservice.Service
                 Email = req.userName.Email,
                 FirstName= req.userName.FirstName,
                 LastName= req.userName.LastName,
-               // UserName=req.FirstName+req.LastName,
+                UserName=req.userName.FirstName+" "+req.userName.LastName,
                 PhoneNumber = req.userName.MobileNumber,
                 PasswordHash = _passwordHasher.HashPassword(null, req.Password),
                 ApplicationId = applicationId
