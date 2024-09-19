@@ -45,7 +45,7 @@ namespace AuthMicroservice.Controller
 
             try
             {
-                string name=request.userName.FirstName+" "+request.userName.LastName;
+                string name=request.userName.FirstName+"_"+request.userName.LastName;
                 string email = request.userName.Email;
                 string mobileNumber = request.userName.MobileNumber;
                 if (name==null&&email == null&& mobileNumber==null)
