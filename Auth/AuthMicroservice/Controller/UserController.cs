@@ -46,13 +46,14 @@ namespace AuthMicroservice.Controller
             try
             {
                 string name=request.userName.FirstName+" "+request.userName.LastName;
-                if(name==null)
+                string email = request.userName.Email;
+                string mobileNumber = request.userName.MobileNumber;
+                if (name==null&&email == null&& mobileNumber==null)
                 {
-                   if(request.userName.MobileNumber == null) { name=request.userName.Email; }  
-                   else{name=request.userName.MobileNumber;  }
+                    throw new Exception("Invalid Input..Write correct userName");
                 }
-                if(name==null) { throw new Exception("Invalid Input..Write correct userName"); }
-                bool userExist = await _userService.isExistUserAsync(name);
+               
+                bool userExist = await _userService.isExistUserAsync(name,email,mobileNumber);
 
                 if(userExist) { throw new Exception("This user already exist"); }
 

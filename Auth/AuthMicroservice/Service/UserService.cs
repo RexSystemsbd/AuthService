@@ -11,7 +11,7 @@ namespace AuthMicroservice.Service
         Task<UserRole> RegisterUserRoleAsync(Guid AppId, string appName, string role, string n);
         Task<User> AuthenticateUserAsync(Guid applicationId, string email, string password);
         Task<bool> ResetPasswordAsync(Guid applicationId, string email, string newPassword);
-        Task<bool> isExistUserAsync(string u);
+        Task<bool> isExistUserAsync(string name,string email,string mobileNumber);
 
     }
     
@@ -27,9 +27,9 @@ namespace AuthMicroservice.Service
             _userRoleRepository = userRoleRepository;   
              
         }
-        public async Task<bool> isExistUserAsync(string userName)
+        public async Task<bool> isExistUserAsync(string userName,string email,string mobile)
         {
-            var user=await _userRepository.FindAsync(a=>a.Email== userName || a.PhoneNumber== userName || a.FirstName+" "+a.LastName==userName);
+            var user=await _userRepository.FindAsync(a=>a.Email== email || a.PhoneNumber== mobile || a.FirstName+" "+a.LastName==userName);
             if(user.Any()) return true;
             return false;
         }

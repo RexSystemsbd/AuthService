@@ -1,6 +1,22 @@
 [
   {
     "ContainingType": "AuthMicroservice.Controller.ApplicationController",
+    "Method": "AllApp",
+    "RelativePath": "Application/AllApp",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "pass",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuthMicroservice.Controller.ApplicationController",
     "Method": "RegisterApplication",
     "RelativePath": "Application/register",
     "HttpMethod": "POST",
@@ -27,6 +43,27 @@
         "Name": "app",
         "Type": "Application",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuthMicroservice.Controller.AuthController",
+    "Method": "Login",
+    "RelativePath": "Auth/login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "AuthMicroservice.Controller.LoginModel",
+        "IsRequired": true
+      },
+      {
+        "Name": "AppKey",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
