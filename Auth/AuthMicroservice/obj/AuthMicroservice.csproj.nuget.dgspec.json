@@ -1,15 +1,15 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\HP\\source\\repos\\AuthService\\Auth\\AuthMicroservice\\AuthMicroservice.csproj": {}
+    "C:\\Users\\HP\\Source\\Repos\\AuthService\\Auth\\AuthMicroservice\\AuthMicroservice.csproj": {}
   },
   "projects": {
-    "C:\\Users\\HP\\source\\repos\\AuthService\\Auth\\AuthMicroservice\\AuthMicroservice.csproj": {
+    "C:\\Users\\HP\\Source\\Repos\\AuthService\\Auth\\AuthMicroservice\\AuthMicroservice.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\HP\\source\\repos\\AuthService\\Auth\\AuthMicroservice\\AuthMicroservice.csproj",
+        "projectUniqueName": "C:\\Users\\HP\\Source\\Repos\\AuthService\\Auth\\AuthMicroservice\\AuthMicroservice.csproj",
         "projectName": "AuthMicroservice",
-        "projectPath": "C:\\Users\\HP\\source\\repos\\AuthService\\Auth\\AuthMicroservice\\AuthMicroservice.csproj",
+        "projectPath": "C:\\Users\\HP\\Source\\Repos\\AuthService\\Auth\\AuthMicroservice\\AuthMicroservice.csproj",
         "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\HP\\Source\\Repos\\AuthService\\Auth\\AuthMicroservice\\obj\\",
         "projectStyle": "PackageReference",

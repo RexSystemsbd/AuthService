@@ -64,8 +64,9 @@ namespace AuthMicroservice.Service
         // Helper method to validate phone number
         private bool IsValidPhoneNumber(string number)
         {
-            // Adjust the regex pattern according to your phone number format requirements
-            return System.Text.RegularExpressions.Regex.IsMatch(number, @"^\d{10}$");
+            
+            // Adjusted regex pattern for 11-digit numbers starting with 0
+            return System.Text.RegularExpressions.Regex.IsMatch(number, @"^0\d{10}$");
         }
 
         public async Task<UserRole> GetUserRoleAsync(string username,Guid appId)
