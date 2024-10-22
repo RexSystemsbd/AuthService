@@ -15,12 +15,12 @@ namespace AuthMicroservice
             services.AddScoped<IUserRoleRepository, UserRoleRepository>();
 
             // Add service registrations here
-
+            //services.AddScoped<HttpClient, HttpClient>();
             services.AddScoped<ILoginService,LoginService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IApplicationService, ApplicationService>();
+            services.AddHttpClient();
 
-          
 
             return services;
         }

@@ -1,13 +1,17 @@
 ﻿using AuthMicroservice.Model;
 using AuthMicroservice.Repository;
 using AuthMicroservice.Service;
+using Google.Protobuf;
 using Google.Protobuf.WellKnownTypes;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
+using System.Net.Http;
 using System.Reflection.Metadata;
-
+using Google.Apis.Auth;
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.Identity; // For JsonConvert
 namespace AuthMicroservice.Controller
 {
     [ApiController]
@@ -16,13 +20,96 @@ namespace AuthMicroservice.Controller
     {
         private readonly IUserService _userService;
         private readonly IApplicationService _applicationService;
-       
-        public UserController(IUserService userService, IApplicationService applicationService)
+        private readonly ILogger _logger;
+        private readonly HttpClient _httpClient;
+
+        public UserController(IUserService userService, IApplicationService applicationService, HttpClient httpClient, ILogger<UserController> logger)
         {
             _userService = userService;
             _applicationService = applicationService;
-           
+            _httpClient = httpClient;
+            _logger = logger;
+
         }
+        [HttpPost("GoogleLogin")]
+        public async Task<IActionResult> GoogleLogin([FromBody] GoogleLoginViewModel request)
+        {
+            // Check if the request is null
+            if (!ModelState.IsValid)
+            {
+                _logger.LogWarning("Google login attempt with missing request data.");
+                return BadRequest(new Messages
+                {
+                    IsAuthorized = false,
+                    Message = "Invalid request.Data is not valid required valid format.",
+                    MessageType = "LoginFailed",
+                    Status = false
+                });
+            }
+
+            // Log the validated Google token details
+            _logger.LogInformation("Google token validated. Email: {Email}, Name: {Name}", request.email, request.display_name);
+
+            // Retrieve the application by ID
+            var application = await _applicationService.GetApplicationByIdAsync(Guid.Parse(request.appId));
+
+            // Validate the application key and secret
+            if (application == null || !await _applicationService.ValidateAppKeyAndSecretAsync(application.AppKey, application.AppSecret))
+            {
+                _logger.LogWarning("Application not registered: {AppId}", request.appId);
+                return BadRequest(new Messages
+                {
+                    IsAuthorized = false,
+                    Message = "Invalid request. Application has not been registered yet.",
+                    MessageType = "LoginFailed",
+                    Status = false
+                });
+            }
+
+            // Find or create the user in the system
+            var user = await _userService.FindOrCreateUserAsync(request.email, request.mobile, request.display_name, Guid.Parse(request.appId));
+
+            if (user != null)
+            {
+                if (user.ApplicationId.ToString() != request.appId)
+                {
+                    _logger.LogWarning("Application is mismatched: {ApplicationId}", user.ApplicationId);
+                    return BadRequest(new Messages
+                    {
+                        IsAuthorized = false,
+                        Message = "Invalid request. Application is mismatched.",
+                        MessageType = "LoginFailed",
+                        Status = false
+                    });
+                }
+                // Return success response with user info and JWT token
+                return Ok(new
+                {
+                    IsAuthorized = true,
+                    user.Id,
+                    idname =request.id_name,
+                    user.Email,
+                    user.PhoneNumber,
+                    //user.EmailConfirmed,
+                    //user.Address,
+                    user.UserName,
+                    user.ApplicationId,
+                    ApplicationName=application.Name,
+                    firebasetoken=request.firebase_token,
+                    token = _userService.GetToken(user,application.AppSecret,request.email) // Assuming you have a GetToken method to generate JWT token
+                });
+            }
+
+            // Handle case where user creation failed
+            return BadRequest(new Messages
+            {
+                IsAuthorized = false,
+                Message = "Failed to create or find user.",
+                MessageType = "LoginFailed",
+                Status = false
+            });
+        }
+
 
 
         [HttpPost("register")]
@@ -45,17 +132,19 @@ namespace AuthMicroservice.Controller
 
             try
             {
-                string name=request.userName.FirstName+"_"+request.userName.LastName;
+                
                 string email = request.userName.Email;
                 string mobileNumber = request.userName.MobileNumber;
-                if (name==null&&email == null&& mobileNumber==null)
+                if (email == null&& mobileNumber==null)
                 {
                     throw new Exception("Invalid Input..Write correct userName");
                 }
-               
-                bool userExist = await _userService.isExistUserAsync(name,email,mobileNumber);
 
-                if(userExist) { throw new Exception("This user already exist"); }
+                var name=email==null?mobileNumber:email; 
+
+                var userExist = await _userService.ExistedUserAsync(email,mobileNumber);
+
+                if(userExist!=null) { throw new Exception("This user already exist"); }
 
                 var user = await _userService.RegisterUserAsync(app.Id, request);
                
@@ -151,7 +240,15 @@ namespace AuthMicroservice.Controller
         public string MobileNumber { get; set; }
        
     }
-
+    public class GoogleLoginViewModel
+    {
+        public string id_name { get; set; } 
+        public string display_name { get; set; }
+        public string email { get; set; }
+        public string mobile { get; set; }
+        public string firebase_token { get; set; }
+        public string appId { get; set; }
+    }
 
     public class LoginRequest
     {
@@ -163,6 +260,30 @@ namespace AuthMicroservice.Controller
     {
         public string Email { get; set; }
         public string NewPassword { get; set; }
+    }
+    public class GoogleTokenResponse
+    {
+        [JsonProperty("access_token")]
+        public string AccessToken { get; set; }
+
+        [JsonProperty("refresh_token")]
+        public string RefreshToken { get; set; }
+
+         [JsonProperty("id_token")]
+        public string IdToken { get; set; }
+    }
+    public class Messages
+    {
+        public bool Status { get; set; }
+
+        public bool IsAuthorized { get; set; } = true;
+
+        public string Message { get; set; }
+
+        public string MessageType { get; set; }
+
+        public object Result { get; set; }
+
     }
 
 }

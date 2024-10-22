@@ -70,6 +70,22 @@
   },
   {
     "ContainingType": "AuthMicroservice.Controller.UserController",
+    "Method": "GoogleLogin",
+    "RelativePath": "User/GoogleLogin",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "AuthMicroservice.Controller.GoogleLoginViewModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuthMicroservice.Controller.UserController",
     "Method": "LoginUser",
     "RelativePath": "User/login",
     "HttpMethod": "POST",
