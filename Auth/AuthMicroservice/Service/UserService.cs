@@ -2,6 +2,12 @@
 using AuthMicroservice.Model;
 using AuthMicroservice.Repository;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
+using Org.BouncyCastle.Ocsp;
+using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 using static System.Net.Mime.MediaTypeNames;
 namespace AuthMicroservice.Service
 {
@@ -11,7 +17,9 @@ namespace AuthMicroservice.Service
         Task<UserRole> RegisterUserRoleAsync(Guid AppId, string appName, string role, string n);
         Task<User> AuthenticateUserAsync(Guid applicationId, string email, string password);
         Task<bool> ResetPasswordAsync(Guid applicationId, string email, string newPassword);
-        Task<bool> isExistUserAsync(string name,string email,string mobileNumber);
+        Task<User> ExistedUserAsync(string email,string mobileNumber);
+        string GetToken(User user, string AppSecret, string Username);
+        Task<User> FindOrCreateUserAsync(string email, string mobile, string username,Guid appId);
 
     }
     
@@ -21,17 +29,19 @@ namespace AuthMicroservice.Service
         private readonly IPasswordHasher<User> _passwordHasher = new PasswordHasher<User>();
         private readonly IUserRepository _userRepository;
         private readonly IUserRoleRepository _userRoleRepository;
-        public UserService(IUserRepository userRepository, IUserRoleRepository userRoleRepository)
+        private IConfiguration _config;
+        public UserService(IUserRepository userRepository, IUserRoleRepository userRoleRepository, IConfiguration config)
         {
             _userRepository = userRepository;
-            _userRoleRepository = userRoleRepository;   
-             
+            _userRoleRepository = userRoleRepository;
+            _config = config;
         }
-        public async Task<bool> isExistUserAsync(string userName,string email,string mobile)
+        public async Task<User> ExistedUserAsync(string email,string mobile)
         {
-            var user=await _userRepository.FindAsync(a=>a.Email== email || a.PhoneNumber== mobile || a.FirstName+" "+a.LastName==userName);
-            if(user.Any()) return true;
-            return false;
+            var user=await _userRepository.FindAsync(a=>a.Email== email || a.PhoneNumber== mobile);
+           
+            return user.FirstOrDefault();
+
         }
         public async Task<User> RegisterUserAsync(Guid applicationId, RegisterUserRequest req)
         {
@@ -43,7 +53,7 @@ namespace AuthMicroservice.Service
                 Email = req.userName.Email,
                 FirstName= req.userName.FirstName,
                 LastName= req.userName.LastName,
-                UserName=req.userName.FirstName+" "+req.userName.LastName,
+                UserName=req.userName.FirstName+"_"+req.userName.LastName,
                 PhoneNumber = req.userName.MobileNumber,
                 PasswordHash = _passwordHasher.HashPassword(null, req.Password),
                 ApplicationId = applicationId
@@ -54,6 +64,7 @@ namespace AuthMicroservice.Service
            
             return user;
         }
+
 
         public async Task<UserRole> RegisterUserRoleAsync(Guid AppId,string appName, string role,string name)
         {
@@ -82,7 +93,28 @@ namespace AuthMicroservice.Service
 
             return null;
         }
+        public async Task<User> FindOrCreateUserAsync(string email, string mobile, string username, Guid appId)
+        {
+            var userExisted = await ExistedUserAsync(email,mobile);
+            if (userExisted != null)
+            {
+                return userExisted;
+            }
+            var user = new User
+            {
+                Id = Guid.NewGuid().ToString(),
+                Email = email,
+                UserName = username,    
+                PhoneNumber=mobile,
+                PasswordHash = _passwordHasher.HashPassword(null, Guid.NewGuid().ToString()),
+                ApplicationId = appId
+             };
 
+
+            await _userRepository.AddAsync(user);
+
+            return user;
+        }
 
         public async Task<bool> ResetPasswordAsync(Guid applicationId, string email, string newPassword)
         {
@@ -99,6 +131,38 @@ namespace AuthMicroservice.Service
 
             return false;
         }
+        public string GetToken(User user,string AppSecret,string Username)
+        {
+           
+
+            var key = Encoding.ASCII.GetBytes(AppSecret);
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new[]
+                {
+                    new Claim(ClaimTypes.Name,Username)
+                }),
+                Claims = new Dictionary<string, object>(),
+                Expires = DateTime.UtcNow.AddHours(12),
+                Audience = "your-audience-here",  // Set your audience here
+                Issuer = "your-issuer-here",  // Set your issuer here
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+
+            tokenDescriptor.Claims.Add("Id", user.Id);
+            tokenDescriptor.Claims.Add("ApplicationId", user.ApplicationId);
+            tokenDescriptor.Claims.Add("UserName", user.UserName);
+            tokenDescriptor.Claims.Add("FirstName", user.FirstName);
+            tokenDescriptor.Claims.Add("LastName", user.LastName);
+            tokenDescriptor.Claims.Add("Email", user.Email);
+            tokenDescriptor.Claims.Add("PhoneNumber", user.PhoneNumber);
+
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            var tokenString = tokenHandler.WriteToken(token);
+            return tokenString;
+        }
+
 
     }
 

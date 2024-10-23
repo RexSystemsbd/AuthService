@@ -22,5 +22,6 @@ namespace AuthMicroservice.Model
         public string? PostalCode { get; set; }
         public Guid ApplicationId { get; set; }
         public string? UserName { get; set; }
+        
     }
 }
