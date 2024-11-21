@@ -20,7 +20,7 @@ namespace AuthMicroservice.Service
         Task<User> ExistedUserAsync(string email,string mobileNumber);
         string GetToken(User user, string AppSecret, string Username);
         Task<User> FindOrCreateUserAsync(string email, string mobile, string username,Guid appId);
-
+        Task<User> FindOrCreateUserForLoginWithGoogleAsync(Guid appId, string userRole, string firstname, string lastname,string fullname, string email);
     }
     
     public class UserService : IUserService
@@ -38,7 +38,7 @@ namespace AuthMicroservice.Service
         }
         public async Task<User> ExistedUserAsync(string email,string mobile)
         {
-            var user=await _userRepository.FindAsync(a=>a.Email== email || a.PhoneNumber== mobile);
+            var user=await _userRepository.FindAsync(a=>a.Email== email&&email!="" || a.PhoneNumber== mobile&&mobile!="");
            
             return user.FirstOrDefault();
 
@@ -80,6 +80,30 @@ namespace AuthMicroservice.Service
             };
             await _userRoleRepository.AddAsync(userRole);
             return userRole;    
+        }
+        public async Task<User> FindOrCreateUserForLoginWithGoogleAsync(Guid appId, string userRole, string firstname, string lastname, string fullname, string email)
+        {
+            var users =await _userRepository.FindAsync(a => a.Email == email || a.UserName == fullname);
+            if (users != null)
+            {
+                return users.FirstOrDefault();
+            }
+            var user = new User
+            {
+                Id = Guid.NewGuid().ToString(),
+                Email = email,
+                FirstName = firstname,
+                LastName = lastname,
+                UserName = fullname,
+                PhoneNumber = "",
+                PasswordHash = _passwordHasher.HashPassword(null,Guid.NewGuid().ToString()),
+                ApplicationId = appId
+            };
+
+
+            await _userRepository.AddAsync(user);
+
+            return user;
         }
         public async Task<User> AuthenticateUserAsync(Guid applicationId, string email, string password)
         {
