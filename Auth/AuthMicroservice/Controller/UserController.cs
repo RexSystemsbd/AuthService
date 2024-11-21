@@ -231,19 +231,10 @@ namespace AuthMicroservice.Controller
             const string tokenEndpoint = "https://oauth2.googleapis.com/token";
 
             // for live  --> redirect URI,clientId,clientSecret
-            var redirectUri = "http://localhost:4200/";
+            var redirectUri = request.redirectUrl;
             var clientId = "818198579489-3k300anefbk8sp8v0kvhougd1v7idpg4.apps.googleusercontent.com";
             var clientSecret = "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";
-            if (request.isLogin)
-            {
-                redirectUri += "login";
-
-            }
-            else
-            {
-                redirectUri += "register";
-
-            }
+          
             // Create the request body
             var requestBody = new FormUrlEncodedContent(new[]
             {
@@ -316,7 +307,7 @@ namespace AuthMicroservice.Controller
     public class GoogleWithLoginViewModel
     {
         public string code { get; set; }
-        public bool isLogin{ get; set; }
+        public string redirectUrl{ get; set; }
         public string appKey { get; set; }
         public string role { get; set; }
     }
