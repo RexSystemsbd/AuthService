@@ -52,32 +52,6 @@ namespace AuthMicroservice.Controller
 
             if (user!=null&&userRole!=null)
             {
-                //var key = Encoding.ASCII.GetBytes(app.AppSecret);
-                //var tokenHandler = new JwtSecurityTokenHandler();
-                //var tokenDescriptor = new SecurityTokenDescriptor
-                //{
-                //    Subject = new ClaimsIdentity(new[]
-                //    {
-                //    new Claim(ClaimTypes.Name, model.Username)
-                //}),
-                //    Claims = new Dictionary<string, object>(),
-                //    Expires = DateTime.UtcNow.AddHours(12),
-                //    Audience = "your-audience-here",  // Set your audience here
-                //    Issuer = "your-issuer-here",  // Set your issuer here
-                //    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-                //};
-
-                //tokenDescriptor.Claims.Add("Id", user.Id);
-                //tokenDescriptor.Claims.Add("ApplicationId", user.ApplicationId);
-                //tokenDescriptor.Claims.Add("UserName", user.UserName);
-                //tokenDescriptor.Claims.Add("FirstName", user.FirstName);
-                //tokenDescriptor.Claims.Add("LastName", user.LastName);
-                //tokenDescriptor.Claims.Add("Email", user.Email);
-                //tokenDescriptor.Claims.Add("PhoneNumber", user.PhoneNumber);
-
-                //var token = tokenHandler.CreateToken(tokenDescriptor);
-                //var tokenString = tokenHandler.WriteToken(token);
-
                 var tokenString=_userService.GetToken(user,app.AppSecret,model.Username);
                 var role = userRole.RoleName;
                 //userName may be Email or MobileNumber or FistName&LastName

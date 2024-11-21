@@ -101,11 +101,22 @@
         "Name": "AppKey",
         "Type": "System.String",
         "IsRequired": false
-      },
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuthMicroservice.Controller.UserController",
+    "Method": "LoginWithGoogle",
+    "RelativePath": "User/LoginWithGoogle",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
       {
-        "Name": "AppSecret",
-        "Type": "System.String",
-        "IsRequired": false
+        "Name": "request",
+        "Type": "AuthMicroservice.Controller.GoogleWithLoginViewModel",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -125,11 +136,6 @@
       },
       {
         "Name": "AppKey",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "AppSecret",
         "Type": "System.String",
         "IsRequired": false
       }

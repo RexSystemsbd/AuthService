@@ -71,7 +71,7 @@ namespace AuthMicroservice.Service
 
         public async Task<UserRole> GetUserRoleAsync(string username,Guid appId)
         {
-           var user=await _userRoleRepository.FindAsync(a=>a.UserName==username||a.ApplicationId==appId);
+           var user=await _userRoleRepository.FindAsync(a=>a.UserName==username&&a.ApplicationId==appId);
             if (user==null)
             {
                 throw new Exception("No such userRole exist");

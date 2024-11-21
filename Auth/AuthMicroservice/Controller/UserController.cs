@@ -22,14 +22,15 @@ namespace AuthMicroservice.Controller
         private readonly IApplicationService _applicationService;
         private readonly ILogger _logger;
         private readonly HttpClient _httpClient;
-
-        public UserController(IUserService userService, IApplicationService applicationService, HttpClient httpClient, ILogger<UserController> logger)
+        private readonly ILoginService loginService;
+        public UserController(IUserService userService, IApplicationService applicationService, HttpClient httpClient, ILogger<UserController> logger, ILoginService loginService)
         {
+            this.loginService = loginService;
             _userService = userService;
             _applicationService = applicationService;
             _httpClient = httpClient;
             _logger = logger;
-
+            this.loginService = loginService;   
         }
         [HttpPost("GoogleLogin")]
         public async Task<IActionResult> GoogleLogin([FromBody] GoogleLoginViewModel request)
@@ -114,8 +115,7 @@ namespace AuthMicroservice.Controller
 
         [HttpPost("register")]
         public async Task<IActionResult> RegisterUser([FromBody] RegisterUserRequest request,
-       [FromHeader(Name = "AppKey")] string appKey,
-       [FromHeader(Name = "AppSecret")] string appSecret)
+       [FromHeader(Name = "AppKey")] string appKey)
         {
             if (!ModelState.IsValid)
             {
@@ -125,7 +125,7 @@ namespace AuthMicroservice.Controller
             var applications = await _applicationService.GetApplicationsAsync(appKey);
             var app = applications.FirstOrDefault(a => a.AppKey == appKey);
 
-            if (app == null || !await _applicationService.ValidateAppKeyAndSecretAsync(appKey, appSecret))
+            if (app == null || !await _applicationService.ValidateAppKeyAndSecretAsync(appKey, app.AppSecret))
             {
                 return Unauthorized();
             }
@@ -144,14 +144,15 @@ namespace AuthMicroservice.Controller
 
                 var userExist = await _userService.ExistedUserAsync(email,mobileNumber);
 
-                if(userExist!=null) { throw new Exception("This user already exist"); }
-
-                var user = await _userService.RegisterUserAsync(app.Id, request);
-               
-                var userRole = await _userService.RegisterUserRoleAsync(app.Id,app.Name, request.UserRole,name);
+                if(userExist==null) { userExist = await _userService.RegisterUserAsync(app.Id, request); }
+                var userRole = await loginService.GetUserRoleAsync(email, app.Id);
+                if (userRole == null)
+                {
+                    userRole = await _userService.RegisterUserRoleAsync(app.Id, app.Name, request.UserRole, email);
+                }
                 var userWithUserRole = new
                 {
-                    user=user,
+                    user= userExist,
                     role=userRole,  
                 };
                 return Ok(userWithUserRole);
@@ -166,26 +167,23 @@ namespace AuthMicroservice.Controller
 
         [HttpPost("login")]
         public async Task<IActionResult> LoginUser([FromBody] LoginRequest request,
-    [FromHeader(Name = "AppKey")] string appKey,
-    [FromHeader(Name = "AppSecret")] string appSecret)
+    [FromHeader(Name = "AppKey")] string appKey)
         {
             // Fetch applications asynchronously
             var applications = await _applicationService.GetApplicationsAsync(appKey);
             var app = applications.FirstOrDefault(a => a.AppKey == appKey);
 
             // Validate the application key and secret asynchronously
-            if (app == null || !await _applicationService.ValidateAppKeyAndSecretAsync(appKey, appSecret))
+            if (app == null || !await _applicationService.ValidateAppKeyAndSecretAsync(appKey, app.AppSecret))
             {
                 return Unauthorized();
             }
 
             // Authenticate the user asynchronously
             var user = await _userService.AuthenticateUserAsync(app.Id, request.Email, request.Password);
+         
             if (user != null)
             {
-                // Generate JWT token here (assuming you have a method for this)
-                // var token = GenerateJwtToken(user);
-
                 return Ok(user);
             }
 
@@ -217,8 +215,102 @@ namespace AuthMicroservice.Controller
             return BadRequest("Password reset failed.");
         }
 
-    }
 
+        [HttpPost("LoginWithGoogle")]
+        public async Task<IActionResult> LoginWithGoogle([FromBody] GoogleWithLoginViewModel request)
+        {
+            // Fetch applications asynchronously
+            var applications = await _applicationService.GetApplicationsAsync(request.appKey);
+            var app = applications.FirstOrDefault(a => a.AppKey == request.appKey);
+
+            // Validate the application key and secret asynchronously
+            if (app == null || !await _applicationService.ValidateAppKeyAndSecretAsync(request. appKey, app.AppSecret))
+            {
+                return Unauthorized();
+            }
+            const string tokenEndpoint = "https://oauth2.googleapis.com/token";
+
+            // for live  --> redirect URI,clientId,clientSecret
+            var redirectUri = request.redirectUrl;
+            var clientId = "818198579489-3k300anefbk8sp8v0kvhougd1v7idpg4.apps.googleusercontent.com";
+            var clientSecret = "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";
+          
+            // Create the request body
+            var requestBody = new FormUrlEncodedContent(new[]
+            {
+              new KeyValuePair<string, string>("code", request.code),
+              new KeyValuePair<string, string>("client_id", clientId),
+              new KeyValuePair<string, string>("client_secret", clientSecret),
+              new KeyValuePair<string, string>("redirect_uri", redirectUri),
+              new KeyValuePair<string, string>("grant_type", "authorization_code")
+              });
+
+
+            //Verify the Code && get access token,id token,refresh token.
+            var response = await _httpClient.PostAsync(tokenEndpoint, requestBody);
+
+            if (response.IsSuccessStatusCode)
+            {
+                try
+                {
+                    var jsonResponse = await response.Content.ReadAsStringAsync();
+                    var tokenResponse = JsonConvert.DeserializeObject<GoogleTokenResponse>(jsonResponse);
+
+                    // Verify the Google access token
+                    var payload = await GoogleJsonWebSignature.ValidateAsync(tokenResponse.IdToken);
+
+                    // Retrieve user details from the Google payload
+                    var email = payload.Email;
+                    var name = payload.Name;
+                    //var picture = payload.Picture;
+                    //var address = payload.Locale;
+                    var fullName = payload.Name.Trim(); // Trims any leading or trailing spaces
+                    var nameParts = fullName.Split(' '); // Splits the name by space
+                    string firstName = nameParts[0]; // First name is the first part
+                    string lastName = nameParts.Length > 1 ? nameParts[^1] : ""; // Last name is the last part if available
+                    //create or find user if exist??
+                    var user = await _userService.FindOrCreateUserForLoginWithGoogleAsync(app.Id,request.role,firstName,lastName,fullName,email);
+                    //If any userRole exist?
+                    var userRole = await loginService.GetUserRoleAsync(email, app.Id);
+                    if (userRole == null)
+                    {
+                        userRole = await _userService.RegisterUserRoleAsync(app.Id, app.Name, request.role, email);
+                    }
+                    if (user != null && userRole != null)
+                    {
+                        var tokenString = _userService.GetToken(user, app.AppSecret, email);
+                        var role = userRole.RoleName;
+                        //userName may be Email or MobileNumber or FistName&LastName
+                        return Ok(new
+                        {
+                            UserId = user.Id,
+                            FirstName = user.FirstName,
+                            LastName = user.LastName,
+                            Email = user.Email,
+                            Role = role,
+                            MobileNumber = user.PhoneNumber,
+                            Token = tokenString
+                        });
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+                }
+
+            return Unauthorized();
+          
+        }
+
+    }
+    public class GoogleWithLoginViewModel
+    {
+        public string code { get; set; }
+        public string redirectUrl{ get; set; }
+        public string appKey { get; set; }
+        public string role { get; set; }
+    }
     public class RegisterUserRequest
     {
         [Required]
