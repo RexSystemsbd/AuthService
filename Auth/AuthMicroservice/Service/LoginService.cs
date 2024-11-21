@@ -6,7 +6,7 @@ namespace AuthMicroservice.Service
 {
     public interface ILoginService
     {
-        Task<User> AuthenticateLoginUserAsync(string username, string password);
+        Task<User> AuthenticateLoginUserAsync(string username, string password, Guid appId);
         Task<UserRole> GetUserRoleAsync(string name, Guid appId);
     }
     public class LoginService : ILoginService
@@ -20,22 +20,22 @@ namespace AuthMicroservice.Service
             _userRepository = userRepository;
             _userRoleRepository= userRoleRepository;    
         }
-        public async Task<User> AuthenticateLoginUserAsync(string identifier, string password)
+        public async Task<User> AuthenticateLoginUserAsync(string identifier, string password,Guid appId)
         {
             User user = null;
 
             // First, try to determine the type of identifier (email, phone number, username)
             if (IsValidEmail(identifier))
             {
-                user = (await _userRepository.FindAsync(u => u.Email == identifier)).FirstOrDefault();
+                user = (await _userRepository.FindAsync(u => u.Email == identifier&&u.ApplicationId==appId)).FirstOrDefault();
             }
             else if (IsValidPhoneNumber(identifier))
             {
-                user = (await _userRepository.FindAsync(u => u.PhoneNumber == identifier)).FirstOrDefault();
+                user = (await _userRepository.FindAsync(u => u.PhoneNumber == identifier && u.ApplicationId == appId)).FirstOrDefault();
             }
             else
             {
-                user = (await _userRepository.FindAsync(u => u.UserName == identifier)).FirstOrDefault();
+                user = (await _userRepository.FindAsync(u => u.UserName == identifier && u.ApplicationId == appId)).FirstOrDefault();
             }
 
             // Verify the password

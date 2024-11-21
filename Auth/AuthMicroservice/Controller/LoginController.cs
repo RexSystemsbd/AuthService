@@ -46,7 +46,7 @@ namespace AuthMicroservice.Controller
             //}
 
             // Replace this with your user authentication logic
-            var user=await _loginService.AuthenticateLoginUserAsync(model.Username, model.Password);
+            var user=await _loginService.AuthenticateLoginUserAsync(model.Username, model.Password,app.Id);
             //If any userRole exist?
             var userRole = await _loginService.GetUserRoleAsync(model.Username,app.Id);
 
