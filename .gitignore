@@ -78,3 +78,8 @@ $RECYCLE.BIN/
 /.vs/IDoctorBackend/v17/.suo
 /Auth/AuthMicroservice/bin/Debug/net8.0/AuthMicroservice.dll
 /Auth/.vs/AuthMicroservice/DesignTimeBuild/.dtbcache.v2
+/Auth/AuthMicroservice/obj/Debug/net8.0/apphost.exe
+/Auth/AuthMicroservice/obj/Debug/net8.0/AuthMicroservice.assets.cache
+/Auth/AuthMicroservice/obj/Debug/net8.0/AuthMicroservice.GeneratedMSBuildEditorConfig.editorconfig
+/Auth/.vs/AuthMicroservice/v17/.suo
+/Auth/.vs/AuthMicroservice/v17/DocumentLayout.json
