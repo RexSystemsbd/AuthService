@@ -232,7 +232,7 @@ namespace AuthMicroservice.Controller
 
             // for live  --> redirect URI,clientId,clientSecret
             var redirectUri = request.redirectUrl;
-            
+          
             // Create the request body
             var requestBody = new FormUrlEncodedContent(new[]
             {
