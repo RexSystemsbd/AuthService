@@ -17,7 +17,7 @@ namespace AuthMicroservice.Service
         Task<UserRole> RegisterUserRoleAsync(Guid AppId, string appName, string role, string n);
         Task<User> AuthenticateUserAsync(Guid applicationId, string email, string password);
         Task<bool> ResetPasswordAsync(Guid applicationId, string email, string newPassword);
-        Task<User> ExistedUserAsync(string email,string mobileNumber);
+        Task<User> ExistedUserAsync(string email,string mobileNumber,Guid appId);
         string GetToken(User user, string AppSecret, string Username);
         Task<User> FindOrCreateUserAsync(string email, string mobile, string username,Guid appId);
         Task<User> FindOrCreateUserForLoginWithGoogleAsync(Guid appId, string userRole, string firstname, string lastname,string fullname, string email);
@@ -36,9 +36,9 @@ namespace AuthMicroservice.Service
             _userRoleRepository = userRoleRepository;
             _config = config;
         }
-        public async Task<User> ExistedUserAsync(string email,string mobile)
+        public async Task<User> ExistedUserAsync(string email,string mobile, Guid appId )
         {
-            var user=await _userRepository.FindAsync(a=>a.Email== email&&email!="" || a.PhoneNumber== mobile&&mobile!="");
+            var user=await _userRepository.FindAsync(a=>a.ApplicationId==appId&&(a.Email== email&&email!="" || a.PhoneNumber== mobile&&mobile!=""));
            
             return user.FirstOrDefault();
 
@@ -119,7 +119,7 @@ namespace AuthMicroservice.Service
         }
         public async Task<User> FindOrCreateUserAsync(string email, string mobile, string username, Guid appId)
         {
-            var userExisted = await ExistedUserAsync(email,mobile);
+            var userExisted = await ExistedUserAsync(email,mobile,appId);
             if (userExisted != null)
             {
                 return userExisted;

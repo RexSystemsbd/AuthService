@@ -142,7 +142,7 @@ namespace AuthMicroservice.Controller
 
                 var name=email==null?mobileNumber:email; 
 
-                var userExist = await _userService.ExistedUserAsync(email,mobileNumber);
+                var userExist = await _userService.ExistedUserAsync(email,mobileNumber,app.Id);
 
                 if(userExist==null) { userExist = await _userService.RegisterUserAsync(app.Id, request); }
                 var userRole = await loginService.GetUserRoleAsync(email, app.Id);
@@ -232,15 +232,13 @@ namespace AuthMicroservice.Controller
 
             // for live  --> redirect URI,clientId,clientSecret
             var redirectUri = request.redirectUrl;
-            var clientId = "818198579489-3k300anefbk8sp8v0kvhougd1v7idpg4.apps.googleusercontent.com";
-            var clientSecret = "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";
-          
+            
             // Create the request body
             var requestBody = new FormUrlEncodedContent(new[]
             {
               new KeyValuePair<string, string>("code", request.code),
-              new KeyValuePair<string, string>("client_id", clientId),
-              new KeyValuePair<string, string>("client_secret", clientSecret),
+              new KeyValuePair<string, string>("client_id", request.clientId),
+              new KeyValuePair<string, string>("client_secret", request.clientSecret),
               new KeyValuePair<string, string>("redirect_uri", redirectUri),
               new KeyValuePair<string, string>("grant_type", "authorization_code")
               });
@@ -309,6 +307,8 @@ namespace AuthMicroservice.Controller
         public string code { get; set; }
         public string redirectUrl{ get; set; }
         public string appKey { get; set; }
+        public string clientId { get; set; }
+        public string clientSecret { get; set; }    
         public string role { get; set; }
     }
     public class RegisterUserRequest
