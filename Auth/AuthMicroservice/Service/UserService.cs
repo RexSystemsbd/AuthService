@@ -83,7 +83,7 @@ namespace AuthMicroservice.Service
         }
         public async Task<User> FindOrCreateUserForLoginWithGoogleAsync(Guid appId, string userRole, string firstname, string lastname, string fullname, string email)
         {
-            var users =await _userRepository.FindAsync(a => a.Email == email || a.UserName == fullname);
+            var users =await _userRepository.FindAsync(a =>( a.Email == email || a.UserName == fullname)&&a.ApplicationId==appId);
             if (users != null)
             {
                 return users.FirstOrDefault();
