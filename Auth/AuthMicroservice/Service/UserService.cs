@@ -7,6 +7,7 @@ using Org.BouncyCastle.Ocsp;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography.Xml;
 using System.Text;
 using static System.Net.Mime.MediaTypeNames;
 namespace AuthMicroservice.Service
@@ -19,10 +20,11 @@ namespace AuthMicroservice.Service
         Task<bool> ResetPasswordAsync(Guid applicationId, string email, string newPassword);
         Task<User> ExistedUserAsync(string email,string mobileNumber,Guid appId);
         string GetToken(User user, string AppSecret, string Username);
-        Task<User> FindOrCreateUserAsync(string email, string mobile, string username,Guid appId);
+        Task<User> FindOrCreateUserAsync(string email, string mobile, string username, Guid appId);
         Task<User> FindOrCreateUserForLoginWithGoogleAsync(Guid appId, string userRole, string firstname, string lastname,string fullname, string email);
+        Task<User> FindOrCreateUserForFacebookAsync(string email,string username, Guid appId);
     }
-    
+
     public class UserService : IUserService
     {
         private readonly List<User> _users = new();
@@ -43,6 +45,28 @@ namespace AuthMicroservice.Service
             return user.FirstOrDefault();
 
         }
+        public async Task<User> FindOrCreateUserForFacebookAsync(string email ,string username, Guid appId)
+        {
+           var users = await _userRepository.FindAsync(a => a.UserName == username && a.ApplicationId == appId);
+            if(users.Any())
+            {
+                return users.FirstOrDefault();
+            }
+            var user = new User()
+            {
+                Id = Guid.NewGuid().ToString(),
+                Email = email ,
+                FirstName = "",
+                LastName = "",
+                UserName = username,
+                PhoneNumber = "",
+                PasswordHash = _passwordHasher.HashPassword(null, Guid.NewGuid().ToString()),
+                ApplicationId = appId
+            };
+            await _userRepository.AddAsync(user);
+            return user;
+        }
+
         public async Task<User> RegisterUserAsync(Guid applicationId, RegisterUserRequest req)
         {
 
@@ -84,7 +108,7 @@ namespace AuthMicroservice.Service
         public async Task<User> FindOrCreateUserForLoginWithGoogleAsync(Guid appId, string userRole, string firstname, string lastname, string fullname, string email)
         {
             var users =await _userRepository.FindAsync(a =>( a.Email == email || a.UserName == fullname)&&a.ApplicationId==appId);
-            if (users != null)
+            if (users.Any())
             {
                 return users.FirstOrDefault();
             }
@@ -96,7 +120,7 @@ namespace AuthMicroservice.Service
                 LastName = lastname,
                 UserName = fullname,
                 PhoneNumber = "",
-                PasswordHash = _passwordHasher.HashPassword(null,Guid.NewGuid().ToString()),
+                PasswordHash = _passwordHasher.HashPassword(null, Guid.NewGuid().ToString()),
                 ApplicationId = appId
             };
 
@@ -157,7 +181,7 @@ namespace AuthMicroservice.Service
         }
         public string GetToken(User user,string AppSecret,string Username)
         {
-           
+
 
             var key = Encoding.ASCII.GetBytes(AppSecret);
             var tokenHandler = new JwtSecurityTokenHandler();

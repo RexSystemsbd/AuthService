@@ -70,6 +70,22 @@
   },
   {
     "ContainingType": "AuthMicroservice.Controller.UserController",
+    "Method": "FacebookLogin",
+    "RelativePath": "User/FacebookLogin",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "AuthMicroservice.Controller.LoginWithFacebookViewModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuthMicroservice.Controller.UserController",
     "Method": "GoogleLogin",
     "RelativePath": "User/GoogleLogin",
     "HttpMethod": "POST",
