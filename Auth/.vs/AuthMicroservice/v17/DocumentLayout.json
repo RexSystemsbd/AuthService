@@ -3,6 +3,14 @@
   "WorkspaceRootPath": "C:\\Users\\HP\\source\\repos\\AuthService\\Auth\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|c:\\users\\hp\\source\\repos\\authservice\\auth\\authmicroservice\\controller\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|solutionrelative:authmicroservice\\controller\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|c:\\users\\hp\\source\\repos\\authservice\\auth\\authmicroservice\\service\\loginservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|solutionrelative:authmicroservice\\service\\loginservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|c:\\users\\hp\\source\\repos\\authservice\\auth\\authmicroservice\\controller\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|solutionrelative:authmicroservice\\controller\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -11,8 +19,8 @@
       "RelativeMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|solutionrelative:authmicroservice\\service\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|c:\\users\\hp\\source\\repos\\authservice\\auth\\authmicroservice\\controller\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|solutionrelative:authmicroservice\\controller\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|c:\\users\\hp\\source\\repos\\authservice\\auth\\authmicroservice\\model\\userrole.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|solutionrelative:authmicroservice\\model\\userrole.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|c:\\users\\hp\\source\\repos\\authservice\\auth\\authmicroservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -21,10 +29,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|c:\\users\\hp\\source\\repos\\authservice\\auth\\authmicroservice\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|solutionrelative:authmicroservice\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|c:\\users\\hp\\source\\repos\\authservice\\auth\\authmicroservice\\service\\loginservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|solutionrelative:authmicroservice\\service\\loginservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|c:\\users\\hp\\source\\repos\\authservice\\auth\\authmicroservice\\model\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -42,8 +46,12 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 13,
+          "SelectedChildIndex": 11,
           "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{eefa5220-e298-11d0-8f78-00a0c9110057}"
@@ -70,32 +78,46 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
+              "Title": "UserRole.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\source\\repos\\AuthService\\Auth\\AuthMicroservice\\Model\\UserRole.cs",
+              "RelativeDocumentMoniker": "AuthMicroservice\\Model\\UserRole.cs",
+              "ToolTip": "C:\\Users\\HP\\source\\repos\\AuthService\\Auth\\AuthMicroservice\\Model\\UserRole.cs",
+              "RelativeToolTip": "AuthMicroservice\\Model\\UserRole.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-18T13:42:03.977Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "UserService.cs",
               "DocumentMoniker": "C:\\Users\\HP\\source\\repos\\AuthService\\Auth\\AuthMicroservice\\Service\\UserService.cs",
               "RelativeDocumentMoniker": "AuthMicroservice\\Service\\UserService.cs",
               "ToolTip": "C:\\Users\\HP\\source\\repos\\AuthService\\Auth\\AuthMicroservice\\Service\\UserService.cs",
               "RelativeToolTip": "AuthMicroservice\\Service\\UserService.cs",
-              "ViewState": "AgIAACIAAAAAAAAAAAAmwEMAAAAIAAAAAAAAAA==",
+              "ViewState": "AgIAABgAAAAAAAAAAAA9wCgAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-10T16:33:48.44Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 1,
               "Title": "LoginService.cs",
               "DocumentMoniker": "C:\\Users\\HP\\source\\repos\\AuthService\\Auth\\AuthMicroservice\\Service\\LoginService.cs",
               "RelativeDocumentMoniker": "AuthMicroservice\\Service\\LoginService.cs",
               "ToolTip": "C:\\Users\\HP\\source\\repos\\AuthService\\Auth\\AuthMicroservice\\Service\\LoginService.cs",
               "RelativeToolTip": "AuthMicroservice\\Service\\LoginService.cs",
-              "ViewState": "AgIAAA8AAACAZmZmZmYiwC0AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-10T16:18:09.872Z"
+              "WhenOpened": "2024-12-10T16:18:09.872Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\HP\\source\\repos\\AuthService\\Auth\\AuthMicroservice\\appsettings.json",
               "RelativeDocumentMoniker": "AuthMicroservice\\appsettings.json",
@@ -107,19 +129,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "LoginController.cs",
               "DocumentMoniker": "C:\\Users\\HP\\source\\repos\\AuthService\\Auth\\AuthMicroservice\\Controller\\LoginController.cs",
               "RelativeDocumentMoniker": "AuthMicroservice\\Controller\\LoginController.cs",
               "ToolTip": "C:\\Users\\HP\\source\\repos\\AuthService\\Auth\\AuthMicroservice\\Controller\\LoginController.cs",
               "RelativeToolTip": "AuthMicroservice\\Controller\\LoginController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAbAAAAAAAAAA==",
+              "ViewState": "AgIAACYAAAAAAAAAAAAnwDkAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-10T15:45:46.139Z"
+              "WhenOpened": "2024-12-10T15:45:46.139Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "Application.cs",
               "DocumentMoniker": "C:\\Users\\HP\\source\\repos\\AuthService\\Auth\\AuthMicroservice\\Model\\Application.cs",
               "RelativeDocumentMoniker": "AuthMicroservice\\Model\\Application.cs",
@@ -131,7 +154,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "User.cs",
               "DocumentMoniker": "C:\\Users\\HP\\source\\repos\\AuthService\\Auth\\AuthMicroservice\\Model\\User.cs",
               "RelativeDocumentMoniker": "AuthMicroservice\\Model\\User.cs",
@@ -143,7 +166,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\HP\\source\\repos\\AuthService\\Auth\\AuthMicroservice\\Program.cs",
               "RelativeDocumentMoniker": "AuthMicroservice\\Program.cs",
@@ -155,13 +178,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "UserController.cs",
               "DocumentMoniker": "C:\\Users\\HP\\source\\repos\\AuthService\\Auth\\AuthMicroservice\\Controller\\UserController.cs",
               "RelativeDocumentMoniker": "AuthMicroservice\\Controller\\UserController.cs",
               "ToolTip": "C:\\Users\\HP\\source\\repos\\AuthService\\Auth\\AuthMicroservice\\Controller\\UserController.cs",
               "RelativeToolTip": "AuthMicroservice\\Controller\\UserController.cs",
-              "ViewState": "AgIAAHsAAADAzczMzMwSwJcAAAAMAAAAAAAAAA==",
+              "ViewState": "AgIAAMoAAAAAAAAAAAAmwOMAAABCAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-25T13:44:36.152Z",
               "EditorCaption": ""

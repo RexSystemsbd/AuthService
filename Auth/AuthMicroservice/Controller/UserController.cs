@@ -219,9 +219,15 @@ namespace AuthMicroservice.Controller
                 var name = email == null ? mobileNumber : email;
 
                 var userExist = await _userService.ExistedUserAsync(email, mobileNumber, app.Id);
+                var userRole = new UserRole();
+                if (userExist == null) { userExist = await _userService.RegisterUserAsync(app.Id, request);
+                    userRole = await loginService.GetUserRoleAsync(email, mobileNumber, app.Id);
+                }
+                else
+                {
+                    userRole = await loginService.GetUserRoleAsync(userExist.Email, userExist.PhoneNumber, app.Id);
 
-                if (userExist == null) { userExist = await _userService.RegisterUserAsync(app.Id, request); }
-                var userRole = await loginService.GetUserRoleAsync(email, app.Id);
+                }
                 if (userRole == null)
                 {
                     userRole = await _userService.RegisterUserRoleAsync(app.Id, app.Name, request.UserRole, email);
@@ -291,90 +297,7 @@ namespace AuthMicroservice.Controller
             return BadRequest("Password reset failed.");
         }
 
-        // [HttpPost("LoginWithGoogle")]
-        //public async Task<IActionResult> LoginWithGoogle([FromBody] GoogleWithLoginViewModel request)
-        //{
-        //    // Fetch applications asynchronously
-        //    var applications = await _applicationService.GetApplicationsAsync(request.appKey);
-        //    var app = applications.FirstOrDefault(a => a.AppKey == request.appKey);
-
-        //    // Validate the application key and secret asynchronously
-        //    if (app == null || !await _applicationService.ValidateAppKeyAndSecretAsync(request. appKey, app.AppSecret))
-        //    {
-        //        return Unauthorized();
-        //    }
-        //    const string tokenEndpoint = "https://oauth2.googleapis.com/token";
-
-        //    // for live  --> redirect URI,clientId,clientSecret
-        //    var redirectUri = request.redirectUrl;
-
-        //    // Create the request body
-        //    var requestBody = new FormUrlEncodedContent(new[]
-        //    {
-        //      new KeyValuePair<string, string>("code", request.code),
-        //      new KeyValuePair<string, string>("client_id", request.clientId),
-        //      new KeyValuePair<string, string>("client_secret", request.clientSecret),
-        //      new KeyValuePair<string, string>("redirect_uri", redirectUri),
-        //      new KeyValuePair<string, string>("grant_type", "authorization_code")
-        //      });
-
-
-        //    //Verify the Code && get access token,id token,refresh token.
-        //    var response = await _httpClient.PostAsync(tokenEndpoint, requestBody);
-
-        //    if (response.IsSuccessStatusCode)
-        //    {
-        //        try
-        //        {
-        //            var jsonResponse = await response.Content.ReadAsStringAsync();
-        //            var tokenResponse = JsonConvert.DeserializeObject<GoogleTokenResponse>(jsonResponse);
-
-        //            // Verify the Google access token
-        //            var payload = await GoogleJsonWebSignature.ValidateAsync(tokenResponse.IdToken);
-
-        //            // Retrieve user details from the Google payload
-        //            var email = payload.Email;
-        //            var name = payload.Name;
-        //            //var picture = payload.Picture;
-        //            //var address = payload.Locale;
-        //            var fullName = payload.Name.Trim(); // Trims any leading or trailing spaces
-        //            var nameParts = fullName.Split(' '); // Splits the name by space
-        //            string firstName = nameParts[0]; // First name is the first part
-        //            string lastName = nameParts.Length > 1 ? nameParts[^1] : ""; // Last name is the last part if available
-        //            //create or find user if exist??
-        //            var user = await _userService.FindOrCreateUserForLoginWithGoogleAsync(app.Id,request.role,firstName,lastName,fullName,email);
-        //            //If any userRole exist?
-        //            var userRole = await loginService.GetUserRoleAsync(email, app.Id);
-        //            if (userRole == null)
-        //            {
-        //                userRole = await _userService.RegisterUserRoleAsync(app.Id, app.Name, request.role, email);
-        //            }
-        //            if (user != null && userRole != null)
-        //            {
-        //                var tokenString = _userService.GetToken(user, app.AppSecret, email);
-        //                var role = userRole.RoleName;
-        //                //userName may be Email or MobileNumber or FistName&LastName
-        //                return Ok(new
-        //                {
-        //                    UserId = user.Id,
-        //                    FirstName = user.FirstName,
-        //                    LastName = user.LastName,
-        //                    Email = user.Email,
-        //                    Role = role,
-        //                    MobileNumber = user.PhoneNumber,
-        //                    Token = tokenString
-        //                });
-        //            }
-        //        }
-        //        catch (Exception ex)
-        //        {
-
-        //        }
-        //        }
-
-        //    return Unauthorized();
-
-        //}
+        
 
         [HttpPost("LoginWithGoogle")]
         public async Task<IActionResult> LoginWithGoogle([FromBody] GoogleWithLoginViewModel request)
@@ -453,7 +376,7 @@ namespace AuthMicroservice.Controller
                 }
 
                 // Retrieve or assign user role
-                var userRole = await loginService.GetUserRoleAsync(email, app.Id) ??
+                var userRole = await loginService.GetUserRoleAsync(email,user.PhoneNumber, app.Id) ??
                                await _userService.RegisterUserRoleAsync(app.Id, app.Name, request.role, email);
 
                 if (userRole == null)

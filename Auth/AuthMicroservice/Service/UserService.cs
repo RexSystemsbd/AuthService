@@ -38,7 +38,7 @@ namespace AuthMicroservice.Service
             _userRoleRepository = userRoleRepository;
             _config = config;
         }
-        public async Task<User> ExistedUserAsync(string email,string mobile, Guid appId )
+        public async Task<User>ExistedUserAsync(string email,string mobile, Guid appId )
         {
             var user=await _userRepository.FindAsync(a=>a.ApplicationId==appId&&(a.Email== email&&email!="" || a.PhoneNumber== mobile&&mobile!=""));
            

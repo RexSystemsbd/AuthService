@@ -7,7 +7,7 @@ namespace AuthMicroservice.Service
     public interface ILoginService
     {
         Task<User> AuthenticateLoginUserAsync(string username, string password, Guid appId);
-        Task<UserRole> GetUserRoleAsync(string name, Guid appId);
+        Task<UserRole> GetUserRoleAsync(string email, string phone, Guid appId);
     }
     public class LoginService : ILoginService
     {
@@ -69,9 +69,9 @@ namespace AuthMicroservice.Service
             return System.Text.RegularExpressions.Regex.IsMatch(number, @"^0\d{10}$");
         }
 
-        public async Task<UserRole> GetUserRoleAsync(string username,Guid appId)
+        public async Task<UserRole> GetUserRoleAsync(string email,string phone,Guid appId)
         {
-           var user=await _userRoleRepository.FindAsync(a=>a.UserName==username&&a.ApplicationId==appId);
+           var user=await _userRoleRepository.FindAsync(a=>((a.UserName== email)||(a.UserName==phone)) && a.ApplicationId==appId);
             if (user==null)
             {
                 throw new Exception("No such userRole exist");
