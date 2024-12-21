@@ -4,6 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using AuthMicroservice.Service;
+using AuthMicroservice.Model;
 namespace AuthMicroservice.Controller
 {
     [ApiController]
@@ -47,10 +48,15 @@ namespace AuthMicroservice.Controller
 
             // Replace this with your user authentication logic
             var user=await _loginService.AuthenticateLoginUserAsync(model.Username, model.Password,app.Id);
+            if (user == null)
+            {
+                return Unauthorized();
+            }
             //If any userRole exist?
-            var userRole = await _loginService.GetUserRoleAsync(model.Username,app.Id);
-
-            if (user!=null&&userRole!=null)
+           
+             var  userRole = await _loginService.GetUserRoleAsync(user.Email, user.PhoneNumber, app.Id);
+            
+            if (userRole!=null)
             {
                 var tokenString=_userService.GetToken(user,app.AppSecret,model.Username);
                 var role = userRole.RoleName;
