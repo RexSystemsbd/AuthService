@@ -192,7 +192,7 @@ namespace AuthMicroservice.Service
                     new Claim(ClaimTypes.Name,Username)
                 }),
                 Claims = new Dictionary<string, object>(),
-                Expires = DateTime.UtcNow.AddHours(12),
+                Expires = DateTime.UtcNow.AddHours(96),
                 Audience = "your-audience-here",  // Set your audience here
                 Issuer = "your-issuer-here",  // Set your issuer here
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
