@@ -21,6 +21,7 @@ namespace AuthMicroservice
             services.AddScoped<IApplicationService, ApplicationService>();
             services.AddHttpClient();
 
+            services.AddMemoryCache();
 
             return services;
         }

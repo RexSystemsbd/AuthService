@@ -7,24 +7,8 @@
       "RelativeMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|solutionrelative:authmicroservice\\controller\\smscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|c:\\users\\lenovo\\source\\repos\\authservice\\auth\\authmicroservice\\controller\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|solutionrelative:authmicroservice\\controller\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|c:\\users\\lenovo\\source\\repos\\authservice\\auth\\authmicroservice\\controller\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|solutionrelative:authmicroservice\\controller\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|c:\\users\\lenovo\\source\\repos\\authservice\\auth\\authmicroservice\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|solutionrelative:authmicroservice\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|c:\\users\\lenovo\\source\\repos\\authservice\\auth\\authmicroservice\\model\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|solutionrelative:authmicroservice\\model\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|c:\\users\\lenovo\\source\\repos\\authservice\\auth\\authmicroservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|solutionrelative:authmicroservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|c:\\users\\lenovo\\source\\repos\\authservice\\auth\\authmicroservice\\servicecollectionextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|solutionrelative:authmicroservice\\servicecollectionextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,7 +18,42 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 9,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ServiceCollectionExtensions.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\source\\repos\\AuthService\\Auth\\AuthMicroservice\\ServiceCollectionExtensions.cs",
+              "RelativeDocumentMoniker": "AuthMicroservice\\ServiceCollectionExtensions.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\source\\repos\\AuthService\\Auth\\AuthMicroservice\\ServiceCollectionExtensions.cs",
+              "RelativeToolTip": "AuthMicroservice\\ServiceCollectionExtensions.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAQwBYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-13T05:21:14.362Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "SmsController.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\source\\repos\\AuthService\\Auth\\AuthMicroservice\\Controller\\SmsController.cs",
+              "RelativeDocumentMoniker": "AuthMicroservice\\Controller\\SmsController.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\source\\repos\\AuthService\\Auth\\AuthMicroservice\\Controller\\SmsController.cs",
+              "RelativeToolTip": "AuthMicroservice\\Controller\\SmsController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-12T17:42:08.816Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedWidth": 88,
+          "SelectedChildIndex": -1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -67,85 +86,6 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "SmsController.cs",
-              "DocumentMoniker": "C:\\Users\\Lenovo\\source\\repos\\AuthService\\Auth\\AuthMicroservice\\Controller\\SmsController.cs",
-              "RelativeDocumentMoniker": "AuthMicroservice\\Controller\\SmsController.cs",
-              "ToolTip": "C:\\Users\\Lenovo\\source\\repos\\AuthService\\Auth\\AuthMicroservice\\Controller\\SmsController.cs",
-              "RelativeToolTip": "AuthMicroservice\\Controller\\SmsController.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAgwBEAAAALAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-12T17:42:08.816Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "UserController.cs",
-              "DocumentMoniker": "C:\\Users\\Lenovo\\source\\repos\\AuthService\\Auth\\AuthMicroservice\\Controller\\UserController.cs",
-              "RelativeDocumentMoniker": "AuthMicroservice\\Controller\\UserController.cs",
-              "ToolTip": "C:\\Users\\Lenovo\\source\\repos\\AuthService\\Auth\\AuthMicroservice\\Controller\\UserController.cs",
-              "RelativeToolTip": "AuthMicroservice\\Controller\\UserController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAsAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-08T08:26:37.321Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\Lenovo\\source\\repos\\AuthService\\Auth\\AuthMicroservice\\appsettings.json",
-              "RelativeDocumentMoniker": "AuthMicroservice\\appsettings.json",
-              "ToolTip": "C:\\Users\\Lenovo\\source\\repos\\AuthService\\Auth\\AuthMicroservice\\appsettings.json",
-              "RelativeToolTip": "AuthMicroservice\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAaAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-03-07T08:51:01.528Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "User.cs",
-              "DocumentMoniker": "C:\\Users\\Lenovo\\source\\repos\\AuthService\\Auth\\AuthMicroservice\\Model\\User.cs",
-              "RelativeDocumentMoniker": "AuthMicroservice\\Model\\User.cs",
-              "ToolTip": "C:\\Users\\Lenovo\\source\\repos\\AuthService\\Auth\\AuthMicroservice\\Model\\User.cs",
-              "RelativeToolTip": "AuthMicroservice\\Model\\User.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAuAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-01T06:28:04.246Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "LoginController.cs",
-              "DocumentMoniker": "C:\\Users\\Lenovo\\source\\repos\\AuthService\\Auth\\AuthMicroservice\\Controller\\LoginController.cs",
-              "RelativeDocumentMoniker": "AuthMicroservice\\Controller\\LoginController.cs",
-              "ToolTip": "C:\\Users\\Lenovo\\source\\repos\\AuthService\\Auth\\AuthMicroservice\\Controller\\LoginController.cs",
-              "RelativeToolTip": "AuthMicroservice\\Controller\\LoginController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAbAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-01T06:27:55.086Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\Lenovo\\source\\repos\\AuthService\\Auth\\AuthMicroservice\\Program.cs",
-              "RelativeDocumentMoniker": "AuthMicroservice\\Program.cs",
-              "ToolTip": "C:\\Users\\Lenovo\\source\\repos\\AuthService\\Auth\\AuthMicroservice\\Program.cs",
-              "RelativeToolTip": "AuthMicroservice\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAtAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-20T12:50:46.955Z"
             }
           ]
         },

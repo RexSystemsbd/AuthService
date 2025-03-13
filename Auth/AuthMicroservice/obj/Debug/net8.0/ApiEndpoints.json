@@ -69,6 +69,38 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "AuthMicroservice.Controller.SmsController",
+    "Method": "SendOtp",
+    "RelativePath": "Sms/sendotp",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "AuthMicroservice.Controller.SendOtpRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuthMicroservice.Controller.SmsController",
+    "Method": "VerifyOtp",
+    "RelativePath": "Sms/verifyotp",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "AuthMicroservice.Controller.VerifyOtpRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "AuthMicroservice.Controller.UserController",
     "Method": "FacebookLogin",
     "RelativePath": "User/FacebookLogin",
