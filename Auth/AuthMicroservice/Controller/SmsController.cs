@@ -52,7 +52,7 @@ namespace AuthMicroservice.Controller
                 stream.Close();
 
                 // Return the response from the SMS service
-                return Ok(new { message = "OTP sent successfully", result });
+                return Ok(new { message = "OTP sent successfully", result,otp });
             }
             catch (Exception ex)
             {
