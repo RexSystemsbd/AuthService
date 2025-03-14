@@ -12,7 +12,7 @@ namespace AuthMicroservice.Controller
     {
        // private readonly IMemoryCache _cache;
         private const string ApiKey = "zzTXYcqGRBpmZJCKKifM";  // Replace with your actual API key
-        private const string SenderId = "Random";  // Your Sender ID
+        private const string SenderId = "8809617624929";  // Your Sender ID
         private readonly IMemoryCache _cache;
 
         public SmsController(IMemoryCache memoryCache)
@@ -37,8 +37,8 @@ namespace AuthMicroservice.Controller
 
                 // Send the OTP via SMS
                 string message = Uri.EscapeDataString($"Your OTP is: {otp}");
-
-                string url = $"http://bulksmsbd.net/api/smsapi?api_key={ApiKey}&senderid={SenderId}&number={request.PhoneNumber}&message={message}";
+               //http://bulksmsbd.net/api/smsapi?api_key=zzTXYcqGRBpmZJCKKifM&type=text&number=Receiver&senderid=8809617624929&message=TestSMS
+                string url = $"http://bulksmsbd.net/api/smsapi?api_key={ApiKey}&type=text&number={request.PhoneNumber}&senderid={SenderId}&message={message}";
 
                 // Create the WebRequest to send the SMS
                 WebRequest requestSms = WebRequest.Create(url);
@@ -52,7 +52,7 @@ namespace AuthMicroservice.Controller
                 stream.Close();
 
                 // Return the response from the SMS service
-                return Ok(new { message = "OTP sent successfully", result,otp });
+                return Ok(new { message = "OTP sent successfully", result});
             }
             catch (Exception ex)
             {
