@@ -80,6 +80,11 @@
         "Name": "request",
         "Type": "AuthMicroservice.Controller.SendOtpRequest",
         "IsRequired": true
+      },
+      {
+        "Name": "AppKey",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
