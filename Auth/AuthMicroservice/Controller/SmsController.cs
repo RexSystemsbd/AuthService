@@ -37,28 +37,35 @@ namespace AuthMicroservice.Controller
             {
                 return BadRequest(ModelState);
             }
-            var applications = await _applicationService.GetApplicationsAsync(appKey);
-            var app = applications.FirstOrDefault(a => a.AppKey == appKey);
+           
+                var applications = await _applicationService.GetApplicationsAsync(appKey);
+                var app = applications.FirstOrDefault(a => a.AppKey == appKey);
 
-            if (app == null || !await _applicationService.ValidateAppKeyAndSecretAsync(appKey, app.AppSecret))
+                if (app == null || !await _applicationService.ValidateAppKeyAndSecretAsync(appKey, app.AppSecret))
+                {
+                    return Unauthorized();
+                }
+                var userExist = await _userService.ExistedUserAsync("", request.PhoneNumber, app.Id);
+            string token="";
+
+
+            if (request.Role == "login" || request.Role == "signup")
             {
-                return Unauthorized();
-            }
-            var userExist = await _userService.ExistedUserAsync("", request.PhoneNumber, app.Id);
-            if (userExist == null)
-            {
-                return Ok(new { message = "Please register the application first"});
+                if (userExist == null)
+                {
+                    return Ok(new { message = "Please register the application first" });
+                }
+                token = _userService.GetToken(userExist, app.AppSecret, request.PhoneNumber);
+
             }
             //If any userRole exist?
 
             //var userRole = await _loginService.GetUserRoleAsync(userExist.Email, userExist.PhoneNumber, app.Id);
 
-           
-             var tokenString = _userService.GetToken(userExist, app.AppSecret, request.PhoneNumber);
-           
-              
-              
-            
+
+
+
+
             try
             {
                 // Generate a random OTP
@@ -90,7 +97,15 @@ namespace AuthMicroservice.Controller
                 stream.Close();
 
                 // Return the response from the SMS service
-                return Ok(new { message = "OTP sent successfully", result,tokenString});
+                if (request.Role == "login" || request.Role == "signup")
+                {
+                    return Ok(new { message = "OTP sent successfully", result, token, fullname=userExist.FirstName });
+                }
+                else
+                {
+                    return Ok(new { message = "OTP sent successfully", result });
+
+                }
             }
             catch (Exception ex)
             {
@@ -133,6 +148,7 @@ namespace AuthMicroservice.Controller
     public class SendOtpRequest
     {
         public string PhoneNumber { get; set; }
+        public string Role {  get; set; }   
     }
 
     // DTO for verifying OTP request
