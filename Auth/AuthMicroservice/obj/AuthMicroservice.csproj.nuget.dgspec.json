@@ -1,15 +1,15 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Lenovo\\Source\\Repos\\AuthService\\Auth\\AuthMicroservice\\AuthMicroservice.csproj": {}
+    "C:\\Users\\Lenovo\\source\\repos\\AuthService\\Auth\\AuthMicroservice\\AuthMicroservice.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Lenovo\\Source\\Repos\\AuthService\\Auth\\AuthMicroservice\\AuthMicroservice.csproj": {
+    "C:\\Users\\Lenovo\\source\\repos\\AuthService\\Auth\\AuthMicroservice\\AuthMicroservice.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Lenovo\\Source\\Repos\\AuthService\\Auth\\AuthMicroservice\\AuthMicroservice.csproj",
+        "projectUniqueName": "C:\\Users\\Lenovo\\source\\repos\\AuthService\\Auth\\AuthMicroservice\\AuthMicroservice.csproj",
         "projectName": "AuthMicroservice",
-        "projectPath": "C:\\Users\\Lenovo\\Source\\Repos\\AuthService\\Auth\\AuthMicroservice\\AuthMicroservice.csproj",
+        "projectPath": "C:\\Users\\Lenovo\\source\\repos\\AuthService\\Auth\\AuthMicroservice\\AuthMicroservice.csproj",
         "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\Lenovo\\Source\\Repos\\AuthService\\Auth\\AuthMicroservice\\obj\\",
         "projectStyle": "PackageReference",
