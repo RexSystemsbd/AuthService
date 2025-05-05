@@ -219,6 +219,14 @@ namespace AuthMicroservice.Controller
                 var name = email == null ? mobileNumber : email;
 
                 var userExist = await _userService.ExistedUserAsync(email, mobileNumber, app.Id);
+                if (userExist != null)
+                {
+                    return Ok(new
+                    {
+                        message = "Already existed such user",
+                        userExist
+                    });
+                }
                 var userRole = new UserRole();
                 if (userExist == null) { userExist = await _userService.RegisterUserAsync(app.Id, request);
                     userRole = await loginService.GetUserRoleAsync(email, mobileNumber, app.Id);
@@ -234,6 +242,7 @@ namespace AuthMicroservice.Controller
                 }
                 var userWithUserRole = new
                 {
+                    message="User is added successfully",
                     user = userExist,
                     role = userRole,
                 };
