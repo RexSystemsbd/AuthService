@@ -8,6 +8,7 @@ namespace AuthMicroservice.Service
     {
         Task<User> AuthenticateLoginUserAsync(string username, string password, Guid appId);
         Task<UserRole> GetUserRoleAsync(string email, string phone, Guid appId);
+        
     }
     public class LoginService : ILoginService
     {
@@ -20,6 +21,8 @@ namespace AuthMicroservice.Service
             _userRepository = userRepository;
             _userRoleRepository= userRoleRepository;    
         }
+     
+
         public async Task<User> AuthenticateLoginUserAsync(string identifier, string password,Guid appId)
         {
             User user = null;

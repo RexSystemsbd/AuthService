@@ -107,6 +107,27 @@
   },
   {
     "ContainingType": "AuthMicroservice.Controller.UserController",
+    "Method": "DeleteUser",
+    "RelativePath": "User/delete",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "AuthMicroservice.Controller.LoginModel",
+        "IsRequired": true
+      },
+      {
+        "Name": "AppKey",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuthMicroservice.Controller.UserController",
     "Method": "FacebookLogin",
     "RelativePath": "User/FacebookLogin",
     "HttpMethod": "POST",

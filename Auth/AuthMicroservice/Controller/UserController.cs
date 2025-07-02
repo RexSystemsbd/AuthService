@@ -219,7 +219,7 @@ namespace AuthMicroservice.Controller
                 var name = email == null ? mobileNumber : email;
 
                 var userExist = await _userService.ExistedUserAsync(email, mobileNumber, app.Id);
-                if (userExist != null)
+                if (userExist != null&&userExist.Status?.ToLower()=="active"||userExist.Status==null)
                 {
                     return Ok(new
                     {
@@ -227,14 +227,45 @@ namespace AuthMicroservice.Controller
                         userExist
                     });
                 }
+               
                 var userRole = new UserRole();
                 if (userExist == null) { userExist = await _userService.RegisterUserAsync(app.Id, request);
                     userRole = await loginService.GetUserRoleAsync(email, mobileNumber, app.Id);
                 }
                 else
                 {
+
+
+                    userExist.Status = "active";
+                    if (email != null)
+                    {
+                        userExist.Email = email;
+                    }
+                    if (mobileNumber != null)
+                    {
+                        userExist.PhoneNumber = mobileNumber;
+                    }
+                    if (request.userName != null)
+                    {
+                        userExist.FirstName = request.userName.FirstName;
+                        userExist.LastName = request.userName.LastName;
+
+
+                    }
+                    userExist.PasswordHash = request.Password;
                     userRole = await loginService.GetUserRoleAsync(userExist.Email, userExist.PhoneNumber, app.Id);
 
+                   
+                    userExist = await _userService.UpdatedUser(userExist);
+                    if (userRole != null)
+                    {
+                        userRole.IsActive = true;
+                        userRole.IsDeleted = false;
+                        userRole = await _userService.UpdatedUserRole(userRole);
+                    }
+                    
+
+                
                 }
                 if (userRole == null)
                 {
@@ -258,7 +289,7 @@ namespace AuthMicroservice.Controller
 
         [HttpPost("login")]
         public async Task<IActionResult> LoginUser([FromBody] LoginRequest request,
-    [FromHeader(Name = "AppKey")] string appKey)
+                  [FromHeader(Name = "AppKey")] string appKey)
         {
             // Fetch applications asynchronously
             var applications = await _applicationService.GetApplicationsAsync(appKey);
@@ -275,11 +306,47 @@ namespace AuthMicroservice.Controller
 
             if (user != null)
             {
-                return Ok(user);
+              return Ok(user);
             }
 
             return Unauthorized();
         }
+
+        [HttpPost("delete")]
+        public async Task<IActionResult> DeleteUser(
+    [FromBody] LoginModel request,
+    [FromHeader(Name = "AppKey")] string appKey)
+        {
+            // Validate AppKey and retrieve the associated application
+            var applications = await _applicationService.GetApplicationsAsync(appKey);
+            var application = applications.FirstOrDefault(a => a.AppKey == appKey);
+
+            if (application == null ||
+                !await _applicationService.ValidateAppKeyAndSecretAsync(appKey, application.AppSecret))
+            {
+                return Ok(new { message = $"No application registered with the provided AppKey: {appKey}" });
+            }
+
+            // Authenticate user
+            var user = await _userService.AuthenticateUserAsync(application.Id, request.Username, request.Password);
+            if (user == null)
+            {
+                return NotFound(new { message = "User not found or invalid credentials." });
+            }
+
+            // Retrieve user role
+            var userRole = await loginService.GetUserRoleAsync(user.Email, user.PhoneNumber, application.Id);
+
+            // Deactivate user and role
+            var isDeleted = await _userService.DeactiveUserAndRole(user, userRole);
+            if (!isDeleted)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Unable to delete user data." });
+            }
+
+            return Ok(new { message = "User data deleted successfully." });
+        }
+
 
         [HttpPost("reset-password")]
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest request,
@@ -446,6 +513,7 @@ namespace AuthMicroservice.Controller
         [Required]
         public string UserRole { get; set; }
     }
+   
 
     [AtLeastOneRequired] // Apply the custom validation attribute here
     public class UserName

@@ -23,6 +23,9 @@ namespace AuthMicroservice.Service
         Task<User> FindOrCreateUserAsync(string email, string mobile, string username, Guid appId);
         Task<User> FindOrCreateUserForLoginWithGoogleAsync(Guid appId, string userRole, string firstname, string lastname,string fullname, string email);
         Task<User> FindOrCreateUserForFacebookAsync(string email,string username, Guid appId);
+        Task<bool> DeactiveUserAndRole(User user, UserRole role);
+        Task<User>UpdatedUser(User user);
+        Task<UserRole>UpdatedUserRole(UserRole role);   
     }
 
     public class UserService : IUserService
@@ -38,12 +41,46 @@ namespace AuthMicroservice.Service
             _userRoleRepository = userRoleRepository;
             _config = config;
         }
+        public async Task<User> UpdatedUser(User user)
+        {
+            user.PasswordHash = _passwordHasher.HashPassword(null, user.PasswordHash);
+            _userRepository.UpdateAsync(user);
+            return user;    
+        }
+       public async Task<UserRole> UpdatedUserRole(UserRole role){
+            _userRoleRepository.UpdateAsync(role);  
+            return role;
+        }
         public async Task<User>ExistedUserAsync(string email,string mobile, Guid appId )
         {
             var user=await _userRepository.FindAsync(a=>a.ApplicationId==appId&&(a.Email== email&&email!="" || a.PhoneNumber== mobile&&mobile!=""));
            
             return user.FirstOrDefault();
 
+        }
+        public async Task<bool> DeactiveUserAndRole(User user, UserRole role)
+        {
+
+
+            try
+            {
+                if (role != null)
+                {
+                    role.IsDeleted = true;  
+                    role.IsActive = false;
+                    await _userRoleRepository.UpdateAsync(role);
+                }
+                user.Status = "inactive";
+                await _userRepository.UpdateAsync(user);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                // Log the exception (you can inject ILogger and use _logger.LogError)
+                // _logger.LogError(ex, "Failed to delete user and role.");
+                return false;
+            }
+            return false;
         }
         public async Task<User> FindOrCreateUserForFacebookAsync(string email ,string username, Guid appId)
         {
@@ -60,6 +97,7 @@ namespace AuthMicroservice.Service
                 LastName = "",
                 UserName = username,
                 PhoneNumber = "",
+                Status ="active",
                 PasswordHash = _passwordHasher.HashPassword(null, Guid.NewGuid().ToString()),
                 ApplicationId = appId
             };
@@ -75,11 +113,12 @@ namespace AuthMicroservice.Service
             {
                 Id = Guid.NewGuid().ToString(),
                 Email = req.userName.Email,
-                FirstName= req.userName.FirstName,
-                LastName= req.userName.LastName,
-                UserName=req.userName.FirstName+"_"+req.userName.LastName,
+                FirstName = req.userName.FirstName,
+                LastName = req.userName.LastName,
+                UserName = req.userName.FirstName + "_" + req.userName.LastName,
                 PhoneNumber = req.userName.MobileNumber,
                 PasswordHash = _passwordHasher.HashPassword(null, req.Password),
+                Status = "active",
                 ApplicationId = applicationId
             };
           
@@ -99,8 +138,8 @@ namespace AuthMicroservice.Service
                 RoleName = role,
                 UserName=name,
                 ApplicationName = appName,
-                CreatedDate = DateTime.Now
-
+                CreatedDate = DateTime.Now,
+                IsActive=true,
             };
             await _userRoleRepository.AddAsync(userRole);
             return userRole;    
@@ -120,6 +159,7 @@ namespace AuthMicroservice.Service
                 LastName = lastname,
                 UserName = fullname,
                 PhoneNumber = "",
+                Status = "active",
                 PasswordHash = _passwordHasher.HashPassword(null, Guid.NewGuid().ToString()),
                 ApplicationId = appId
             };
@@ -129,10 +169,10 @@ namespace AuthMicroservice.Service
 
             return user;
         }
-        public async Task<User> AuthenticateUserAsync(Guid applicationId, string email, string password)
+        public async Task<User> AuthenticateUserAsync(Guid applicationId, string username, string password)
         {
             // Fetch the user asynchronously
-            var user = (await _userRepository.FindAsync(u => u.Email == email && u.ApplicationId == applicationId)).FirstOrDefault();
+            var user = (await _userRepository.FindAsync(u => (u.Email == username||u.PhoneNumber==username) && u.ApplicationId == applicationId)).FirstOrDefault();
 
             if (user != null && _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, password) == PasswordVerificationResult.Success)
             {
@@ -154,6 +194,7 @@ namespace AuthMicroservice.Service
                 Email = email,
                 UserName = username,    
                 PhoneNumber=mobile,
+                Status = "active",
                 PasswordHash = _passwordHasher.HashPassword(null, Guid.NewGuid().ToString()),
                 ApplicationId = appId
              };

@@ -152,6 +152,9 @@ namespace AuthMicroservice.Migrations
                     b.Property<string>("UserName")
                         .HasColumnType("longtext");
 
+                    b.Property<string?>("Status")
+                        .HasColumnType("longtext");
+
                     b.HasKey("Id");
 
                     b.ToTable("Users");
