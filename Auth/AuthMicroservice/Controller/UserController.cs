@@ -189,102 +189,102 @@ namespace AuthMicroservice.Controller
         }
 
 
+        
+     
+
         [HttpPost("register")]
-        public async Task<IActionResult> RegisterUser([FromBody] RegisterUserRequest request,
-       [FromHeader(Name = "AppKey")] string appKey)
+        public async Task<IActionResult> RegisterUser(
+    [FromBody] RegisterUserRequest request,
+    [FromHeader(Name = "AppKey")] string appKey)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
-
-            var applications = await _applicationService.GetApplicationsAsync(appKey);
-            var app = applications.FirstOrDefault(a => a.AppKey == appKey);
-
-            if (app == null || !await _applicationService.ValidateAppKeyAndSecretAsync(appKey, app.AppSecret))
-            {
-                return Unauthorized();
-            }
 
             try
             {
+                // ✅ Validate AppKey
+                var applications = await _applicationService.GetApplicationsAsync(appKey);
+                var app = applications.FirstOrDefault(a => a.AppKey == appKey);
 
-                string email = request.userName.Email;
-                string mobileNumber = request.userName.MobileNumber;
-                if (email == null && mobileNumber == null)
-                {
-                    throw new Exception("Invalid Input..Write correct userName");
-                }
+                if (app == null || !await _applicationService.ValidateAppKeyAndSecretAsync(appKey, app.AppSecret))
+                    return Unauthorized("Invalid AppKey or Secret");
 
-                var name = email == null ? mobileNumber : email;
+                //// ✅ Validate request.userName
+                //if (request?.userName == null)
+                //    return BadRequest("UserName section is missing");
 
+                string? email = request.userName.Email;
+                string? mobileNumber = request.userName.MobileNumber;
+
+                if (string.IsNullOrWhiteSpace(email) && string.IsNullOrWhiteSpace(mobileNumber))
+                    return BadRequest("Either Email or MobileNumber is required.");
+
+                string name = !string.IsNullOrWhiteSpace(email) ? email : mobileNumber!;
+
+                // ✅ Check if user already exists
                 var userExist = await _userService.ExistedUserAsync(email, mobileNumber, app.Id);
-                if (userExist != null&&userExist.Status?.ToLower()=="active"||userExist.Status==null)
+
+                // ✅ Handle existing user
+                if (userExist != null)
                 {
-                    return Ok(new
+                    string status = userExist.Status?.ToLower() ?? "active";
+                    if (status == "active")
                     {
-                        message = "Already existed such user",
-                        userExist
-                    });
-                }
-               
-                var userRole = new UserRole();
-                if (userExist == null) { userExist = await _userService.RegisterUserAsync(app.Id, request);
-                    userRole = await loginService.GetUserRoleAsync(email, mobileNumber, app.Id);
+                        return Ok(new
+                        {
+                            message = "User already exists and is active.",
+                            user = userExist
+                        });
+                    }
+
+                    // ✅ Update inactive user
+                    userExist.Status = "active";
+                    userExist.Email = email ?? userExist.Email;
+                    userExist.PhoneNumber = mobileNumber ?? userExist.PhoneNumber;
+                    userExist.FirstName = request.userName.FirstName;
+                    userExist.LastName = request.userName.LastName;
+                    userExist.PasswordHash = request.Password;
+
+                    userExist = await _userService.UpdatedUser(userExist);
                 }
                 else
                 {
-
-
-                    userExist.Status = "active";
-                    if (email != null)
-                    {
-                        userExist.Email = email;
-                    }
-                    if (mobileNumber != null)
-                    {
-                        userExist.PhoneNumber = mobileNumber;
-                    }
-                    if (request.userName != null)
-                    {
-                        userExist.FirstName = request.userName.FirstName;
-                        userExist.LastName = request.userName.LastName;
-
-
-                    }
-                    userExist.PasswordHash = request.Password;
-                    userRole = await loginService.GetUserRoleAsync(userExist.Email, userExist.PhoneNumber, app.Id);
-
-                   
-                    userExist = await _userService.UpdatedUser(userExist);
-                    if (userRole != null)
-                    {
-                        userRole.IsActive = true;
-                        userRole.IsDeleted = false;
-                        userRole = await _userService.UpdatedUserRole(userRole);
-                    }
-                    
-
-                
+                    // ✅ Register new user
+                    userExist = await _userService.RegisterUserAsync(app.Id, request);
                 }
+
+                // ✅ Get or register user role
+                var userRole = await loginService.GetUserRoleAsync(userExist.Email, userExist.PhoneNumber, app.Id);
+
                 if (userRole == null)
                 {
-                    userRole = await _userService.RegisterUserRoleAsync(app.Id, app.Name, request.UserRole, email);
+                    userRole = await _userService.RegisterUserRoleAsync(app.Id, app.Name, request.UserRole, userExist.Email);
                 }
-                var userWithUserRole = new
+                else
                 {
-                    message="User is added successfully",
+                    userRole.IsActive = true;
+                    userRole.IsDeleted = false;
+                    userRole = await _userService.UpdatedUserRole(userRole);
+                }
+
+                // ✅ Final response
+                return Ok(new
+                {
+                    message = "User registered successfully",
                     user = userExist,
-                    role = userRole,
-                };
-                return Ok(userWithUserRole);
+                    role = userRole
+                });
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                // Optional: log the error using ILogger here
+                return StatusCode(500, new
+                {
+                    message = "An unexpected error occurred.",
+                    details = ex.Message
+                });
             }
         }
-
 
 
         [HttpPost("login")]
