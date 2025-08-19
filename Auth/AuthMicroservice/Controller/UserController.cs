@@ -232,7 +232,7 @@ namespace AuthMicroservice.Controller
                     {
                         return Ok(new
                         {
-                            message = "User already exists and is active.",
+                            message = "Already existed such user",
                             user = userExist
                         });
                     }
