@@ -83,3 +83,8 @@ $RECYCLE.BIN/
 /Auth/AuthMicroservice/obj/Debug/net8.0/AuthMicroservice.GeneratedMSBuildEditorConfig.editorconfig
 /Auth/.vs/AuthMicroservice/v17/.suo
 /Auth/.vs/AuthMicroservice/v17/DocumentLayout.json
+/Auth/AuthMicroservice/obj/project.nuget.cache
+/Auth/AuthMicroservice/obj/project.assets.json
+/Auth/AuthMicroservice/obj/AuthMicroservice.csproj.nuget.g.props
+/Auth/AuthMicroservice/obj/AuthMicroservice.csproj.nuget.dgspec.json
+/Auth/AuthMicroservice/obj/Debug/net8.0/AuthMicroservice.assets.cache
