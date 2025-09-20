@@ -1,4 +1,4 @@
-﻿using AuthMicroservice.Repository;
+using AuthMicroservice.Repository;
 using AuthMicroservice.Service;
 
 namespace AuthMicroservice
@@ -13,12 +13,15 @@ namespace AuthMicroservice
             services.AddScoped<IApplicationRepository, ApplicationRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserRoleRepository, UserRoleRepository>();
+            services.AddScoped<ISmtpConfigRepository, SmtpConfigRepository>();
 
             // Add service registrations here
             //services.AddScoped<HttpClient, HttpClient>();
             services.AddScoped<ILoginService,LoginService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IApplicationService, ApplicationService>();
+            services.AddScoped<ISmtpConfigService, SmtpConfigService>();
+            services.AddScoped<IEmailService, EmailService>();
             services.AddHttpClient();
 
             services.AddMemoryCache();
