@@ -1,6 +1,7 @@
 using AuthMicroservice.Model;
 using AuthMicroservice.Service;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -36,7 +37,8 @@ namespace AuthMicroservice.Controller
         [HttpGet("smtp-configs")]
         public async Task<IActionResult> GetSmtpConfigs([FromHeader(Name = "AppKey")] string appKey)
         {
-            if (!await IsValidAppKey(appKey, out var app))
+            var (isValid, app) = await IsValidAppKey(appKey);
+            if (!isValid)
                 return Unauthorized(new { message = "Invalid AppKey or AppSecret" });
 
             var configs = await _smtpConfigService.GetSmtpConfigsAsync();
@@ -46,7 +48,8 @@ namespace AuthMicroservice.Controller
         [HttpGet("smtp-configs/{id}")]
         public async Task<IActionResult> GetSmtpConfig(string id, [FromHeader(Name = "AppKey")] string appKey)
         {
-            if (!await IsValidAppKey(appKey, out var app))
+            var (isValid, app) = await IsValidAppKey(appKey);
+            if (!isValid)
                 return Unauthorized(new { message = "Invalid AppKey or AppSecret" });
 
             var config = await _smtpConfigService.GetSmtpConfigAsync(id);
@@ -59,7 +62,8 @@ namespace AuthMicroservice.Controller
         [HttpPost("smtp-configs")]
         public async Task<IActionResult> CreateSmtpConfig([FromBody] SmtpConfig smtpConfig, [FromHeader(Name = "AppKey")] string appKey)
         {
-            if (!await IsValidAppKey(appKey, out var app))
+            var (isValid, app) = await IsValidAppKey(appKey);
+            if (!isValid)
                 return Unauthorized(new { message = "Invalid AppKey or AppSecret" });
 
             if (!ModelState.IsValid)
@@ -73,7 +77,8 @@ namespace AuthMicroservice.Controller
         [HttpPut("smtp-configs/{id}")]
         public async Task<IActionResult> UpdateSmtpConfig(string id, [FromBody] SmtpConfig smtpConfig, [FromHeader(Name = "AppKey")] string appKey)
         {
-            if (!await IsValidAppKey(appKey, out var app))
+            var (isValid, app) = await IsValidAppKey(appKey);
+            if (!isValid)
                 return Unauthorized(new { message = "Invalid AppKey or AppSecret" });
 
             if (id != smtpConfig.Id || smtpConfig.ApplicationId != app.Id)
@@ -86,7 +91,8 @@ namespace AuthMicroservice.Controller
         [HttpDelete("smtp-configs/{id}")]
         public async Task<IActionResult> DeleteSmtpConfig(string id, [FromHeader(Name = "AppKey")] string appKey)
         {
-            if (!await IsValidAppKey(appKey, out var app))
+            var (isValid, app) = await IsValidAppKey(appKey);
+            if (!isValid)
                 return Unauthorized(new { message = "Invalid AppKey or AppSecret" });
 
             var config = await _smtpConfigService.GetSmtpConfigAsync(id);
@@ -102,7 +108,8 @@ namespace AuthMicroservice.Controller
         [HttpPost("subscribe")]
         public async Task<IActionResult> Subscribe([FromBody] SubscriberRequest request, [FromHeader(Name = "AppKey")] string appKey)
         {
-            if (!await IsValidAppKey(appKey, out var app))
+            var (isValid, app) = await IsValidAppKey(appKey);
+            if (!isValid)
                 return Unauthorized(new { message = "Invalid AppKey or AppSecret" });
 
             var subscriber = await _subscriberService.SubscribeAsync(request.Email, app.Id);
@@ -112,7 +119,8 @@ namespace AuthMicroservice.Controller
         [HttpPost("unsubscribe")]
         public async Task<IActionResult> Unsubscribe([FromBody] SubscriberRequest request, [FromHeader(Name = "AppKey")] string appKey)
         {
-            if (!await IsValidAppKey(appKey, out var app))
+            var (isValid, app) = await IsValidAppKey(appKey);
+            if (!isValid)
                 return Unauthorized(new { message = "Invalid AppKey or AppSecret" });
 
             await _subscriberService.UnsubscribeAsync(request.Email, app.Id);
@@ -122,7 +130,8 @@ namespace AuthMicroservice.Controller
         [HttpGet("subscribers")]
         public async Task<IActionResult> GetSubscribers([FromHeader(Name = "AppKey")] string appKey)
         {
-            if (!await IsValidAppKey(appKey, out var app))
+            var (isValid, app) = await IsValidAppKey(appKey);
+            if (!isValid)
                 return Unauthorized(new { message = "Invalid AppKey or AppSecret" });
 
             var subscribers = await _subscriberService.GetSubscribersAsync(app.Id);
@@ -134,7 +143,8 @@ namespace AuthMicroservice.Controller
         [HttpPost("send-to-subscribers")]
         public async Task<IActionResult> SendToSubscribers([FromBody] EmailContentRequest request, [FromHeader(Name = "AppKey")] string appKey)
         {
-            if (!await IsValidAppKey(appKey, out var app))
+            var (isValid, app) = await IsValidAppKey(appKey);
+            if (!isValid)
                 return Unauthorized(new { message = "Invalid AppKey or AppSecret" });
 
             var subscribers = await _subscriberService.GetSubscribersAsync(app.Id);
@@ -151,10 +161,10 @@ namespace AuthMicroservice.Controller
         [HttpPost("send-by-group/{groupName}")]
         public async Task<IActionResult> SendByGroup(string groupName, [FromBody] EmailContentRequest request, [FromHeader(Name = "AppKey")] string appKey)
         {
-            if (!await IsValidAppKey(appKey, out var app))
+            var (isValid, app) = await IsValidAppKey(appKey);
+            if (!isValid)
                 return Unauthorized(new { message = "Invalid AppKey or AppSecret" });
 
-            // This is a placeholder for getting users by group. You would need to implement this functionality.
             var users = await _userService.GetUsersByGroupAsync(groupName, app.Id);
             var recipientList = users.Select(u => u.Email).ToList();
 
@@ -171,18 +181,22 @@ namespace AuthMicroservice.Controller
         [HttpGet("history")]
         public async Task<IActionResult> GetEmailHistory([FromHeader(Name = "AppKey")] string appKey)
         {
-            if (!await IsValidAppKey(appKey, out var app))
+            var (isValid, app) = await IsValidAppKey(appKey);
+            if (!isValid)
                 return Unauthorized(new { message = "Invalid AppKey or AppSecret" });
 
             var history = await _emailService.GetEmailHistoryAsync(app.Id);
             return Ok(history);
         }
 
-        private async Task<bool> IsValidAppKey(string appKey, out Application app)
+        private async Task<(bool, Application)> IsValidAppKey(string appKey)
         {
             var applications = await _applicationService.GetApplicationsAsync(appKey);
-            app = applications.FirstOrDefault(a => a.AppKey == appKey);
-            return app != null && await _applicationService.ValidateAppKeyAndSecretAsync(appKey, app.AppSecret);
+            var app = applications.FirstOrDefault(a => a.AppKey == appKey);
+            if (app == null) return (false, null);
+
+            var isValid = await _applicationService.ValidateAppKeyAndSecretAsync(appKey, app.AppSecret);
+            return (isValid, app);
         }
     }
 
