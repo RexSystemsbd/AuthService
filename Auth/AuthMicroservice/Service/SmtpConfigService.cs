@@ -1,5 +1,6 @@
 using AuthMicroservice.Model;
 using AuthMicroservice.Repository;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -12,7 +13,7 @@ namespace AuthMicroservice.Service
         Task<SmtpConfig> CreateSmtpConfigAsync(SmtpConfig smtpConfig);
         Task UpdateSmtpConfigAsync(string id, SmtpConfig smtpConfig);
         Task DeleteSmtpConfigAsync(string id);
-        Task<SmtpConfig> GetSmtpConfigByApplicationIdAsync(string applicationId);
+        Task<SmtpConfig> GetSmtpConfigByApplicationIdAsync(Guid applicationId);
     }
 
     public class SmtpConfigService : ISmtpConfigService
@@ -66,7 +67,7 @@ namespace AuthMicroservice.Service
             }
         }
 
-        public async Task<SmtpConfig> GetSmtpConfigByApplicationIdAsync(string applicationId)
+        public async Task<SmtpConfig> GetSmtpConfigByApplicationIdAsync(Guid applicationId)
         {
             return await _smtpConfigRepository.GetByApplicationIdAsync(applicationId);
         }

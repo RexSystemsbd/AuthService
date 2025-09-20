@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace AuthMicroservice.Model
@@ -17,6 +18,6 @@ namespace AuthMicroservice.Model
         public string FromName { get; set; }
 
         [Required]
-        public string ApplicationId { get; set; }
+        public Guid ApplicationId { get; set; }
     }
 }

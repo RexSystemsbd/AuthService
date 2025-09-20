@@ -11,8 +11,8 @@ namespace AuthMicroservice.Service
 {
     public interface IEmailService
     {
-        Task SendEmailAsync(string applicationId, string subject, string body, List<string> to);
-        Task<IEnumerable<EmailHistory>> GetEmailHistoryAsync(string applicationId);
+        Task SendEmailAsync(Guid applicationId, string subject, string body, List<string> to);
+        Task<IEnumerable<EmailHistory>> GetEmailHistoryAsync(Guid applicationId);
     }
 
     public class EmailService : IEmailService
@@ -26,7 +26,7 @@ namespace AuthMicroservice.Service
             _emailHistoryRepository = emailHistoryRepository;
         }
 
-        public async Task SendEmailAsync(string applicationId, string subject, string body, List<string> to)
+        public async Task SendEmailAsync(Guid applicationId, string subject, string body, List<string> to)
         {
             var smtpConfig = await _smtpConfigService.GetSmtpConfigByApplicationIdAsync(applicationId);
             if (smtpConfig == null)
@@ -58,7 +58,7 @@ namespace AuthMicroservice.Service
                 }
             }
             catch (Exception ex)
-            {
+            { 
                 status = "Failed: " + ex.Message;
             }
 
@@ -75,7 +75,7 @@ namespace AuthMicroservice.Service
             await _emailHistoryRepository.AddAsync(emailHistory);
         }
 
-        public async Task<IEnumerable<EmailHistory>> GetEmailHistoryAsync(string applicationId)
+        public async Task<IEnumerable<EmailHistory>> GetEmailHistoryAsync(Guid applicationId)
         {
             var allHistory = await _emailHistoryRepository.GetAllAsync();
             return allHistory.Where(h => h.ApplicationId == applicationId);
