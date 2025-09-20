@@ -29,7 +29,7 @@ namespace AuthMicroservice.Service
         Task<bool> DeactiveUserAndRole(User user, UserRole role);
         Task<User>UpdatedUser(User user);
         Task<UserRole>UpdatedUserRole(UserRole role);
-        Task<IEnumerable<User>> GetUsersByGroupAsync(string groupName, string applicationId);
+        Task<IEnumerable<User>> GetUsersByGroupAsync(string groupName, Guid applicationId);
         Task<IEnumerable<User>> GetUsersByCategoryAsync(string category);
     }
 
@@ -57,7 +57,7 @@ namespace AuthMicroservice.Service
 
         public async Task<User> UpdatedUser(User user)
         {
-            user.PasswordHash = _passwordHasher.HashPassword(null, user.PasswordHash);
+            // Do not re-hash the password if it's not being changed.
             _userRepository.UpdateAsync(user);
             return user;    
         }
@@ -254,7 +254,7 @@ namespace AuthMicroservice.Service
             };
 
             tokenDescriptor.Claims.Add("Id", user.Id);
-            tokenDescriptor.Claims.Add("ApplicationId", user.ApplicationId);
+            tokenDescriptor.Claims.Add("ApplicationId", user.ApplicationId.ToString());
             tokenDescriptor.Claims.Add("UserName", user.UserName);
             tokenDescriptor.Claims.Add("FirstName", user.FirstName);
             tokenDescriptor.Claims.Add("LastName", user.LastName);
@@ -266,14 +266,9 @@ namespace AuthMicroservice.Service
             return tokenString;
         }
 
-        public async Task<IEnumerable<User>> GetUsersByGroupAsync(string groupName, string applicationId)
+        public async Task<IEnumerable<User>> GetUsersByGroupAsync(string groupName, Guid applicationId)
         {
-            if (!Guid.TryParse(applicationId, out var appGuid))
-            {
-                return new List<User>();
-            }
-
-            var userRoles = await _userRoleRepository.FindAsync(ur => ur.RoleName == groupName && ur.ApplicationId == appGuid);
+            var userRoles = await _userRoleRepository.FindAsync(ur => ur.RoleName == groupName && ur.ApplicationId == applicationId);
             var usernames = userRoles.Select(ur => ur.UserName).ToList();
 
             if (!usernames.Any())
@@ -281,7 +276,7 @@ namespace AuthMicroservice.Service
                 return new List<User>();
             }
 
-            var users = await _userRepository.FindAsync(u => usernames.Contains(u.UserName) && u.ApplicationId == appGuid);
+            var users = await _userRepository.FindAsync(u => usernames.Contains(u.UserName) && u.ApplicationId == applicationId);
             return users;
         }
     }
