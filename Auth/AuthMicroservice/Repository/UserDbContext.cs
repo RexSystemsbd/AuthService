@@ -20,6 +20,11 @@ namespace AuthMicroservice.Repository
         public DbSet<User> Users { get; set; }
         public DbSet<Application> Applications { get; set; }
         public DbSet<UserRole>userRoles { get; set; }
+        public DbSet<Contact> Contacts { get; set; }
+        public DbSet<Subscriber> Subscribers { get; set; }
+        public DbSet<EmailHistory> EmailHistories { get; set; }
+        public DbSet<SmtpConfig> SmtpConfigs { get; set; }
+
 
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //{

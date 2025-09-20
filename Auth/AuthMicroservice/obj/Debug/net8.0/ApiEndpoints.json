@@ -1,5 +1,357 @@
 [
   {
+    "ContainingType": "AuthMicroservice.Controller.ContactController",
+    "Method": "CreateContact",
+    "RelativePath": "api/Contact",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "contact",
+        "Type": "AuthMicroservice.Model.Contact",
+        "IsRequired": true
+      },
+      {
+        "Name": "AppKey",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuthMicroservice.Controller.ContactController",
+    "Method": "GetContacts",
+    "RelativePath": "api/Contact",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "AppKey",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuthMicroservice.Controller.ContactController",
+    "Method": "GetContact",
+    "RelativePath": "api/Contact/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "AppKey",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuthMicroservice.Controller.ContactController",
+    "Method": "UpdateContact",
+    "RelativePath": "api/Contact/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "contact",
+        "Type": "AuthMicroservice.Model.Contact",
+        "IsRequired": true
+      },
+      {
+        "Name": "AppKey",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuthMicroservice.Controller.ContactController",
+    "Method": "DeleteContact",
+    "RelativePath": "api/Contact/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "AppKey",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuthMicroservice.Controller.NewsletterController",
+    "Method": "ContactWithUS",
+    "RelativePath": "api/Newsletter/contactwithus",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "AuthMicroservice.Service.ContactWithUSReqest",
+        "IsRequired": true
+      },
+      {
+        "Name": "AppKey",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuthMicroservice.Controller.NewsletterController",
+    "Method": "GetEmailHistory",
+    "RelativePath": "api/Newsletter/history",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "AppKey",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuthMicroservice.Controller.NewsletterController",
+    "Method": "SendByGroup",
+    "RelativePath": "api/Newsletter/send-by-group/{groupName}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "groupName",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "request",
+        "Type": "AuthMicroservice.Controller.EmailContentRequest",
+        "IsRequired": true
+      },
+      {
+        "Name": "AppKey",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuthMicroservice.Controller.NewsletterController",
+    "Method": "SendToSubscribers",
+    "RelativePath": "api/Newsletter/send-to-subscribers",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "AuthMicroservice.Controller.EmailContentRequest",
+        "IsRequired": true
+      },
+      {
+        "Name": "AppKey",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuthMicroservice.Controller.NewsletterController",
+    "Method": "GetSmtpConfigs",
+    "RelativePath": "api/Newsletter/smtp-configs",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "AppKey",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuthMicroservice.Controller.NewsletterController",
+    "Method": "CreateSmtpConfig",
+    "RelativePath": "api/Newsletter/smtp-configs",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "smtpConfig",
+        "Type": "AuthMicroservice.Model.SmtpConfig",
+        "IsRequired": true
+      },
+      {
+        "Name": "AppKey",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuthMicroservice.Controller.NewsletterController",
+    "Method": "GetSmtpConfig",
+    "RelativePath": "api/Newsletter/smtp-configs/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "AppKey",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuthMicroservice.Controller.NewsletterController",
+    "Method": "UpdateSmtpConfig",
+    "RelativePath": "api/Newsletter/smtp-configs/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "smtpConfig",
+        "Type": "AuthMicroservice.Model.SmtpConfig",
+        "IsRequired": true
+      },
+      {
+        "Name": "AppKey",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuthMicroservice.Controller.NewsletterController",
+    "Method": "DeleteSmtpConfig",
+    "RelativePath": "api/Newsletter/smtp-configs/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "AppKey",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuthMicroservice.Controller.NewsletterController",
+    "Method": "Subscribe",
+    "RelativePath": "api/Newsletter/subscribe",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "AuthMicroservice.Controller.SubscriberRequest",
+        "IsRequired": true
+      },
+      {
+        "Name": "AppKey",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuthMicroservice.Controller.NewsletterController",
+    "Method": "GetSubscribers",
+    "RelativePath": "api/Newsletter/subscribers",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "AppKey",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuthMicroservice.Controller.NewsletterController",
+    "Method": "Unsubscribe",
+    "RelativePath": "api/Newsletter/unsubscribe",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "AuthMicroservice.Controller.SubscriberRequest",
+        "IsRequired": true
+      },
+      {
+        "Name": "AppKey",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "AuthMicroservice.Controller.ApplicationController",
     "Method": "AllApp",
     "RelativePath": "Application/AllApp",

@@ -66,7 +66,7 @@ namespace AuthMicroservice.Controller
             if (!isValid)
                 return Unauthorized(new { message = "Invalid AppKey or AppSecret" });
 
-            if (id != contact.Id || contact.ApplicationId != app.Id)
+            if (id != contact.Id.ToString() || contact.ApplicationId != app.Id)
                 return BadRequest();
 
             await _contactService.UpdateContactAsync(id, contact, app.Id);

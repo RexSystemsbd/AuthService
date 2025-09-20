@@ -1,10 +1,6 @@
 using AuthMicroservice.Model;
 using AuthMicroservice.Service;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace AuthMicroservice.Controller
 {
@@ -52,7 +48,7 @@ namespace AuthMicroservice.Controller
             if (!isValid)
                 return Unauthorized(new { message = "Invalid AppKey or AppSecret" });
 
-            var config = await _smtpConfigService.GetSmtpConfigAsync(id);
+            var config = await _smtpConfigService.GetSmtpConfigAsync(new Guid(id));
             if (config == null || config.ApplicationId != app.Id)
                 return NotFound();
 
@@ -81,10 +77,10 @@ namespace AuthMicroservice.Controller
             if (!isValid)
                 return Unauthorized(new { message = "Invalid AppKey or AppSecret" });
 
-            if (id != smtpConfig.Id || smtpConfig.ApplicationId != app.Id)
+            if (id != smtpConfig.Id.ToString() || smtpConfig.ApplicationId != app.Id)
                 return BadRequest();
 
-            await _smtpConfigService.UpdateSmtpConfigAsync(id, smtpConfig);
+            await _smtpConfigService.UpdateSmtpConfigAsync(new Guid(id), smtpConfig);
             return NoContent();
         }
 
@@ -95,11 +91,11 @@ namespace AuthMicroservice.Controller
             if (!isValid)
                 return Unauthorized(new { message = "Invalid AppKey or AppSecret" });
 
-            var config = await _smtpConfigService.GetSmtpConfigAsync(id);
+            var config = await _smtpConfigService.GetSmtpConfigAsync(new Guid(id));
             if (config == null || config.ApplicationId != app.Id)
                 return NotFound();
 
-            await _smtpConfigService.DeleteSmtpConfigAsync(id);
+            await _smtpConfigService.DeleteSmtpConfigAsync(new Guid(id));
             return NoContent();
         }
 
@@ -112,7 +108,26 @@ namespace AuthMicroservice.Controller
             if (!isValid)
                 return Unauthorized(new { message = "Invalid AppKey or AppSecret" });
 
-            var subscriber = await _subscriberService.SubscribeAsync(request.Email, app.Id);
+            var subscriber = await _subscriberService.SubscribeAsync(request.Email, app.Id.ToString());
+            return Ok(subscriber);
+        }
+
+
+        // Contact with us
+
+        [HttpPost("contactwithus")]
+        public async Task<IActionResult> ContactWithUS([FromBody] ContactWithUSReqest request, [FromHeader(Name = "AppKey")] string appKey)
+        {
+            var (isValid, app) = await IsValidAppKey(appKey);
+            if (!isValid)
+                return Unauthorized(new { message = "Invalid AppKey or AppSecret" });
+
+            var subscriber = await _subscriberService.ContactWithUSAsync(request, app.Id.ToString());
+
+            string message = $"Name: {request.Name}\nPhone: {request.PhoneNumber}\nEmail: {request.Email}\nMessage: {request.Body}";
+            string subject = "New Contact Us Message";
+            List<string> emailList=new List<string>() { "sajid.ict@gmail.com"};
+            await _emailService.SendEmailAsync(app.Id, subject, message, emailList);
             return Ok(subscriber);
         }
 
@@ -123,7 +138,7 @@ namespace AuthMicroservice.Controller
             if (!isValid)
                 return Unauthorized(new { message = "Invalid AppKey or AppSecret" });
 
-            await _subscriberService.UnsubscribeAsync(request.Email, app.Id);
+            await _subscriberService.UnsubscribeAsync(request.Email, app.Id.ToString());
             return Ok(new { message = "Unsubscribed successfully." });
         }
 
@@ -134,7 +149,7 @@ namespace AuthMicroservice.Controller
             if (!isValid)
                 return Unauthorized(new { message = "Invalid AppKey or AppSecret" });
 
-            var subscribers = await _subscriberService.GetSubscribersAsync(app.Id);
+            var subscribers = await _subscriberService.GetSubscribersAsync(app.Id.ToString());
             return Ok(subscribers);
         }
 
@@ -147,7 +162,7 @@ namespace AuthMicroservice.Controller
             if (!isValid)
                 return Unauthorized(new { message = "Invalid AppKey or AppSecret" });
 
-            var subscribers = await _subscriberService.GetSubscribersAsync(app.Id);
+            var subscribers = await _subscriberService.GetSubscribersAsync(app.Id.ToString());
             var recipientList = subscribers.Select(s => s.Email).ToList();
 
             if (recipientList.Count == 0)

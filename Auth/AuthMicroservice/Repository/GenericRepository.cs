@@ -5,7 +5,7 @@ namespace AuthMicroservice.Repository
 {
     public interface IGenericRepository<T> where T : class
     {
-        Task<T> GetByIdAsync(int id);
+        Task<T> GetByIdAsync(Guid id);
         Task<IEnumerable<T>> GetAllAsync();
         Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate);
         Task<int> AddAsync(T entity);
@@ -23,7 +23,7 @@ namespace AuthMicroservice.Repository
             _context = context;
         }
 
-        public async Task<T> GetByIdAsync(int id)
+        public async Task<T> GetByIdAsync(Guid id)
         {
             return await _context.Set<T>().FindAsync(id);
         }

@@ -11,15 +11,20 @@ namespace AuthMicroservice.Service
         Task<Subscriber> SubscribeAsync(string email, string applicationId);
         Task UnsubscribeAsync(string email, string applicationId);
         Task<IEnumerable<Subscriber>> GetSubscribersAsync(string applicationId);
+        Task<string> ContactWithUSAsync(ContactWithUSReqest contact, string applicationId);
     }
 
     public class SubscriberService : ISubscriberService
     {
         private readonly ISubscriberRepository _subscriberRepository;
+        private readonly ISmtpConfigService _smtpConfigService;
+        private readonly IContactRepository _contactRepository;
 
-        public SubscriberService(ISubscriberRepository subscriberRepository)
+        public SubscriberService(IContactRepository contactRepository,ISmtpConfigService smtpConfigService, ISubscriberRepository subscriberRepository)
         {
             _subscriberRepository = subscriberRepository;
+            _smtpConfigService = smtpConfigService;
+            _contactRepository = contactRepository;
         }
 
         public async Task<Subscriber> SubscribeAsync(string email, string applicationId)
@@ -39,7 +44,42 @@ namespace AuthMicroservice.Service
                 ApplicationId = applicationId
             };
 
-            return await _subscriberRepository.AddAsync(newSubscriber);
+            await _subscriberRepository.AddAsync(newSubscriber);
+            return newSubscriber;
+        }
+
+        public async Task<string> ContactWithUSAsync(ContactWithUSReqest contact, string applicationId)
+        {
+            var existingSubscriber = await _subscriberRepository.GetByEmailAndApplicationIdAsync(contact.Email, applicationId);
+            if (existingSubscriber != null)
+            {
+                existingSubscriber.IsSubscribed = true;
+                await _subscriberRepository.UpdateAsync(existingSubscriber);
+            }
+            else
+            {
+                var newSubscriber = new Subscriber
+                {
+                    Email = contact.Email,
+                    IsSubscribed = true,
+                    ApplicationId = applicationId
+                };
+
+                await _subscriberRepository.AddAsync(newSubscriber);
+                var contactEntity = new Contact
+                {
+                    FirstName = contact.Name,
+                    Email = contact.Email,
+                    Phone = contact.PhoneNumber,
+                    Company = contact.Company,
+                    ApplicationId = new Guid(applicationId)
+                };
+                await _contactRepository.AddAsync(contactEntity);
+
+            }
+
+            return "Thank you for contacting us. We will get back to you shortly.";
+
         }
 
         public async Task UnsubscribeAsync(string email, string applicationId)
@@ -57,5 +97,16 @@ namespace AuthMicroservice.Service
             var allSubscribers = await _subscriberRepository.GetAllAsync();
             return allSubscribers.Where(s => s.ApplicationId == applicationId && s.IsSubscribed);
         }
+    }
+
+
+    public class ContactWithUSReqest
+    {
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Company { get; set; }
+        public string Subject { get; set; }
+        public string Body { get; set; }
     }
 }

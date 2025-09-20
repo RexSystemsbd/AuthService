@@ -38,6 +38,8 @@ namespace AuthMicroservice.Service
                 using (var client = new SmtpClient(smtpConfig.Host, smtpConfig.Port))
                 {
                     client.UseDefaultCredentials = false;
+                    client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                    client.Timeout = 10000;
                     client.Credentials = new NetworkCredential(smtpConfig.Username, smtpConfig.Password);
                     client.EnableSsl = smtpConfig.EnableSsl;
 
@@ -80,5 +82,6 @@ namespace AuthMicroservice.Service
             var allHistory = await _emailHistoryRepository.GetAllAsync();
             return allHistory.Where(h => h.ApplicationId == applicationId);
         }
+
     }
 }

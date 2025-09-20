@@ -8,11 +8,11 @@ namespace AuthMicroservice.Service
 {
     public interface ISmtpConfigService
     {
-        Task<SmtpConfig> GetSmtpConfigAsync(string id);
+        Task<SmtpConfig> GetSmtpConfigAsync(Guid id);
         Task<IEnumerable<SmtpConfig>> GetSmtpConfigsAsync();
         Task<SmtpConfig> CreateSmtpConfigAsync(SmtpConfig smtpConfig);
-        Task UpdateSmtpConfigAsync(string id, SmtpConfig smtpConfig);
-        Task DeleteSmtpConfigAsync(string id);
+        Task UpdateSmtpConfigAsync(Guid id, SmtpConfig smtpConfig);
+        Task DeleteSmtpConfigAsync(Guid id);
         Task<SmtpConfig> GetSmtpConfigByApplicationIdAsync(Guid applicationId);
     }
 
@@ -25,7 +25,7 @@ namespace AuthMicroservice.Service
             _smtpConfigRepository = smtpConfigRepository;
         }
 
-        public async Task<SmtpConfig> GetSmtpConfigAsync(string id)
+        public async Task<SmtpConfig> GetSmtpConfigAsync(Guid id)
         {
             return await _smtpConfigRepository.GetByIdAsync(id);
         }
@@ -37,10 +37,11 @@ namespace AuthMicroservice.Service
 
         public async Task<SmtpConfig> CreateSmtpConfigAsync(SmtpConfig smtpConfig)
         {
-            return await _smtpConfigRepository.AddAsync(smtpConfig);
+            await _smtpConfigRepository.AddAsync(smtpConfig);
+            return smtpConfig;
         }
 
-        public async Task UpdateSmtpConfigAsync(string id, SmtpConfig smtpConfig)
+        public async Task UpdateSmtpConfigAsync(Guid id, SmtpConfig smtpConfig)
         {
             var existingSmtpConfig = await _smtpConfigRepository.GetByIdAsync(id);
             if (existingSmtpConfig == null)
@@ -58,12 +59,12 @@ namespace AuthMicroservice.Service
             await _smtpConfigRepository.UpdateAsync(existingSmtpConfig);
         }
 
-        public async Task DeleteSmtpConfigAsync(string id)
+        public async Task DeleteSmtpConfigAsync(Guid id)
         {
             var smtpConfig = await _smtpConfigRepository.GetByIdAsync(id);
             if (smtpConfig != null)
             {
-                await _smtpConfigRepository.DeleteAsync(smtpConfig);
+              //  await _smtpConfigRepository.DeleteAsync(smtpConfig);
             }
         }
 

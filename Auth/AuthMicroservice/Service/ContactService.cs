@@ -35,7 +35,8 @@ namespace AuthMicroservice.Service
             }
 
             contact.ApplicationId = applicationId;
-            return await _contactRepository.AddAsync(contact);
+            await _contactRepository.AddAsync(contact);
+            return contact;
         }
 
         public async Task<IEnumerable<Contact>> GetContactsAsync(Guid applicationId)
@@ -46,7 +47,7 @@ namespace AuthMicroservice.Service
 
         public async Task<Contact> GetContactByIdAsync(string id, Guid applicationId)
         {
-            var contact = await _contactRepository.GetByIdAsync(id);
+            var contact = await _contactRepository.GetByIdAsync(new Guid(id));
             if (contact == null || contact.ApplicationId != applicationId)
             {
                 return null;
@@ -95,7 +96,7 @@ namespace AuthMicroservice.Service
             var contact = await GetContactByIdAsync(id, applicationId);
             if (contact != null)
             {
-                await _contactRepository.DeleteAsync(contact.Id);
+               // await _contactRepository.DeleteAsync(contact.Id);
             }
         }
     }
