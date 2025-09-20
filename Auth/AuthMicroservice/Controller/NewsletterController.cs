@@ -15,17 +15,20 @@ namespace AuthMicroservice.Controller
         private readonly IUserService _userService;
         private readonly ISmtpConfigService _smtpConfigService;
         private readonly IEmailService _emailService;
+        private readonly ISubscriberService _subscriberService;
 
         public NewsletterController(
             IApplicationService applicationService,
             IUserService userService,
             ISmtpConfigService smtpConfigService,
-            IEmailService emailService)
+            IEmailService emailService,
+            ISubscriberService subscriberService)
         {
             _applicationService = applicationService;
             _userService = userService;
             _smtpConfigService = smtpConfigService;
             _emailService = emailService;
+            _subscriberService = subscriberService;
         }
 
         // SMTP Configuration Management
@@ -94,37 +97,85 @@ namespace AuthMicroservice.Controller
             return NoContent();
         }
 
-        // Email Sending
+        // Subscriber Management
 
-        [HttpPost("send-to-list")]
-        public async Task<IActionResult> SendEmailToList([FromBody] SendEmailRequest request, [FromHeader(Name = "AppKey")] string appKey)
+        [HttpPost("subscribe")]
+        public async Task<IActionResult> Subscribe([FromBody] SubscriberRequest request, [FromHeader(Name = "AppKey")] string appKey)
         {
             if (!await IsValidAppKey(appKey, out var app))
                 return Unauthorized(new { message = "Invalid AppKey or AppSecret" });
 
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            await _emailService.SendEmailAsync(app.Id, request.Subject, request.Body, request.To);
-
-            return Ok(new { message = "Email sent successfully to the list." });
+            var subscriber = await _subscriberService.SubscribeAsync(request.Email, app.Id);
+            return Ok(subscriber);
         }
 
-        [HttpPost("send-by-category/{category}")]
-        public async Task<IActionResult> SendEmailByCategory(string category, [FromBody] SendEmailByCategoryRequest request, [FromHeader(Name = "AppKey")] string appKey)
+        [HttpPost("unsubscribe")]
+        public async Task<IActionResult> Unsubscribe([FromBody] SubscriberRequest request, [FromHeader(Name = "AppKey")] string appKey)
         {
             if (!await IsValidAppKey(appKey, out var app))
                 return Unauthorized(new { message = "Invalid AppKey or AppSecret" });
 
-            var users = await _userService.GetUsersByCategoryAsync(category);
-            var recipientList = users.Select(u => u.Email).ToList();
+            await _subscriberService.UnsubscribeAsync(request.Email, app.Id);
+            return Ok(new { message = "Unsubscribed successfully." });
+        }
+
+        [HttpGet("subscribers")]
+        public async Task<IActionResult> GetSubscribers([FromHeader(Name = "AppKey")] string appKey)
+        {
+            if (!await IsValidAppKey(appKey, out var app))
+                return Unauthorized(new { message = "Invalid AppKey or AppSecret" });
+
+            var subscribers = await _subscriberService.GetSubscribersAsync(app.Id);
+            return Ok(subscribers);
+        }
+
+        // Email Sending
+
+        [HttpPost("send-to-subscribers")]
+        public async Task<IActionResult> SendToSubscribers([FromBody] EmailContentRequest request, [FromHeader(Name = "AppKey")] string appKey)
+        {
+            if (!await IsValidAppKey(appKey, out var app))
+                return Unauthorized(new { message = "Invalid AppKey or AppSecret" });
+
+            var subscribers = await _subscriberService.GetSubscribersAsync(app.Id);
+            var recipientList = subscribers.Select(s => s.Email).ToList();
 
             if (recipientList.Count == 0)
-                return Ok(new { message = "No users found in the specified category." });
+                return Ok(new { message = "No subscribers to send to." });
 
             await _emailService.SendEmailAsync(app.Id, request.Subject, request.Body, recipientList);
 
-            return Ok(new { message = $"Email sent successfully to users in the '{category}' category." });
+            return Ok(new { message = "Email sent successfully to subscribers." });
+        }
+
+        [HttpPost("send-by-group/{groupName}")]
+        public async Task<IActionResult> SendByGroup(string groupName, [FromBody] EmailContentRequest request, [FromHeader(Name = "AppKey")] string appKey)
+        {
+            if (!await IsValidAppKey(appKey, out var app))
+                return Unauthorized(new { message = "Invalid AppKey or AppSecret" });
+
+            // This is a placeholder for getting users by group. You would need to implement this functionality.
+            var users = await _userService.GetUsersByGroupAsync(groupName, app.Id);
+            var recipientList = users.Select(u => u.Email).ToList();
+
+            if (recipientList.Count == 0)
+                return Ok(new { message = $"No users found in group '{groupName}'." });
+
+            await _emailService.SendEmailAsync(app.Id, request.Subject, request.Body, recipientList);
+
+            return Ok(new { message = $"Email sent successfully to the '{groupName}' group." });
+        }
+        
+        // Email History
+
+        [HttpGet("history")]
+        public async Task<IActionResult> GetEmailHistory([FromHeader(Name = "AppKey")] string appKey)
+        {
+            if (!await IsValidAppKey(appKey, out var app))
+                return Unauthorized(new { message = "Invalid AppKey or AppSecret" });
+
+            var history = await _emailService.GetEmailHistoryAsync(app.Id);
+            return Ok(history);
         }
 
         private async Task<bool> IsValidAppKey(string appKey, out Application app)
@@ -135,14 +186,12 @@ namespace AuthMicroservice.Controller
         }
     }
 
-    public class SendEmailRequest
+    public class SubscriberRequest
     {
-        public string Subject { get; set; }
-        public string Body { get; set; }
-        public List<string> To { get; set; }
+        public string Email { get; set; }
     }
 
-    public class SendEmailByCategoryRequest
+    public class EmailContentRequest
     {
         public string Subject { get; set; }
         public string Body { get; set; }

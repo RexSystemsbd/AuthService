@@ -1,14 +1,17 @@
-﻿using AuthMicroservice.Controller;
+using AuthMicroservice.Controller;
 using AuthMicroservice.Model;
 using AuthMicroservice.Repository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Org.BouncyCastle.Ocsp;
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography.Xml;
 using System.Text;
+using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
 namespace AuthMicroservice.Service
 {
@@ -25,7 +28,9 @@ namespace AuthMicroservice.Service
         Task<User> FindOrCreateUserForFacebookAsync(string email,string username, Guid appId);
         Task<bool> DeactiveUserAndRole(User user, UserRole role);
         Task<User>UpdatedUser(User user);
-        Task<UserRole>UpdatedUserRole(UserRole role);   
+        Task<UserRole>UpdatedUserRole(UserRole role);
+        Task<IEnumerable<User>> GetUsersByGroupAsync(string groupName, string applicationId);
+        Task<IEnumerable<User>> GetUsersByCategoryAsync(string category);
     }
 
     public class UserService : IUserService
@@ -41,6 +46,15 @@ namespace AuthMicroservice.Service
             _userRoleRepository = userRoleRepository;
             _config = config;
         }
+
+        public async Task<IEnumerable<User>> GetUsersByCategoryAsync(string category)
+        {
+            // This is a placeholder. You need to implement the logic to get users by category.
+            // For example, you might have a 'Category' property in your User model.
+            var allUsers = await _userRepository.GetAllAsync();
+            return allUsers.Where(u => u.UserName.Contains(category)); // Just an example
+        }
+
         public async Task<User> UpdatedUser(User user)
         {
             user.PasswordHash = _passwordHasher.HashPassword(null, user.PasswordHash);
@@ -252,7 +266,24 @@ namespace AuthMicroservice.Service
             return tokenString;
         }
 
+        public async Task<IEnumerable<User>> GetUsersByGroupAsync(string groupName, string applicationId)
+        {
+            if (!Guid.TryParse(applicationId, out var appGuid))
+            {
+                return new List<User>();
+            }
 
+            var userRoles = await _userRoleRepository.FindAsync(ur => ur.RoleName == groupName && ur.ApplicationId == appGuid);
+            var usernames = userRoles.Select(ur => ur.UserName).ToList();
+
+            if (!usernames.Any())
+            {
+                return new List<User>();
+            }
+
+            var users = await _userRepository.FindAsync(u => usernames.Contains(u.UserName) && u.ApplicationId == appGuid);
+            return users;
+        }
     }
 
 }
