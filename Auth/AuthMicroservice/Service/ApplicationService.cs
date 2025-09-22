@@ -10,7 +10,7 @@ namespace AuthMicroservice.Service
         Task<IEnumerable<Application>> GetApplicationsAsync(string appKey);
         Task<Application> GetApplicationByIdAsync(Guid appId);   
         Task<IEnumerable<Application>> GetAllAsync();
-        Task<Application> RegisterApplicationAsync(string name);
+        Task<Application> RegisterApplicationAsync(ApplicationRequest app);
         Task<bool> ValidateAppKeyAndSecretAsync(string appKey, string appSecret);
         //Application GetApplication(string appKey);
         //bool ValidateAppKeyAndSecret(string appKey, string appSecret);
@@ -40,12 +40,14 @@ namespace AuthMicroservice.Service
             var app = await _applicationRepository.FindAsync(a=>a.Id==appId);
             return app.FirstOrDefault();
         }
-        public async Task<Application> RegisterApplicationAsync(string name)
+        public async Task<Application> RegisterApplicationAsync(ApplicationRequest app)
         {
             var application = new Application
             {
                 Id = Guid.NewGuid(),
-                Name = name,
+                Name = app.Name,
+                ContactEmail=app.ContactEmail,
+                RedirectUri=app.RedirectUri,
                 AppKey = Guid.NewGuid().ToString(),
                 AppSecret = Guid.NewGuid().ToString(),
                 Description = "Default description" // Provide a value for the Description column
@@ -71,5 +73,12 @@ namespace AuthMicroservice.Service
             var app = (await _applicationRepository.FindAsync(a => a.AppKey == appKey && a.AppSecret == appSecret)).FirstOrDefault();
             return app != null;
         }
+    }
+
+    public class ApplicationRequest
+    {
+        public string Name { get; set; }
+        public string ContactEmail { get; set; }
+        public string RedirectUri { get; set; }
     }
 }

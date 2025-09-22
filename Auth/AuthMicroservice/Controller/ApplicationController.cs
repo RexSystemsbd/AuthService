@@ -34,14 +34,14 @@ namespace AuthMicroservice.Controller
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> RegisterApplication([FromBody] string name)
+        public async Task<IActionResult> RegisterApplication([FromBody] ApplicationRequest application)
         {
-            if (string.IsNullOrEmpty(name))
+            if (string.IsNullOrEmpty(application.Name))
             {
                 return BadRequest("Application name cannot be null or empty.");
             }
 
-            var app = await _applicationService.RegisterApplicationAsync(name);
+            var app = await _applicationService.RegisterApplicationAsync(application);
 
             return Ok(app);
         }
