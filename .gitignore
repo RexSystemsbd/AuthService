@@ -88,3 +88,5 @@ $RECYCLE.BIN/
 /Auth/AuthMicroservice/obj/AuthMicroservice.csproj.nuget.g.props
 /Auth/AuthMicroservice/obj/AuthMicroservice.csproj.nuget.dgspec.json
 /Auth/AuthMicroservice/obj/Debug/net8.0/AuthMicroservice.assets.cache
+/Auth/.vs/AuthMicroservice/v17/.suo
+/Auth/.vs/AuthMicroservice/DesignTimeBuild/.dtbcache.v2
