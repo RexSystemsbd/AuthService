@@ -127,7 +127,7 @@ namespace AuthMicroservice.Controller
             string message = $"Name: {request.Name}\nPhone: {request.PhoneNumber}\nEmail: {request.Email}\nMessage: {request.Body}";
             string subject = "New Contact Us Message";
             List<string> emailList=new List<string>();
-            if (string.IsNullOrEmpty(app.ContactEmail))
+            if (!string.IsNullOrEmpty(app.ContactEmail))
             {
                 foreach (var item in app.ContactEmail.Split(';'))
                 {

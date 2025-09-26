@@ -3,12 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\sajidur\\Project\\AuthService\\Auth\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|c:\\users\\sajidur\\project\\authservice\\auth\\authmicroservice\\controller\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|solutionrelative:authmicroservice\\controller\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|c:\\users\\sajidur\\project\\authservice\\auth\\authmicroservice\\service\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|solutionrelative:authmicroservice\\service\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|c:\\users\\sajidur\\project\\authservice\\auth\\authmicroservice\\controller\\newslettercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|solutionrelative:authmicroservice\\controller\\newslettercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|c:\\users\\sajidur\\project\\authservice\\auth\\authmicroservice\\service\\emailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|solutionrelative:authmicroservice\\service\\emailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|c:\\users\\sajidur\\project\\authservice\\auth\\authmicroservice\\model\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|solutionrelative:authmicroservice\\model\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|c:\\users\\sajidur\\project\\authservice\\auth\\authmicroservice\\controller\\applicationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -21,10 +33,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|c:\\users\\sajidur\\project\\authservice\\auth\\authmicroservice\\service\\applicationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|solutionrelative:authmicroservice\\service\\applicationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|c:\\users\\sajidur\\project\\authservice\\auth\\authmicroservice\\model\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|solutionrelative:authmicroservice\\model\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|c:\\users\\sajidur\\project\\authservice\\auth\\authmicroservice\\repository\\userdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -43,20 +51,12 @@
       "RelativeMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|solutionrelative:authmicroservice\\model\\smtpconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|c:\\users\\sajidur\\project\\authservice\\auth\\authmicroservice\\controller\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|solutionrelative:authmicroservice\\controller\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|c:\\users\\sajidur\\project\\authservice\\auth\\authmicroservice\\controller\\smscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|solutionrelative:authmicroservice\\controller\\smscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|c:\\users\\sajidur\\project\\authservice\\auth\\authmicroservice\\controller\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|solutionrelative:authmicroservice\\controller\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|c:\\users\\sajidur\\project\\authservice\\auth\\authmicroservice\\service\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|solutionrelative:authmicroservice\\service\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{283BE634-14EE-470A-BE7B-4829A20DA1EC}|AuthMicroservice\\AuthMicroservice.csproj|c:\\users\\sajidur\\project\\authservice\\auth\\authmicroservice\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
@@ -86,51 +86,41 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 4,
               "Title": "User.cs",
               "DocumentMoniker": "C:\\Users\\sajidur\\Project\\AuthService\\Auth\\AuthMicroservice\\Model\\User.cs",
               "RelativeDocumentMoniker": "AuthMicroservice\\Model\\User.cs",
               "ToolTip": "C:\\Users\\sajidur\\Project\\AuthService\\Auth\\AuthMicroservice\\Model\\User.cs",
               "RelativeToolTip": "AuthMicroservice\\Model\\User.cs",
-              "ViewState": "AgIAABEAAAAAAAAAAAAxwBgAAAAdAAAAAAAAAA==",
+              "ViewState": "AgIAABIAAAAAAAAAAAAuwBcAAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-01T12:15:47.16Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "EmailService.cs",
-              "DocumentMoniker": "C:\\Users\\sajidur\\Project\\AuthService\\Auth\\AuthMicroservice\\Service\\EmailService.cs",
-              "RelativeDocumentMoniker": "AuthMicroservice\\Service\\EmailService.cs",
-              "ToolTip": "C:\\Users\\sajidur\\Project\\AuthService\\Auth\\AuthMicroservice\\Service\\EmailService.cs",
-              "RelativeToolTip": "AuthMicroservice\\Service\\EmailService.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAA4wEsAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-20T12:15:50.29Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "NewsletterController.cs",
               "DocumentMoniker": "C:\\Users\\sajidur\\Project\\AuthService\\Auth\\AuthMicroservice\\Controller\\NewsletterController.cs",
               "RelativeDocumentMoniker": "AuthMicroservice\\Controller\\NewsletterController.cs",
               "ToolTip": "C:\\Users\\sajidur\\Project\\AuthService\\Auth\\AuthMicroservice\\Controller\\NewsletterController.cs",
               "RelativeToolTip": "AuthMicroservice\\Controller\\NewsletterController.cs",
-              "ViewState": "AgIAAGsAAAAAAAAAAAAQwIUAAAAoAAAAAAAAAA==",
+              "ViewState": "AgIAAHcAAAAAAAAAAAAuwIYAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-20T07:13:48.667Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
               "Title": "UserDbContext.cs",
               "DocumentMoniker": "C:\\Users\\sajidur\\Project\\AuthService\\Auth\\AuthMicroservice\\Repository\\UserDbContext.cs",
               "RelativeDocumentMoniker": "AuthMicroservice\\Repository\\UserDbContext.cs",
@@ -138,12 +128,11 @@
               "RelativeToolTip": "AuthMicroservice\\Repository\\UserDbContext.cs",
               "ViewState": "AgIAABAAAAAAAAAAAAAIwBcAAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-20T09:39:36.66Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-20T09:39:36.66Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "ApplicationController.cs",
               "DocumentMoniker": "C:\\Users\\sajidur\\Project\\AuthService\\Auth\\AuthMicroservice\\Controller\\ApplicationController.cs",
               "RelativeDocumentMoniker": "AuthMicroservice\\Controller\\ApplicationController.cs",
@@ -156,7 +145,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 6,
               "Title": "ContactController.cs",
               "DocumentMoniker": "C:\\Users\\sajidur\\Project\\AuthService\\Auth\\AuthMicroservice\\Controller\\ContactController.cs",
               "RelativeDocumentMoniker": "AuthMicroservice\\Controller\\ContactController.cs",
@@ -169,7 +158,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 7,
               "Title": "ApplicationService.cs",
               "DocumentMoniker": "C:\\Users\\sajidur\\Project\\AuthService\\Auth\\AuthMicroservice\\Service\\ApplicationService.cs",
               "RelativeDocumentMoniker": "AuthMicroservice\\Service\\ApplicationService.cs",
@@ -177,12 +166,50 @@
               "RelativeToolTip": "AuthMicroservice\\Service\\ApplicationService.cs",
               "ViewState": "AgIAAAEAAAAAAAAAAAAgwAoAAABBAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-20T13:07:30.773Z",
+              "WhenOpened": "2025-09-20T13:07:30.773Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UserController.cs",
+              "DocumentMoniker": "C:\\Users\\sajidur\\Project\\AuthService\\Auth\\AuthMicroservice\\Controller\\UserController.cs",
+              "RelativeDocumentMoniker": "AuthMicroservice\\Controller\\UserController.cs",
+              "ToolTip": "C:\\Users\\sajidur\\Project\\AuthService\\Auth\\AuthMicroservice\\Controller\\UserController.cs",
+              "RelativeToolTip": "AuthMicroservice\\Controller\\UserController.cs",
+              "ViewState": "AgIAAPAAAAAAAAAAAAAAAAoBAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-04T14:58:31.669Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 1,
+              "Title": "UserService.cs",
+              "DocumentMoniker": "C:\\Users\\sajidur\\Project\\AuthService\\Auth\\AuthMicroservice\\Service\\UserService.cs",
+              "RelativeDocumentMoniker": "AuthMicroservice\\Service\\UserService.cs",
+              "ToolTip": "C:\\Users\\sajidur\\Project\\AuthService\\Auth\\AuthMicroservice\\Service\\UserService.cs",
+              "RelativeToolTip": "AuthMicroservice\\Service\\UserService.cs",
+              "ViewState": "AgIAANwAAAAAAAAAAAAUwOYAAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-01T11:52:14.123Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "EmailService.cs",
+              "DocumentMoniker": "C:\\Users\\sajidur\\Project\\AuthService\\Auth\\AuthMicroservice\\Service\\EmailService.cs",
+              "RelativeDocumentMoniker": "AuthMicroservice\\Service\\EmailService.cs",
+              "ToolTip": "C:\\Users\\sajidur\\Project\\AuthService\\Auth\\AuthMicroservice\\Service\\EmailService.cs",
+              "RelativeToolTip": "AuthMicroservice\\Service\\EmailService.cs",
+              "ViewState": "AgIAACEAAAAAAAAAAAAuwDUAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-20T12:15:50.29Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
               "Title": "ContactService.cs",
               "DocumentMoniker": "C:\\Users\\sajidur\\Project\\AuthService\\Auth\\AuthMicroservice\\Service\\ContactService.cs",
               "RelativeDocumentMoniker": "AuthMicroservice\\Service\\ContactService.cs",
@@ -190,12 +217,11 @@
               "RelativeToolTip": "AuthMicroservice\\Service\\ContactService.cs",
               "ViewState": "AgIAAA4AAAAAAAAAAAAgwBYAAABCAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-20T07:48:14.334Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-20T07:48:14.334Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 9,
               "Title": "Subscriber.cs",
               "DocumentMoniker": "C:\\Users\\sajidur\\Project\\AuthService\\Auth\\AuthMicroservice\\Model\\Subscriber.cs",
               "RelativeDocumentMoniker": "AuthMicroservice\\Model\\Subscriber.cs",
@@ -203,12 +229,11 @@
               "RelativeToolTip": "AuthMicroservice\\Model\\Subscriber.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-20T12:11:59.748Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-20T12:11:59.748Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 11,
               "Title": "SmtpConfig.cs",
               "DocumentMoniker": "C:\\Users\\sajidur\\Project\\AuthService\\Auth\\AuthMicroservice\\Model\\SmtpConfig.cs",
               "RelativeDocumentMoniker": "AuthMicroservice\\Model\\SmtpConfig.cs",
@@ -216,12 +241,11 @@
               "RelativeToolTip": "AuthMicroservice\\Model\\SmtpConfig.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-20T07:15:10.912Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-20T07:15:10.912Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "SmsController.cs",
               "DocumentMoniker": "C:\\Users\\sajidur\\Project\\AuthService\\Auth\\AuthMicroservice\\Controller\\SmsController.cs",
               "RelativeDocumentMoniker": "AuthMicroservice\\Controller\\SmsController.cs",
@@ -229,8 +253,7 @@
               "RelativeToolTip": "AuthMicroservice\\Controller\\SmsController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-19T06:26:07.9Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-19T06:26:07.9Z"
             },
             {
               "$type": "Document",
@@ -242,21 +265,7 @@
               "RelativeToolTip": "AuthMicroservice\\Model\\UserRole.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-01T11:54:36.44Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "UserService.cs",
-              "DocumentMoniker": "C:\\Users\\sajidur\\Project\\AuthService\\Auth\\AuthMicroservice\\Service\\UserService.cs",
-              "RelativeDocumentMoniker": "AuthMicroservice\\Service\\UserService.cs",
-              "ToolTip": "C:\\Users\\sajidur\\Project\\AuthService\\Auth\\AuthMicroservice\\Service\\UserService.cs",
-              "RelativeToolTip": "AuthMicroservice\\Service\\UserService.cs",
-              "ViewState": "AgIAAKsAAAAAAAAAAAAqwOYAAAAyAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-01T11:52:14.123Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-01T11:54:36.44Z"
             },
             {
               "$type": "Document",
@@ -272,7 +281,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "LoginController.cs",
               "DocumentMoniker": "C:\\Users\\sajidur\\Project\\AuthService\\Auth\\AuthMicroservice\\Controller\\LoginController.cs",
               "RelativeDocumentMoniker": "AuthMicroservice\\Controller\\LoginController.cs",
@@ -280,21 +289,7 @@
               "RelativeToolTip": "AuthMicroservice\\Controller\\LoginController.cs",
               "ViewState": "AgIAAEYAAAAAAAAAAAAAADUAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-04T15:05:40.579Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "UserController.cs",
-              "DocumentMoniker": "C:\\Users\\sajidur\\Project\\AuthService\\Auth\\AuthMicroservice\\Controller\\UserController.cs",
-              "RelativeDocumentMoniker": "AuthMicroservice\\Controller\\UserController.cs",
-              "ToolTip": "C:\\Users\\sajidur\\Project\\AuthService\\Auth\\AuthMicroservice\\Controller\\UserController.cs",
-              "RelativeToolTip": "AuthMicroservice\\Controller\\UserController.cs",
-              "ViewState": "AgIAAOcAAAAAAAAAAAAAAOkAAAAZAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-04T14:58:31.669Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-04T15:05:40.579Z"
             },
             {
               "$type": "Document",
@@ -306,8 +301,7 @@
               "RelativeToolTip": "AuthMicroservice\\Service\\LoginService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-01T12:21:10.185Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-01T12:21:10.185Z"
             },
             {
               "$type": "Document",
@@ -319,8 +313,7 @@
               "RelativeToolTip": "AuthMicroservice\\Program.cs",
               "ViewState": "AgIAABUAAAAAAAAAAAAAACAAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-10T09:14:23.919Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-10T09:14:23.919Z"
             },
             {
               "$type": "Document",

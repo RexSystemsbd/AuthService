@@ -254,25 +254,25 @@ namespace AuthMicroservice.Controller
                 }
 
                 // ✅ Get or register user role
-                var userRole = await loginService.GetUserRoleAsync(userExist.Email, userExist.PhoneNumber, app.Id);
+                //var userRole = await loginService.GetUserRoleAsync(userExist.Email, userExist.PhoneNumber, app.Id);
 
-                if (userRole == null)
-                {
-                    userRole = await _userService.RegisterUserRoleAsync(app.Id, app.Name, request.UserRole, userExist.Email);
-                }
-                else
-                {
-                    userRole.IsActive = true;
-                    userRole.IsDeleted = false;
-                    userRole = await _userService.UpdatedUserRole(userRole);
-                }
+                //if (userRole == null)
+                //{
+                //    userRole = await _userService.RegisterUserRoleAsync(app.Id, app.Name, request.UserRole, userExist.Email);
+                //}
+                //else
+                //{
+                //    userRole.IsActive = true;
+                //    userRole.IsDeleted = false;
+                //    userRole = await _userService.UpdatedUserRole(userRole);
+                //}
 
                 // ✅ Final response
                 return Ok(new
                 {
                     message = "User registered successfully",
                     user = userExist,
-                    role = userRole
+                 //   role = null
                 });
             }
             catch (Exception ex)
@@ -510,8 +510,6 @@ namespace AuthMicroservice.Controller
         [Required]
         public string Password { get; set; }
 
-        [Required]
-        public string UserRole { get; set; }
     }
    
 
