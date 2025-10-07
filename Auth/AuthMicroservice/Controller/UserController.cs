@@ -292,11 +292,9 @@ namespace AuthMicroservice.Controller
                   [FromHeader(Name = "AppKey")] string appKey)
         {
             // Fetch applications asynchronously
-            var applications = await _applicationService.GetApplicationsAsync(appKey);
-            var app = applications.FirstOrDefault(a => a.AppKey == appKey);
-
+            var app = _applicationService.GetApplicationsAsync(appKey).Result.FirstOrDefault();
             // Validate the application key and secret asynchronously
-            if (app == null || !await _applicationService.ValidateAppKeyAndSecretAsync(appKey, app.AppSecret))
+            if (app == null)
             {
                 return Unauthorized();
             }

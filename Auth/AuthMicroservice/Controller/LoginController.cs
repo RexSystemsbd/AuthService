@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AuthMicroservice.Model;
+using AuthMicroservice.Service;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using System.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using AuthMicroservice.Service;
-using AuthMicroservice.Model;
 namespace AuthMicroservice.Controller
 {
     [ApiController]
@@ -55,10 +56,10 @@ namespace AuthMicroservice.Controller
             //If any userRole exist?
            
              var  userRole = await _loginService.GetUserRoleAsync(user.Email, user.PhoneNumber, app.Id);
-            
+            var tokenString = _userService.GetToken(user, app.AppSecret, model.Username);
+
             if (userRole!=null)
             {
-                var tokenString=_userService.GetToken(user,app.AppSecret,model.Username);
                 var role = userRole.RoleName;
                 //userName may be Email or MobileNumber or FistName&LastName
                 return Ok(new
@@ -73,7 +74,15 @@ namespace AuthMicroservice.Controller
                 });
             }
 
-            return Unauthorized();
+            return Ok(new
+            {
+                UserId = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                MobileNumber = user.PhoneNumber,
+                Token = tokenString
+            });
         }
    
     }
