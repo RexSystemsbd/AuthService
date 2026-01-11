@@ -12,6 +12,7 @@ namespace AuthMicroservice.Service
     public interface IEmailService
     {
         Task SendEmailAsync(Guid applicationId, string subject, string body, List<string> to);
+        Task SendEmailAsync(Guid applicationId, string subject, string body, List<string> to, List<Attachment> attachments);
         Task<IEnumerable<EmailHistory>> GetEmailHistoryAsync(Guid applicationId);
     }
 
@@ -27,6 +28,11 @@ namespace AuthMicroservice.Service
         }
 
         public async Task SendEmailAsync(Guid applicationId, string subject, string body, List<string> to)
+        {
+            await SendEmailAsync(applicationId, subject, body, to, null);
+        }
+
+        public async Task SendEmailAsync(Guid applicationId, string subject, string body, List<string> to, List<Attachment> attachments)
         {
             var smtpConfig = await _smtpConfigService.GetSmtpConfigByApplicationIdAsync(applicationId);
             if (smtpConfig == null)
@@ -54,6 +60,14 @@ namespace AuthMicroservice.Service
                     foreach (var email in to)
                     {
                         mailMessage.To.Add(email);
+                    }
+
+                    if (attachments != null && attachments.Count > 0)
+                    {
+                        foreach (var attachment in attachments)
+                        {
+                            mailMessage.Attachments.Add(attachment);
+                        }
                     }
 
                     await client.SendMailAsync(mailMessage);

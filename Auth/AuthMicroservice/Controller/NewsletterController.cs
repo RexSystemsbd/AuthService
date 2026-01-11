@@ -1,6 +1,8 @@
 using AuthMicroservice.Model;
 using AuthMicroservice.Service;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.Mail;
+using Microsoft.AspNetCore.Http;
 
 namespace AuthMicroservice.Controller
 {
@@ -125,7 +127,7 @@ namespace AuthMicroservice.Controller
             var subscriber = await _subscriberService.ContactWithUSAsync(request, app.Id.ToString());
 
             string message = $"Name: {request.Name}\nPhone: {request.PhoneNumber}\nEmail: {request.Email}\nMessage: {request.Body}";
-            string subject = "New Contact Us Message";
+            string subject = request.Subject ?? "New Contact Us Message";
             List<string> emailList=new List<string>();
             if (!string.IsNullOrEmpty(app.ContactEmail))
             {
@@ -135,6 +137,62 @@ namespace AuthMicroservice.Controller
                 }
             }
             await _emailService.SendEmailAsync(app.Id, subject, message, emailList);
+            return Ok(subscriber);
+        }
+
+        [HttpPost("contactwithattachment")]
+        public async Task<IActionResult> ContactWithAttachment([FromForm] ContactWithAttachmentRequest request, [FromHeader(Name = "AppKey")] string appKey)
+        {
+            var (isValid, app) = await IsValidAppKey(appKey);
+            if (!isValid)
+                return Unauthorized(new { message = "Invalid AppKey or AppSecret" });
+
+            // Using the same service method for tracking/subscription
+            var subscriber = await _subscriberService.ContactWithUSAsync(new ContactWithUSReqest
+            {
+                Name = request.Name,
+                Email = request.Email,
+                PhoneNumber = request.PhoneNumber,
+                Company = request.Company,
+                Subject = request.Subject,
+                Body = request.Body
+            }, app.Id.ToString());
+
+            string message = $"Name: {request.Name}\nPhone: {request.PhoneNumber}\nEmail: {request.Email}\nMessage: {request.Body}";
+            string subject = request.Subject ?? "New Contact Us Message (with attachment)";
+            List<string> emailList = new List<string>();
+            if (!string.IsNullOrEmpty(app.ContactEmail))
+            {
+                foreach (var item in app.ContactEmail.Split(';'))
+                {
+                    emailList.Add(item);
+                }
+            }
+
+            List<Attachment> attachments = new List<Attachment>();
+            if (request.Attachments != null)
+            {
+                foreach (var file in request.Attachments)
+                {
+                    if (file.Length > 0)
+                    {
+                        var stream = file.OpenReadStream();
+                        attachments.Add(new Attachment(stream, file.FileName, file.ContentType));
+                    }
+                }
+            }
+
+            try
+            {
+                await _emailService.SendEmailAsync(app.Id, subject, message, emailList, attachments);
+            }
+            finally
+            {
+                // Ensure streams are disposed if necessary, though System.Net.Mail.Attachment usually handles it if we don't dispose early.
+                // However, Attachment doesn't automatically close the stream until it's disposed.
+                // MailMessage.Dispose() will dispose attachments.
+            }
+
             return Ok(subscriber);
         }
 
@@ -231,5 +289,16 @@ namespace AuthMicroservice.Controller
     {
         public string Subject { get; set; }
         public string Body { get; set; }
+    }
+
+    public class ContactWithAttachmentRequest
+    {
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Company { get; set; }
+        public string Subject { get; set; }
+        public string Body { get; set; }
+        public IFormFileCollection Attachments { get; set; }
     }
 }
