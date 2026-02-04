@@ -58,7 +58,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 23,
+          "SelectedChildIndex": 22,
           "Children": [
             {
               "$type": "Document",
@@ -158,10 +158,6 @@
               "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
             },
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
-            },
-            {
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "NewsletterController.cs",
@@ -169,7 +165,7 @@
               "RelativeDocumentMoniker": "AuthMicroservice\\Controller\\NewsletterController.cs",
               "ToolTip": "C:\\alamin\\AuthService\\Auth\\AuthMicroservice\\Controller\\NewsletterController.cs",
               "RelativeToolTip": "AuthMicroservice\\Controller\\NewsletterController.cs",
-              "ViewState": "AgIAAJAAAAAAAAAAAAAAAJYAAAAUAAAAAAAAAA==",
+              "ViewState": "AgIAAM0AAAAAAAAAAAAAAM4AAAAOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-01-11T13:52:31.119Z",
               "EditorCaption": ""
@@ -280,7 +276,8 @@
               "RelativeToolTip": "AuthMicroservice\\Program.cs",
               "ViewState": "AgIAAA8AAAAAAAAAAAAAABQAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-10T09:14:23.919Z"
+              "WhenOpened": "2025-07-10T09:14:23.919Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -293,6 +290,10 @@
               "ViewState": "AgIAAAUAAAAAAAAAAAAxwBgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-13T05:21:14.362Z"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
             }
           ]
         },

@@ -149,7 +149,7 @@ Name:{request.Name}
 Phone:{request.PhoneNumber}
 
 Email:{request.Name}
-{(string.IsNullOrWhiteSpace(request.Company)||request.Company==""
+{(string.IsNullOrWhiteSpace(request.Company) || request.Company == ""
     ? string.Empty
     : $"\nCompany:{request.Company}")}
 
@@ -190,7 +190,23 @@ Message:
                 Body = request.Body
             }, app.Id.ToString());
 
-            string message = $"Name: {request.Name}\nPhone: {request.PhoneNumber}\nEmail: {request.Email}\nMessage: {request.Body}";
+            //string message = $"Name: {request.Name}\nPhone: {request.PhoneNumber}\nEmail: {request.Email}\nMessage: {request.Body}";
+            var message = $@"
+You have received a new contact request.
+
+Name:{request.Name}
+
+Phone:{request.PhoneNumber}
+
+Email:{request.Name}
+{(string.IsNullOrWhiteSpace(request.Company) || request.Company == ""
+    ? string.Empty
+    : $"\nCompany:{request.Company}")}
+
+Message:
+{request.Body}
+".Trim();
+
             string subject = request.Subject ?? "New Contact Us Message (with attachment)";
             List<string> emailList = new List<string>();
             if (!string.IsNullOrEmpty(app.ContactEmail))
