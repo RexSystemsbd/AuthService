@@ -126,17 +126,52 @@ namespace AuthMicroservice.Controller
 
             var subscriber = await _subscriberService.ContactWithUSAsync(request, app.Id.ToString());
 
-            string message = $"Name: {request.Name}\nPhone: {request.PhoneNumber}\nEmail: {request.Email}\nMessage: {request.Body}";
-            string subject = request.Subject ?? "New Contact Us Message";
-            List<string> emailList=new List<string>();
-            if (!string.IsNullOrEmpty(app.ContactEmail))
+            //string message = $"Name: {request.Name}\nPhone: {request.PhoneNumber}\nEmail: {request.Email}\nMessage: {request.Body}";
+            //string subject = request.Subject ?? "New Contact Us Message";
+            //List<string> emailList=new List<string>();
+            //if (!string.IsNullOrEmpty(app.ContactEmail))
+            //{
+            //    foreach (var item in app.ContactEmail.Split(';'))
+            //    {
+            //        emailList.Add(item); 
+            //    }
+            //}
+            //await _emailService.SendEmailAsync(app.Id, subject, message, emailList);
+            var subject = string.IsNullOrWhiteSpace(request.Subject)
+    ? "New Contact Us Message"
+    : request.Subject;
+
+            var message = $@"
+You have received a new contact request.
+
+Name:
+{request.Name}
+
+Phone:
+{request.PhoneNumber}
+
+Name:
+{request.Name}
+{(string.IsNullOrWhiteSpace(request.Company)
+    ? string.Empty
+    : $"\n\nCompany:\n{request.Company}")}
+
+Message:
+{request.Body}
+".Trim();
+
+            var emailList = new List<string>();
+
+            if (!string.IsNullOrWhiteSpace(app.ContactEmail))
             {
-                foreach (var item in app.ContactEmail.Split(';'))
-                {
-                    emailList.Add(item); 
-                }
+                emailList = app.ContactEmail
+                    .Split(';', StringSplitOptions.RemoveEmptyEntries)
+                    .Select(e => e.Trim())
+                    .ToList();
             }
+
             await _emailService.SendEmailAsync(app.Id, subject, message, emailList);
+
             return Ok(subscriber);
         }
 
@@ -255,7 +290,7 @@ namespace AuthMicroservice.Controller
 
             return Ok(new { message = $"Email sent successfully to the '{groupName}' group." });
         }
-        
+
         // Email History
 
         [HttpGet("history")]
