@@ -144,17 +144,14 @@ namespace AuthMicroservice.Controller
             var message = $@"
 You have received a new contact request.
 
-Name:
-{request.Name}
+Name:{request.Name}
 
-Phone:
-{request.PhoneNumber}
+Phone:{request.PhoneNumber}
 
-Name:
-{request.Name}
-{(string.IsNullOrWhiteSpace(request.Company)
+Email:{request.Name}
+{(string.IsNullOrWhiteSpace(request.Company)||request.Company==""
     ? string.Empty
-    : $"\n\nCompany:\n{request.Company}")}
+    : $"\nCompany:{request.Company}")}
 
 Message:
 {request.Body}
