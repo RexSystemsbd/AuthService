@@ -142,20 +142,54 @@ namespace AuthMicroservice.Controller
     : request.Subject;
 
             var message = $@"
-You have received a new contact request.
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='UTF-8'>
+</head>
+<body style='margin:0; padding:0; font-family: Arial, Helvetica, sans-serif; background-color:#f5f5f5;'>
 
-Name:{request.Name}
+    <div style='max-width:600px; margin:20px auto; background-color:#ffffff; padding:20px; border-radius:6px;'>
 
-Phone:{request.PhoneNumber}
+        <h2 style='margin-top:0; color:#333;'>New Contact Request</h2>
 
-Email:{request.Name}
-{(string.IsNullOrWhiteSpace(request.Company) || request.Company == ""
-    ? string.Empty
-    : $"\nCompany:{request.Company}")}
+        <p style='margin:8px 0;'>
+            <strong>Name:</strong>
+            {request.Name}
+        </p>
 
-Message:
-{request.Body}
-".Trim();
+        <p style='margin:8px 0;'>
+            <strong>Phone:</strong>
+            {request.PhoneNumber}
+        </p>
+
+        <p style='margin:8px 0;'>
+            <strong>Email:</strong>
+            {request.Email}
+        </p>
+
+        {(string.IsNullOrWhiteSpace(request.Company)
+                        ? string.Empty
+                        : $@"
+        <p style='margin:8px 0;'>
+            <strong>Company:</strong>
+            {request.Company}
+        </p>")}
+
+        <hr style='margin:16px 0; border:none; border-top:1px solid #ddd;' />
+
+        <p style='margin:8px 0;'>
+            <strong>Message:</strong>
+        </p>
+
+        <div style='background-color:#f9f9f9; padding:12px; border-radius:4px; white-space:pre-line;'>
+            {request.Body}
+        </div>
+
+    </div>
+
+</body>
+</html>";
 
             var emailList = new List<string>();
 
@@ -192,19 +226,45 @@ Message:
 
             //string message = $"Name: {request.Name}\nPhone: {request.PhoneNumber}\nEmail: {request.Email}\nMessage: {request.Body}";
             var message = $@"
-You have received a new contact request.
+<!DOCTYPE html>
+<html>
+<body style='font-family: Arial, Helvetica, sans-serif; line-height:1.6; color:#333;'>
 
-Name:{request.Name}
+    <p>You have received a new contact request.</p>
 
-Phone:{request.PhoneNumber}
+    <p>
+        <strong>Name:</strong>
+        {request.Name}
+    </p>
 
-Email:{request.Name}
-{(string.IsNullOrWhiteSpace(request.Company) || request.Company == ""
-    ? string.Empty
-    : $"\nCompany:{request.Company}")}
+    <p>
+        <strong>Phone:</strong>
+        {request.PhoneNumber}
+    </p>
 
-Message:
-{request.Body}
+    <p>
+        <strong>Email:</strong>
+        {request.Email}
+    </p>
+
+    {(string.IsNullOrWhiteSpace(request.Company)
+         ? string.Empty
+         : $@"
+    <p>
+        <strong>Company:</strong>
+        {request.Company}
+    </p>")}
+
+    <p>
+        <strong>Message:</strong>
+    </p>
+
+    <div style='background-color:#f7f7f7; padding:12px; border-radius:4px; white-space:pre-line;'>
+        {request.Body}
+    </div>
+
+</body>
+</html>
 ".Trim();
 
             string subject = request.Subject ?? "New Contact Us Message (with attachment)";
