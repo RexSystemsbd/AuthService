@@ -107,6 +107,7 @@ namespace AuthMicroservice.Service
             existingContact.ExtraData = contact.ExtraData;
             existingContact.NextContactDate = contact.NextContactDate;
             existingContact.Tags = contact.Tags;
+            existingContact.Website = contact.Website;
 
             await _contactRepository.UpdateAsync(existingContact);
         }
@@ -251,6 +252,7 @@ namespace AuthMicroservice.Service
             existing.Gps = FirstNonEmpty(incoming.Gps, existing.Gps);
             existing.HealthData = FirstNonEmpty(incoming.HealthData, existing.HealthData);
             existing.ExtraData = FirstNonEmpty(incoming.ExtraData, existing.ExtraData);
+            existing.Website = FirstNonEmpty(incoming.Website, existing.Website);
             if (incoming.EngagementScore.HasValue)
                 existing.EngagementScore = incoming.EngagementScore;
             // Tags accumulate across imports rather than being replaced.

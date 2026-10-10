@@ -320,6 +320,9 @@ namespace AuthMicroservice.Migrations
                     b.Property<DateTime?>("VerifiedDate")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<string>("Website")
+                        .HasColumnType("longtext");
+
                     b.Property<string>("WorkAddress")
                         .HasColumnType("longtext");
 

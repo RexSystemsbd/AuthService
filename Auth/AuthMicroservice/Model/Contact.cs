@@ -52,5 +52,6 @@ namespace AuthMicroservice.Model
         public string? FacebookPsid { get; set; }
         // Comma-separated free-form labels ("vip, wholesale") used to segment the data bank.
         public string? Tags { get; set; }
+        public string? Website { get; set; }
     }
 }
