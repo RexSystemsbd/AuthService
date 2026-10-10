@@ -24,8 +24,10 @@ namespace AuthMicroservice.Controller
         private readonly ILogger _logger;
         private readonly HttpClient _httpClient;
         private readonly ILoginService loginService;
-        public UserController(IUserService userService, IApplicationService applicationService, IVerificationService verificationService, HttpClient httpClient, ILogger<UserController> logger, ILoginService loginService)
+        private readonly IPasswordResetService _passwordResetService;
+        public UserController(IUserService userService, IApplicationService applicationService, IVerificationService verificationService, HttpClient httpClient, ILogger<UserController> logger, ILoginService loginService, IPasswordResetService passwordResetService)
         {
+            _passwordResetService = passwordResetService;
             this.loginService = loginService;
             _userService = userService;
             _applicationService = applicationService;
@@ -398,6 +400,40 @@ namespace AuthMicroservice.Controller
             return BadRequest("Password reset failed.");
         }
 
+        // Self-service "forgot password", step 1: email a one-time reset link. Answers the
+        // same way whether or not the account exists, so it can't be used to discover
+        // which emails are registered. (reset-password above is the separate server-side
+        // admin reset that needs the AppSecret.)
+        [HttpPost("forgot-password")]
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordRequest request,
+            [FromHeader(Name = "AppKey")] string appKey)
+        {
+            var applications = await _applicationService.GetApplicationsAsync(appKey);
+            var app = applications.FirstOrDefault(a => a.AppKey == appKey);
+            if (app == null)
+                return Unauthorized(new { message = "Invalid AppKey" });
+
+            if (string.IsNullOrWhiteSpace(request?.Email))
+                return BadRequest(new { message = "Email is required." });
+
+            await _passwordResetService.RequestResetAsync(app, request.Email);
+            return Ok(new { message = "If an account exists for that email, we've sent a link to reset the password." });
+        }
+
+        // Step 2: the emailed link's token plus the new password.
+        [HttpPost("reset-password-with-token")]
+        public async Task<IActionResult> ResetPasswordWithToken([FromBody] ResetPasswordWithTokenRequest request,
+            [FromHeader(Name = "AppKey")] string appKey)
+        {
+            var applications = await _applicationService.GetApplicationsAsync(appKey);
+            var app = applications.FirstOrDefault(a => a.AppKey == appKey);
+            if (app == null)
+                return Unauthorized(new { message = "Invalid AppKey" });
+
+            var (ok, error) = await _passwordResetService.ResetAsync(app, request?.Token, request?.NewPassword);
+            return ok ? Ok(new { message = "Your password has been reset. You can sign in now." }) : BadRequest(new { message = error });
+        }
+
         
 
         [HttpPost("LoginWithGoogle")]
@@ -566,6 +602,17 @@ namespace AuthMicroservice.Controller
     {
         public string Email { get; set; }
         public string NewPassword { get; set; }
+    }
+
+    public class ForgotPasswordRequest
+    {
+        public string? Email { get; set; }
+    }
+
+    public class ResetPasswordWithTokenRequest
+    {
+        public string? Token { get; set; }
+        public string? NewPassword { get; set; }
     }
     public class GoogleTokenResponse
     {

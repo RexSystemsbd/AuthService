@@ -34,6 +34,7 @@ namespace AuthMicroservice.Service
         Task<string> SendEmailAsync(Guid applicationId, string subject, string body, List<string> to, List<Attachment> attachments);
         Task<PersonalizedSendResult> SendPersonalizedEmailAsync(Guid applicationId, string subjectTemplate, string bodyTemplate, List<EmailRecipient> recipients, Dictionary<string, string> globalVariables = null);
         Task<IEnumerable<EmailHistory>> GetEmailHistoryAsync(Guid applicationId);
+        Task SendTransactionalEmailAsync(Guid applicationId, string subject, string body, string to);
     }
 
     public class EmailService : IEmailService
@@ -47,6 +48,35 @@ namespace AuthMicroservice.Service
             _smtpConfigService = smtpConfigService;
             _emailHistoryRepository = emailHistoryRepository;
             _contactActivityService = contactActivityService;
+        }
+
+        // For security emails (password reset links): sent through the tenant's SMTP but
+        // deliberately NOT written to EmailHistory or the contact activity log, since both
+        // are readable by every user of the tenant and the body carries a live credential.
+        // Throws if SMTP isn't configured or delivery fails.
+        public async Task SendTransactionalEmailAsync(Guid applicationId, string subject, string body, string to)
+        {
+            var smtpConfig = await _smtpConfigService.GetSmtpConfigByApplicationIdAsync(applicationId);
+            if (smtpConfig == null)
+                throw new Exception("SMTP configuration not found for this application.");
+
+            using var client = new SmtpClient(smtpConfig.Host, smtpConfig.Port)
+            {
+                UseDefaultCredentials = false,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                Timeout = 10000,
+                Credentials = new NetworkCredential(smtpConfig.Username, smtpConfig.Password),
+                EnableSsl = smtpConfig.EnableSsl,
+            };
+            using var mailMessage = new MailMessage
+            {
+                From = new MailAddress(smtpConfig.FromAddress, smtpConfig.FromName),
+                Subject = subject,
+                Body = body,
+                IsBodyHtml = true,
+            };
+            mailMessage.To.Add(to);
+            await client.SendMailAsync(mailMessage);
         }
 
         public async Task<string> SendEmailAsync(Guid applicationId, string subject, string body, List<string> to)

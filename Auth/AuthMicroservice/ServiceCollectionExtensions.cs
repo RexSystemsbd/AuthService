@@ -50,6 +50,7 @@ namespace AuthMicroservice
             services.AddScoped<ISegmentService, SegmentService>();
             services.AddScoped<IFeedbackService, FeedbackService>();
             services.AddScoped<IOnboardingService, OnboardingService>();
+            services.AddScoped<IPasswordResetService, PasswordResetService>();
             services.AddHttpClient();
             // Auto-redirect disabled so WebCrawlerService can re-validate each redirect hop's
             // resolved address before following it (see WebCrawlerService.FetchSafeAsync).
@@ -66,6 +67,7 @@ namespace AuthMicroservice
             services.AddHttpContextAccessor();
             services.AddSingleton<ITenantKeyProvider, TenantKeyProvider>();
             services.AddSingleton<IContactExtractionService, ContactExtractionService>();
+            services.AddSingleton<IContactTextExtractionService, ContactTextExtractionService>();
 
             return services;
         }

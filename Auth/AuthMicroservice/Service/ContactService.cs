@@ -221,6 +221,10 @@ namespace AuthMicroservice.Service
 
         private static void MergeContactFields(Contact existing, Contact incoming)
         {
+            // A contact first imported phone-only gains an email from a later import, but an
+            // existing email is never replaced (it's the primary identity).
+            if (string.IsNullOrWhiteSpace(existing.Email) && !string.IsNullOrWhiteSpace(incoming.Email))
+                existing.Email = incoming.Email.Trim();
             existing.FirstName = FirstNonEmpty(incoming.FirstName, existing.FirstName);
             existing.LastName = FirstNonEmpty(incoming.LastName, existing.LastName);
             existing.Phone = FirstNonEmpty(incoming.Phone, existing.Phone);
