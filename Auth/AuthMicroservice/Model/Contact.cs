@@ -50,5 +50,7 @@ namespace AuthMicroservice.Model
         // messaged the connected Page (Meta's Send API cannot target arbitrary users);
         // populated by a webhook receiver on first inbound message, not by this API.
         public string? FacebookPsid { get; set; }
+        // Comma-separated free-form labels ("vip, wholesale") used to segment the data bank.
+        public string? Tags { get; set; }
     }
 }

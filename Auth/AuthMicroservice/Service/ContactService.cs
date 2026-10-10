@@ -106,6 +106,7 @@ namespace AuthMicroservice.Service
             existingContact.HealthData = contact.HealthData;
             existingContact.ExtraData = contact.ExtraData;
             existingContact.NextContactDate = contact.NextContactDate;
+            existingContact.Tags = contact.Tags;
 
             await _contactRepository.UpdateAsync(existingContact);
         }
@@ -119,55 +120,103 @@ namespace AuthMicroservice.Service
             }
         }
 
+        // Matches incoming rows against existing contacts (and against each other within
+        // the same batch) by EITHER normalized email OR normalized phone — not just email.
+        // This matters for crawled/scraped data in particular: the same person often turns
+        // up on one page with just an email and on another with just a phone number, and
+        // without a phone-based match those would otherwise land as two separate contacts.
         public async Task<BulkImportResult> BulkImportContactsAsync(List<Contact> rows, Guid applicationId)
         {
             var result = new BulkImportResult();
 
-            var existingByEmail = (await _contactRepository.FindAsync(c => c.ApplicationId == applicationId))
-                .Where(c => !string.IsNullOrWhiteSpace(c.Email))
-                .GroupBy(c => c.Email.Trim().ToLowerInvariant())
-                .ToDictionary(g => g.Key, g => g.First());
+            var existingContacts = (await _contactRepository.FindAsync(c => c.ApplicationId == applicationId)).ToList();
+            var existingByEmail = BuildEmailIndex(existingContacts);
+            var existingByPhone = BuildPhoneIndex(existingContacts);
 
             var toCreate = new List<Contact>();
-            var seenInBatch = new HashSet<string>();
+            var stagedByEmail = new Dictionary<string, Contact>();
+            var stagedByPhone = new Dictionary<string, Contact>();
+            var updatedIds = new HashSet<Guid>();
 
             foreach (var row in rows)
             {
-                if (row == null || string.IsNullOrWhiteSpace(row.Email))
+                if (row == null)
                 {
                     result.Skipped++;
                     continue;
                 }
 
-                var key = row.Email.Trim().ToLowerInvariant();
+                var emailKey = ContactMatching.NormalizeEmail(row.Email);
+                var phoneKey = ContactMatching.NormalizePhone(row.Phone);
 
-                if (existingByEmail.TryGetValue(key, out var existing))
+                if (emailKey == null && phoneKey == null)
+                {
+                    result.Skipped++;
+                    continue;
+                }
+
+                var existing = LookUp(existingByEmail, existingByPhone, emailKey, phoneKey);
+                if (existing != null)
                 {
                     MergeContactFields(existing, row);
-                    await _contactRepository.UpdateAsync(existing);
-                    result.Updated++;
+                    if (updatedIds.Add(existing.Id))
+                        await _contactRepository.UpdateAsync(existing);
+
+                    // Re-index in case this row supplied an identifier (email or phone)
+                    // the existing contact didn't have before, so a later row in the same
+                    // batch that only shares the *new* identifier still matches it.
+                    IndexContact(existing, existingByEmail, existingByPhone);
+                    continue;
                 }
-                else if (!seenInBatch.Add(key))
+
+                var staged = LookUp(stagedByEmail, stagedByPhone, emailKey, phoneKey);
+                if (staged != null)
                 {
-                    // Duplicate email within the same import file.
-                    result.Skipped++;
+                    MergeContactFields(staged, row);
+                    IndexContact(staged, stagedByEmail, stagedByPhone);
+                    continue;
                 }
-                else
-                {
-                    row.Id = Guid.NewGuid();
-                    row.ApplicationId = applicationId;
-                    row.Email = row.Email.Trim();
-                    toCreate.Add(row);
-                }
+
+                row.Id = Guid.NewGuid();
+                row.ApplicationId = applicationId;
+                if (row.Email != null) row.Email = row.Email.Trim();
+                toCreate.Add(row);
+                IndexContact(row, stagedByEmail, stagedByPhone);
             }
 
             if (toCreate.Count > 0)
             {
                 await _contactRepository.AddRangeAsync(toCreate);
-                result.Created = toCreate.Count;
             }
 
+            result.Created = toCreate.Count;
+            result.Updated = updatedIds.Count;
             return result;
+        }
+
+        private static Dictionary<string, Contact> BuildEmailIndex(IEnumerable<Contact> contacts) =>
+            contacts.Where(c => ContactMatching.NormalizeEmail(c.Email) != null)
+                .GroupBy(c => ContactMatching.NormalizeEmail(c.Email))
+                .ToDictionary(g => g.Key, g => g.First());
+
+        private static Dictionary<string, Contact> BuildPhoneIndex(IEnumerable<Contact> contacts) =>
+            contacts.Where(c => ContactMatching.NormalizePhone(c.Phone) != null)
+                .GroupBy(c => ContactMatching.NormalizePhone(c.Phone))
+                .ToDictionary(g => g.Key, g => g.First());
+
+        private static Contact LookUp(Dictionary<string, Contact> byEmail, Dictionary<string, Contact> byPhone, string emailKey, string phoneKey)
+        {
+            if (emailKey != null && byEmail.TryGetValue(emailKey, out var byEmailMatch)) return byEmailMatch;
+            if (phoneKey != null && byPhone.TryGetValue(phoneKey, out var byPhoneMatch)) return byPhoneMatch;
+            return null;
+        }
+
+        private static void IndexContact(Contact contact, Dictionary<string, Contact> byEmail, Dictionary<string, Contact> byPhone)
+        {
+            var emailKey = ContactMatching.NormalizeEmail(contact.Email);
+            var phoneKey = ContactMatching.NormalizePhone(contact.Phone);
+            if (emailKey != null) byEmail[emailKey] = contact;
+            if (phoneKey != null) byPhone[phoneKey] = contact;
         }
 
         private static void MergeContactFields(Contact existing, Contact incoming)
@@ -200,6 +249,9 @@ namespace AuthMicroservice.Service
             existing.ExtraData = FirstNonEmpty(incoming.ExtraData, existing.ExtraData);
             if (incoming.EngagementScore.HasValue)
                 existing.EngagementScore = incoming.EngagementScore;
+            // Tags accumulate across imports rather than being replaced.
+            var mergedTags = SegmentService.SplitTags(existing.Tags).Union(SegmentService.SplitTags(incoming.Tags), StringComparer.OrdinalIgnoreCase).ToList();
+            existing.Tags = mergedTags.Count == 0 ? null : string.Join(", ", mergedTags);
         }
 
         private static string FirstNonEmpty(string incoming, string current) =>

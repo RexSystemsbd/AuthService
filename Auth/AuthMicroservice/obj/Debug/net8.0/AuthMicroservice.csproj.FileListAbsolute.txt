@@ -1179,4 +1179,4 @@ C:\Users\sajidur\Project\AuthService\Auth\AuthMicroservice\bin\Debug\net8.0\runt
 C:\Users\sajidur\Project\AuthService\Auth\AuthMicroservice\bin\Debug\net8.0\runtimes\win-x64\native\LdaNative.dll
 C:\Users\sajidur\Project\AuthService\Auth\AuthMicroservice\bin\Debug\net8.0\runtimes\win-x86\native\LdaNative.dll
 C:\Users\sajidur\Project\AuthService\Auth\AuthMicroservice\bin\Debug\net8.0\HtmlAgilityPack.dll
-C:\Users\sajidur\Project\AuthService\Auth\AuthMicroservice\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\Users\sajidur\Project\AuthService\Auth\AuthMicroservice\obj\Debug\net8.0\swae.build.ex.cache

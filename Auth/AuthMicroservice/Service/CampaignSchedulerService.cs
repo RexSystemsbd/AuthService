@@ -25,6 +25,8 @@ namespace AuthMicroservice.Service
             while (!stoppingToken.IsCancellationRequested)
             {
                 await SendDueCampaignsAsync(stoppingToken);
+                await SendDueFeedbackSurveysAsync(stoppingToken);
+                await ProcessOnboardingAutomationAsync();
 
                 try
                 {
@@ -63,6 +65,51 @@ namespace AuthMicroservice.Service
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error while checking for due scheduled campaigns.");
+            }
+        }
+
+        // Scheduled and recurring customer feedback surveys share this poll with campaigns.
+        private async Task SendDueFeedbackSurveysAsync(CancellationToken stoppingToken)
+        {
+            try
+            {
+                using var scope = _scopeFactory.CreateScope();
+                var feedbackService = scope.ServiceProvider.GetRequiredService<IFeedbackService>();
+
+                var dueSurveys = await feedbackService.GetDueSurveysAsync();
+                foreach (var survey in dueSurveys)
+                {
+                    if (stoppingToken.IsCancellationRequested) break;
+
+                    try
+                    {
+                        await feedbackService.SendDueSurveyAsync(survey);
+                        _logger.LogInformation("Scheduled feedback survey {SurveyId} ({Name}) sent.", survey.Id, survey.Name);
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogError(ex, "Failed to send scheduled feedback survey {SurveyId}.", survey.Id);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error while checking for due feedback surveys.");
+            }
+        }
+
+        // Automated onboarding emails ("Day 3: getting started guide") that have come due.
+        private async Task ProcessOnboardingAutomationAsync()
+        {
+            try
+            {
+                using var scope = _scopeFactory.CreateScope();
+                var onboardingService = scope.ServiceProvider.GetRequiredService<IOnboardingService>();
+                await onboardingService.ProcessDueAutomationAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error while processing onboarding automation.");
             }
         }
     }

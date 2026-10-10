@@ -191,7 +191,7 @@ namespace AuthMicroservice.Service
             };
         }
 
-        private static (string firstName, string lastName) SplitName(string name)
+        internal static (string firstName, string lastName) SplitName(string name)
         {
             if (string.IsNullOrWhiteSpace(name)) return (null, null);
 

@@ -16,6 +16,8 @@ namespace AuthMicroservice.Service
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Company { get; set; }
+        // Extra per-recipient {{variables}}, e.g. a feedback survey's private response link.
+        public Dictionary<string, string>? Variables { get; set; }
     }
 
     public class PersonalizedSendResult
@@ -23,6 +25,7 @@ namespace AuthMicroservice.Service
         public int SentCount { get; set; }
         public int FailedCount { get; set; }
         public string Status { get; set; }
+        public List<string> FailedEmails { get; set; } = new List<string>();
     }
 
     public interface IEmailService
@@ -126,6 +129,7 @@ namespace AuthMicroservice.Service
 
             int sentCount = 0;
             int failedCount = 0;
+            var failedEmails = new List<string>();
 
             using (var client = new SmtpClient(smtpConfig.Host, smtpConfig.Port))
             {
@@ -149,9 +153,14 @@ namespace AuthMicroservice.Service
                     };
                     if (!variables.ContainsKey("date"))
                         variables["date"] = DateTime.Now.ToString("MMMM d, yyyy");
+                    if (recipient.Variables != null)
+                    {
+                        foreach (var pair in recipient.Variables)
+                            variables[pair.Key] = pair.Value;
+                    }
 
-                    var renderedSubject = ApplyVariables(subjectTemplate, variables);
-                    var renderedBody = ApplyVariables(bodyTemplate, variables);
+                    var renderedSubject = MessageTemplate.Apply(subjectTemplate, variables);
+                    var renderedBody = MessageTemplate.Apply(bodyTemplate, variables);
                     var recipientSucceeded = true;
 
                     try
@@ -171,6 +180,7 @@ namespace AuthMicroservice.Service
                     catch
                     {
                         failedCount++;
+                        failedEmails.Add(recipient.Email);
                         recipientSucceeded = false;
                     }
 
@@ -196,16 +206,7 @@ namespace AuthMicroservice.Service
 
             await _emailHistoryRepository.AddAsync(emailHistory);
 
-            return new PersonalizedSendResult { SentCount = sentCount, FailedCount = failedCount, Status = status };
-        }
-
-        private static string ApplyVariables(string template, Dictionary<string, string> variables)
-        {
-            if (string.IsNullOrEmpty(template))
-                return template;
-
-            return Regex.Replace(template, @"\{\{\s*(\w+)\s*\}\}", match =>
-                variables.TryGetValue(match.Groups[1].Value, out var value) ? value : match.Value);
+            return new PersonalizedSendResult { SentCount = sentCount, FailedCount = failedCount, Status = status, FailedEmails = failedEmails };
         }
 
         public async Task<IEnumerable<EmailHistory>> GetEmailHistoryAsync(Guid applicationId)

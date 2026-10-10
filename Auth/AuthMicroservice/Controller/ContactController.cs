@@ -326,13 +326,14 @@ namespace AuthMicroservice.Controller
             return File(bytes, "application/octet-stream");
         }
 
-        // Crawls a tenant-supplied URL (plus a few same-domain "contact us"/"about"/"team"
-        // pages it links to) and runs the page text through ContactExtractionService's
-        // ML.NET classifier to pull out candidate contacts. Returns structured records
-        // rather than raw bytes — unlike import-from-url — since the frontend can feed
-        // them straight into ImportContactsModal's existing mapping step. This does not
-        // create/update any contacts itself; bulk-import still does that after the user
-        // reviews the mapping.
+        // Crawls a tenant-supplied URL (plus same-domain "contact us"/"about"/"team" pages
+        // it links to, up to MaxDepth hops) and combines two extraction paths: the ML.NET
+        // classifier in ContactExtractionService running over each page's visible text,
+        // and WebCrawlerService's structured harvest (mailto:/tel: links, schema.org
+        // Person/Organization JSON-LD). Returns structured records rather than raw bytes
+        // — unlike import-from-url — since the frontend can feed them straight into
+        // ImportContactsModal's existing mapping step. This does not create/update any
+        // contacts itself; bulk-import still does that after the user reviews the mapping.
         [HttpPost("crawl-and-extract")]
         public async Task<IActionResult> CrawlAndExtractContacts([FromBody] CrawlAndExtractRequest request, [FromHeader(Name = "AppKey")] string appKey)
         {
@@ -344,18 +345,12 @@ namespace AuthMicroservice.Controller
             if (string.IsNullOrWhiteSpace(url))
                 return BadRequest(new { message = "A URL is required." });
 
-            var (success, error, pages) = await _webCrawlerService.CrawlAsync(url, request.MaxPages ?? 5);
+            var (success, error, crawlResult, merged) = await CrawlAndMergeAsync(url, request.MaxPages, request.MaxDepth);
             if (!success)
                 return BadRequest(new { message = error ?? "Could not crawl that URL." });
 
-            var combinedText = string.Join("\n\n", pages.Select(p => $"[{p.Url}]\n{p.Text}"));
-            var extracted = _contactExtractionService.ExtractContacts(combinedText);
-
-            var contacts = extracted
-                .Where(c => !string.IsNullOrWhiteSpace(c.Email))
-                .GroupBy(c => c.Email.Trim().ToLowerInvariant())
-                .Select(g => g.First())
-                .Take(500)
+            var contacts = merged
+                .Take(2000)
                 .Select(c => new
                 {
                     email = c.Email,
@@ -371,9 +366,109 @@ namespace AuthMicroservice.Controller
 
             return Ok(new
             {
-                pagesCrawled = pages.Select(p => p.Url).ToList(),
+                pagesCrawled = crawlResult.Pages.Select(p => p.Url).ToList(),
                 contacts,
             });
+        }
+
+        // Same crawl + extraction pipeline as crawl-and-extract, but skips the
+        // review/mapping step and bulk-inserts the results straight into this tenant's
+        // contacts via ContactService.BulkImportContactsAsync — which dedupes against
+        // existing contacts (and within this batch) by email OR phone. For collecting a
+        // full CRM list from a site in one shot rather than reviewing each field mapping.
+        [HttpPost("crawl-and-import")]
+        public async Task<IActionResult> CrawlAndImportContacts([FromBody] CrawlAndExtractRequest request, [FromHeader(Name = "AppKey")] string appKey)
+        {
+            var (isValid, app) = await IsValidAppKey(appKey);
+            if (!isValid)
+                return Unauthorized(new { message = "Invalid AppKey or AppSecret" });
+
+            var url = request?.Url?.Trim();
+            if (string.IsNullOrWhiteSpace(url))
+                return BadRequest(new { message = "A URL is required." });
+
+            var (success, error, crawlResult, merged) = await CrawlAndMergeAsync(url, request.MaxPages, request.MaxDepth);
+            if (!success)
+                return BadRequest(new { message = error ?? "Could not crawl that URL." });
+
+            var pagesCrawled = crawlResult.Pages.Select(p => p.Url).ToList();
+
+            if (merged.Count == 0)
+                return Ok(new { pagesCrawled, created = 0, updated = 0, skipped = 0 });
+
+            if (merged.Count > 2000)
+                return BadRequest(new { message = $"Found {merged.Count} contacts, which is over the 2000 per-run import limit — crawl a narrower section of the site (lower maxPages/maxDepth)." });
+
+            var contactsToImport = merged.Select(c => new Contact
+            {
+                Email = c.Email,
+                FirstName = c.FirstName,
+                LastName = c.LastName,
+                Phone = c.Phone,
+                Company = c.Company,
+                JobTitle = c.JobTitle,
+                Notes = c.Notes,
+                Source = $"Web crawl: {url}",
+            }).ToList();
+
+            var result = await _contactService.BulkImportContactsAsync(contactsToImport, app.Id);
+            return Ok(new { pagesCrawled, result.Created, result.Updated, result.Skipped });
+        }
+
+        private async Task<(bool success, string error, CrawlResult crawlResult, List<ExtractedContact> merged)> CrawlAndMergeAsync(string url, int? maxPages, int? maxDepth)
+        {
+            var (success, error, crawlResult) = await _webCrawlerService.CrawlAsync(url, maxPages ?? 10, maxDepth ?? 2);
+            if (!success)
+                return (false, error, null, null);
+
+            var combinedText = string.Join("\n\n", crawlResult.Pages.Select(p => $"[{p.Url}]\n{p.Text}"));
+            var mlContacts = _contactExtractionService.ExtractContacts(combinedText);
+            var merged = MergeExtractedContacts(mlContacts.Concat(crawlResult.StructuredContacts));
+            return (true, null, crawlResult, merged);
+        }
+
+        // Combines ML-classified candidates (from page text) with structured candidates
+        // (mailto:/tel: links, JSON-LD) into one deduped list, keyed by email OR phone —
+        // the same person frequently shows up with only one of the two on any given page.
+        private static List<ExtractedContact> MergeExtractedContacts(IEnumerable<ExtractedContact> candidates)
+        {
+            var byEmail = new Dictionary<string, ExtractedContact>();
+            var byPhone = new Dictionary<string, ExtractedContact>();
+            var merged = new List<ExtractedContact>();
+
+            foreach (var candidate in candidates)
+            {
+                var emailKey = ContactMatching.NormalizeEmail(candidate.Email);
+                var phoneKey = ContactMatching.NormalizePhone(candidate.Phone);
+                if (emailKey == null && phoneKey == null)
+                    continue;
+
+                ExtractedContact target = null;
+                if (emailKey != null) byEmail.TryGetValue(emailKey, out target);
+                if (target == null && phoneKey != null) byPhone.TryGetValue(phoneKey, out target);
+
+                if (target == null)
+                {
+                    target = new ExtractedContact();
+                    merged.Add(target);
+                }
+
+                target.Email ??= candidate.Email;
+                target.Phone ??= candidate.Phone;
+                target.FirstName ??= candidate.FirstName;
+                target.LastName ??= candidate.LastName;
+                target.Company ??= candidate.Company;
+                target.JobTitle ??= candidate.JobTitle;
+                target.Notes ??= candidate.Notes;
+                target.RawSnippet ??= candidate.RawSnippet;
+
+                var newEmailKey = ContactMatching.NormalizeEmail(target.Email);
+                var newPhoneKey = ContactMatching.NormalizePhone(target.Phone);
+                if (newEmailKey != null) byEmail[newEmailKey] = target;
+                if (newPhoneKey != null) byPhone[newPhoneKey] = target;
+            }
+
+            return merged;
         }
 
         [HttpPost("bulk-import")]
@@ -418,6 +513,7 @@ namespace AuthMicroservice.Controller
     {
         public string Url { get; set; }
         public int? MaxPages { get; set; }
+        public int? MaxDepth { get; set; }
     }
 
     public class ContactEmailRequest

@@ -11,6 +11,7 @@ namespace AuthMicroservice.Repository
         Task<int> AddAsync(T entity);
         Task AddRangeAsync(IEnumerable<T> entities);
         Task<int> UpdateAsync(T entity);
+        Task<int> UpdateRangeAsync(IEnumerable<T> entities);
         Task<int> RemoveAsync(T entity);
         Task RemoveRangeAsync(IEnumerable<T> entities);
     }
@@ -53,6 +54,13 @@ namespace AuthMicroservice.Repository
         public async Task<int> UpdateAsync(T entity)
         {
             _context.Set<T>().Update(entity);
+            return await _context.SaveChangesAsync();
+        }
+
+        // One SaveChanges for the whole batch, rather than a round trip per entity.
+        public async Task<int> UpdateRangeAsync(IEnumerable<T> entities)
+        {
+            _context.Set<T>().UpdateRange(entities);
             return await _context.SaveChangesAsync();
         }
 

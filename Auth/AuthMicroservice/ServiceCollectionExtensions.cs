@@ -23,6 +23,11 @@ namespace AuthMicroservice
             services.AddScoped<IContactRepository, ContactRepository>();
             services.AddScoped<ICampaignRepository, CampaignRepository>();
             services.AddScoped<IContactActivityRepository, ContactActivityRepository>();
+            services.AddScoped<ISegmentRepository, SegmentRepository>();
+            services.AddScoped<IFeedbackSurveyRepository, FeedbackSurveyRepository>();
+            services.AddScoped<IFeedbackResponseRepository, FeedbackResponseRepository>();
+            services.AddScoped<IOnboardingTemplateRepository, OnboardingTemplateRepository>();
+            services.AddScoped<ICustomerOnboardingRepository, CustomerOnboardingRepository>();
 
             // Add service registrations here
             //services.AddScoped<HttpClient, HttpClient>();
@@ -42,6 +47,9 @@ namespace AuthMicroservice
             services.AddScoped<IContactActivityService, ContactActivityService>();
             services.AddScoped<ISmsService, SmsService>();
             services.AddScoped<IWebCrawlerService, WebCrawlerService>();
+            services.AddScoped<ISegmentService, SegmentService>();
+            services.AddScoped<IFeedbackService, FeedbackService>();
+            services.AddScoped<IOnboardingService, OnboardingService>();
             services.AddHttpClient();
             // Auto-redirect disabled so WebCrawlerService can re-validate each redirect hop's
             // resolved address before following it (see WebCrawlerService.FetchSafeAsync).

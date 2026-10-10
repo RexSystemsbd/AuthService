@@ -29,6 +29,11 @@ namespace AuthMicroservice.Repository
         public DbSet<WhatsappConfig> WhatsappConfigs { get; set; }
         public DbSet<Campaign> Campaigns { get; set; }
         public DbSet<ContactActivity> ContactActivities { get; set; }
+        public DbSet<Segment> Segments { get; set; }
+        public DbSet<FeedbackSurvey> FeedbackSurveys { get; set; }
+        public DbSet<FeedbackResponse> FeedbackResponses { get; set; }
+        public DbSet<OnboardingTemplate> OnboardingTemplates { get; set; }
+        public DbSet<CustomerOnboarding> CustomerOnboardings { get; set; }
 
 
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -84,6 +89,25 @@ namespace AuthMicroservice.Repository
             modelBuilder.Entity<Subscriber>().Property(s => s.VerifiedDate).HasConversion(UtcNullableDateTimeConverter);
             modelBuilder.Entity<Subscriber>().Property(s => s.VerificationTokenExpiry).HasConversion(UtcNullableDateTimeConverter);
             modelBuilder.Entity<User>().Property(u => u.EmailConfirmationTokenExpiry).HasConversion(UtcNullableDateTimeConverter);
+
+            // Columns that take part in an index get a bounded length: MySQL can't index longtext.
+            modelBuilder.Entity<FeedbackSurvey>().Property(s => s.Status).HasMaxLength(32);
+            modelBuilder.Entity<FeedbackSurvey>().Property(s => s.NextSendDate).HasConversion(UtcNullableDateTimeConverter);
+            modelBuilder.Entity<FeedbackSurvey>().Property(s => s.LastSentDate).HasConversion(UtcNullableDateTimeConverter);
+            modelBuilder.Entity<FeedbackSurvey>().HasIndex(s => new { s.Status, s.NextSendDate });
+
+            modelBuilder.Entity<FeedbackResponse>().Property(r => r.Token).HasMaxLength(64);
+            modelBuilder.Entity<FeedbackResponse>().HasIndex(r => r.Token).IsUnique();
+            modelBuilder.Entity<FeedbackResponse>().HasIndex(r => new { r.ApplicationId, r.SurveyId });
+            modelBuilder.Entity<FeedbackResponse>().Property(r => r.SentDate).HasConversion(UtcDateTimeConverter);
+            modelBuilder.Entity<FeedbackResponse>().Property(r => r.RespondedDate).HasConversion(UtcNullableDateTimeConverter);
+
+            modelBuilder.Entity<CustomerOnboarding>().Property(o => o.Status).HasMaxLength(32);
+            modelBuilder.Entity<CustomerOnboarding>().Property(o => o.StartDate).HasConversion(UtcDateTimeConverter);
+            modelBuilder.Entity<CustomerOnboarding>().Property(o => o.CompletedDate).HasConversion(UtcNullableDateTimeConverter);
+            modelBuilder.Entity<CustomerOnboarding>().Property(o => o.NextAutomationDate).HasConversion(UtcNullableDateTimeConverter);
+            modelBuilder.Entity<CustomerOnboarding>().HasIndex(o => new { o.Status, o.NextAutomationDate });
+            modelBuilder.Entity<CustomerOnboarding>().HasIndex(o => new { o.ApplicationId, o.ContactId });
         }
         public override int SaveChanges()
         {
