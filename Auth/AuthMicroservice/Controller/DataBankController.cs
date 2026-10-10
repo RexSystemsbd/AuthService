@@ -29,6 +29,39 @@ namespace AuthMicroservice.Controller
             _contactActivityRepository = contactActivityRepository;
         }
 
+        // Server-side paging for the contacts table: one page (default 50) plus the total
+        // matching count, with search/status/tag filters and sorting applied in SQL.
+        [HttpGet("contacts")]
+        public async Task<IActionResult> GetContactsPage([FromQuery] ContactPageQuery query, [FromHeader(Name = "AppKey")] string appKey)
+        {
+            var (isValid, app) = await IsValidAppKey(appKey);
+            if (!isValid) return InvalidAppKey();
+
+            query ??= new ContactPageQuery();
+            var (items, total) = await _contactRepository.GetPageAsync(app.Id, query);
+            return Ok(new
+            {
+                items,
+                total,
+                page = Math.Max(1, query.Page),
+                pageSize = Math.Clamp(query.PageSize, 1, ContactRepository.MaxPageSize),
+            });
+        }
+
+        // Values for the contacts table's status and tag filter dropdowns.
+        [HttpGet("contact-filters")]
+        public async Task<IActionResult> GetContactFilters([FromHeader(Name = "AppKey")] string appKey)
+        {
+            var (isValid, app) = await IsValidAppKey(appKey);
+            if (!isValid) return InvalidAppKey();
+
+            return Ok(new
+            {
+                statuses = await _contactRepository.GetDistinctStatusesAsync(app.Id),
+                tags = await _contactRepository.GetTagsAsync(app.Id),
+            });
+        }
+
         [HttpPost("bulk-update")]
         public async Task<IActionResult> BulkUpdate([FromBody] BulkUpdateContactsRequest request, [FromHeader(Name = "AppKey")] string appKey)
         {
