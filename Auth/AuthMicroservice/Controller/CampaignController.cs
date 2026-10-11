@@ -32,6 +32,10 @@ namespace AuthMicroservice.Controller
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
+            var audienceError = ValidateAudience(campaign);
+            if (audienceError != null)
+                return BadRequest(new { message = audienceError });
+
             var created = await _campaignService.CreateCampaignAsync(campaign, app.Id);
             return CreatedAtAction(nameof(GetCampaign), new { id = created.Id }, created);
         }
@@ -70,6 +74,10 @@ namespace AuthMicroservice.Controller
 
             if (id != campaign.Id.ToString())
                 return BadRequest();
+
+            var audienceError = ValidateAudience(campaign);
+            if (audienceError != null)
+                return BadRequest(new { message = audienceError });
 
             await _campaignService.UpdateCampaignAsync(id, campaign, app.Id);
             return NoContent();
@@ -112,6 +120,13 @@ namespace AuthMicroservice.Controller
                 return NotFound();
 
             return Ok(campaign);
+        }
+
+        private static string ValidateAudience(Campaign campaign)
+        {
+            if (string.Equals(campaign.TargetGroup, "segment", StringComparison.OrdinalIgnoreCase) && !campaign.SegmentId.HasValue)
+                return "Choose a segment to send this campaign to.";
+            return null;
         }
 
         private async Task<(bool, Application)> IsValidAppKey(string appKey)

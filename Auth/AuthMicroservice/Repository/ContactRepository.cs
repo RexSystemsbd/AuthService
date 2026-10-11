@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AuthMicroservice.Repository
@@ -24,6 +25,7 @@ namespace AuthMicroservice.Repository
         Task<Contact> GetByEmailAndApplicationIdAsync(string email, Guid applicationId);
         Task<(List<Contact> Items, int Total)> GetPageAsync(Guid applicationId, ContactPageQuery query);
         Task<List<string>> GetDistinctStatusesAsync(Guid applicationId);
+        Task<List<string>> GetDistinctValuesAsync(Guid applicationId, Expression<Func<Contact, string?>> column);
         Task<List<string>> GetTagsAsync(Guid applicationId);
     }
 
@@ -53,7 +55,12 @@ namespace AuthMicroservice.Repository
                 contacts = contacts.Where(c =>
                     ((c.FirstName ?? "") + " " + (c.LastName ?? "")).Contains(term) ||
                     c.Email.Contains(term) ||
+                    (c.WorkEmail != null && c.WorkEmail.Contains(term)) ||
+                    (c.PersonalEmail != null && c.PersonalEmail.Contains(term)) ||
                     (c.Phone != null && c.Phone.Contains(term)) ||
+                    (c.AlternatePhone != null && c.AlternatePhone.Contains(term)) ||
+                    (c.WorkPhone != null && c.WorkPhone.Contains(term)) ||
+                    (c.WhatsappNumber != null && c.WhatsappNumber.Contains(term)) ||
                     (c.Company != null && c.Company.Contains(term)) ||
                     (c.Tags != null && c.Tags.Contains(term)));
             }
@@ -90,13 +97,19 @@ namespace AuthMicroservice.Repository
             return (items, total);
         }
 
-        public async Task<List<string>> GetDistinctStatusesAsync(Guid applicationId)
+        public Task<List<string>> GetDistinctStatusesAsync(Guid applicationId) =>
+            GetDistinctValuesAsync(applicationId, c => c.Status);
+
+        // Distinct non-empty values of one contact column, e.g. c => c.Category.
+        public async Task<List<string>> GetDistinctValuesAsync(Guid applicationId, Expression<Func<Contact, string?>> column)
         {
             return await _context.Set<Contact>()
-                .Where(c => c.ApplicationId == applicationId && c.Status != null && c.Status != "")
-                .Select(c => c.Status!)
+                .Where(c => c.ApplicationId == applicationId)
+                .Select(column)
+                .Where(v => v != null && v != "")
+                .Select(v => v!)
                 .Distinct()
-                .OrderBy(s => s)
+                .OrderBy(v => v)
                 .ToListAsync();
         }
 

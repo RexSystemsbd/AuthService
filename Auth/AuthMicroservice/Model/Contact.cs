@@ -53,5 +53,30 @@ namespace AuthMicroservice.Model
         // Comma-separated free-form labels ("vip, wholesale") used to segment the data bank.
         public string? Tags { get; set; }
         public string? Website { get; set; }
+
+        // Personal details
+        public string? Salutation { get; set; } // "Mr.", "Ms.", "Dr.", ...
+        public string? Gender { get; set; }
+        public DateTime? DateOfBirth { get; set; } // date only
+        public DateTime? Anniversary { get; set; } // date only
+        public string? Nationality { get; set; }
+
+        // Additional ways to reach the contact; Email and Phone stay the primary ones.
+        public string? PersonalEmail { get; set; }
+        public string? WorkEmail { get; set; }
+        public string? AlternatePhone { get; set; }
+        public string? WorkPhone { get; set; }
+        public string? WhatsappNumber { get; set; }
+
+        // Social profiles (URL or handle)
+        public string? LinkedInUrl { get; set; }
+        public string? FacebookUrl { get; set; }
+        public string? TwitterUrl { get; set; }
+        public string? InstagramUrl { get; set; }
+
+        public string? PostalCode { get; set; }
+        public string? CompanySize { get; set; } // e.g. "11-50"
+        public string? ReferredBy { get; set; }
+        public string? Owner { get; set; } // team member responsible for this contact
     }
 }

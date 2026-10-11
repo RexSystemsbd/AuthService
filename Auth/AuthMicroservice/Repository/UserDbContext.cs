@@ -86,6 +86,9 @@ namespace AuthMicroservice.Repository
             modelBuilder.Entity<Contact>().Property(c => c.LastSmsDate).HasConversion(UtcNullableDateTimeConverter);
             modelBuilder.Entity<Contact>().Property(c => c.LastFacebookMessageDate).HasConversion(UtcNullableDateTimeConverter);
             modelBuilder.Entity<Contact>().Property(c => c.LastWhatsappDate).HasConversion(UtcNullableDateTimeConverter);
+            // Calendar dates, not instants: no time part and no UTC conversion.
+            modelBuilder.Entity<Contact>().Property(c => c.DateOfBirth).HasColumnType("date");
+            modelBuilder.Entity<Contact>().Property(c => c.Anniversary).HasColumnType("date");
             modelBuilder.Entity<Subscriber>().Property(s => s.VerifiedDate).HasConversion(UtcNullableDateTimeConverter);
             modelBuilder.Entity<Subscriber>().Property(s => s.VerificationTokenExpiry).HasConversion(UtcNullableDateTimeConverter);
             modelBuilder.Entity<User>().Property(u => u.EmailConfirmationTokenExpiry).HasConversion(UtcNullableDateTimeConverter);

@@ -90,6 +90,9 @@ namespace AuthMicroservice.Migrations
                     b.Property<Guid>("ApplicationId")
                         .HasColumnType("char(36)");
 
+                    b.Property<string>("AudienceFilter")
+                        .HasColumnType("longtext");
+
                     b.Property<string>("Body")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -124,6 +127,9 @@ namespace AuthMicroservice.Migrations
 
                     b.Property<DateTime?>("ScheduledDate")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<Guid?>("SegmentId")
+                        .HasColumnType("char(36)");
 
                     b.Property<DateTime?>("SentDate")
                         .HasColumnType("datetime(6)");
@@ -169,6 +175,12 @@ namespace AuthMicroservice.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
+                    b.Property<string>("AlternatePhone")
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime?>("Anniversary")
+                        .HasColumnType("date");
+
                     b.Property<Guid>("ApplicationId")
                         .HasColumnType("char(36)");
 
@@ -181,6 +193,9 @@ namespace AuthMicroservice.Migrations
                     b.Property<string>("Company")
                         .HasColumnType("longtext");
 
+                    b.Property<string>("CompanySize")
+                        .HasColumnType("longtext");
+
                     b.Property<string>("Country")
                         .HasColumnType("longtext");
 
@@ -189,6 +204,9 @@ namespace AuthMicroservice.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime?>("DateOfBirth")
+                        .HasColumnType("date");
 
                     b.Property<string>("Department")
                         .HasColumnType("longtext");
@@ -212,7 +230,13 @@ namespace AuthMicroservice.Migrations
                     b.Property<string>("FacebookPsid")
                         .HasColumnType("longtext");
 
+                    b.Property<string>("FacebookUrl")
+                        .HasColumnType("longtext");
+
                     b.Property<string>("FirstName")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Gender")
                         .HasColumnType("longtext");
 
                     b.Property<string>("Gps")
@@ -228,6 +252,9 @@ namespace AuthMicroservice.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("Industry")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("InstagramUrl")
                         .HasColumnType("longtext");
 
                     b.Property<bool>("IsActive")
@@ -263,6 +290,12 @@ namespace AuthMicroservice.Migrations
                     b.Property<DateTime?>("LastWhatsappDate")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<string>("LinkedInUrl")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Nationality")
+                        .HasColumnType("longtext");
+
                     b.Property<DateTime?>("NextContactDate")
                         .HasColumnType("datetime(6)");
 
@@ -272,13 +305,28 @@ namespace AuthMicroservice.Migrations
                     b.Property<string>("Notes")
                         .HasColumnType("longtext");
 
+                    b.Property<string>("Owner")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("PersonalEmail")
+                        .HasColumnType("longtext");
+
                     b.Property<string>("Phone")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("PostalCode")
                         .HasColumnType("longtext");
 
                     b.Property<string>("PreferredLanguage")
                         .HasColumnType("longtext");
 
+                    b.Property<string>("ReferredBy")
+                        .HasColumnType("longtext");
+
                     b.Property<string>("Remarks")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Salutation")
                         .HasColumnType("longtext");
 
                     b.Property<string>("Source")
@@ -302,6 +350,9 @@ namespace AuthMicroservice.Migrations
                     b.Property<string>("TopicsOfInterest")
                         .HasColumnType("longtext");
 
+                    b.Property<string>("TwitterUrl")
+                        .HasColumnType("longtext");
+
                     b.Property<DateTime?>("UnsubscribedDate")
                         .HasColumnType("datetime(6)");
 
@@ -323,7 +374,16 @@ namespace AuthMicroservice.Migrations
                     b.Property<string>("Website")
                         .HasColumnType("longtext");
 
+                    b.Property<string>("WhatsappNumber")
+                        .HasColumnType("longtext");
+
                     b.Property<string>("WorkAddress")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("WorkEmail")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("WorkPhone")
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");

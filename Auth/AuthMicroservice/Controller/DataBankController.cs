@@ -48,7 +48,7 @@ namespace AuthMicroservice.Controller
             });
         }
 
-        // Values for the contacts table's status and tag filter dropdowns.
+        // Values in use for the contact filter dropdowns (contacts table, campaign audience).
         [HttpGet("contact-filters")]
         public async Task<IActionResult> GetContactFilters([FromHeader(Name = "AppKey")] string appKey)
         {
@@ -59,6 +59,11 @@ namespace AuthMicroservice.Controller
             {
                 statuses = await _contactRepository.GetDistinctStatusesAsync(app.Id),
                 tags = await _contactRepository.GetTagsAsync(app.Id),
+                categories = await _contactRepository.GetDistinctValuesAsync(app.Id, c => c.Category),
+                sources = await _contactRepository.GetDistinctValuesAsync(app.Id, c => c.Source),
+                industries = await _contactRepository.GetDistinctValuesAsync(app.Id, c => c.Industry),
+                countries = await _contactRepository.GetDistinctValuesAsync(app.Id, c => c.Country),
+                cities = await _contactRepository.GetDistinctValuesAsync(app.Id, c => c.City),
             });
         }
 

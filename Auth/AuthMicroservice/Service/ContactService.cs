@@ -108,6 +108,24 @@ namespace AuthMicroservice.Service
             existingContact.NextContactDate = contact.NextContactDate;
             existingContact.Tags = contact.Tags;
             existingContact.Website = contact.Website;
+            existingContact.Salutation = contact.Salutation;
+            existingContact.Gender = contact.Gender;
+            existingContact.DateOfBirth = contact.DateOfBirth;
+            existingContact.Anniversary = contact.Anniversary;
+            existingContact.Nationality = contact.Nationality;
+            existingContact.PersonalEmail = contact.PersonalEmail;
+            existingContact.WorkEmail = contact.WorkEmail;
+            existingContact.AlternatePhone = contact.AlternatePhone;
+            existingContact.WorkPhone = contact.WorkPhone;
+            existingContact.WhatsappNumber = contact.WhatsappNumber;
+            existingContact.LinkedInUrl = contact.LinkedInUrl;
+            existingContact.FacebookUrl = contact.FacebookUrl;
+            existingContact.TwitterUrl = contact.TwitterUrl;
+            existingContact.InstagramUrl = contact.InstagramUrl;
+            existingContact.PostalCode = contact.PostalCode;
+            existingContact.CompanySize = contact.CompanySize;
+            existingContact.ReferredBy = contact.ReferredBy;
+            existingContact.Owner = contact.Owner;
 
             await _contactRepository.UpdateAsync(existingContact);
         }
@@ -253,6 +271,24 @@ namespace AuthMicroservice.Service
             existing.HealthData = FirstNonEmpty(incoming.HealthData, existing.HealthData);
             existing.ExtraData = FirstNonEmpty(incoming.ExtraData, existing.ExtraData);
             existing.Website = FirstNonEmpty(incoming.Website, existing.Website);
+            existing.Salutation = FirstNonEmpty(incoming.Salutation, existing.Salutation);
+            existing.Gender = FirstNonEmpty(incoming.Gender, existing.Gender);
+            existing.DateOfBirth = incoming.DateOfBirth ?? existing.DateOfBirth;
+            existing.Anniversary = incoming.Anniversary ?? existing.Anniversary;
+            existing.Nationality = FirstNonEmpty(incoming.Nationality, existing.Nationality);
+            existing.PersonalEmail = FirstNonEmpty(incoming.PersonalEmail, existing.PersonalEmail);
+            existing.WorkEmail = FirstNonEmpty(incoming.WorkEmail, existing.WorkEmail);
+            existing.AlternatePhone = FirstNonEmpty(incoming.AlternatePhone, existing.AlternatePhone);
+            existing.WorkPhone = FirstNonEmpty(incoming.WorkPhone, existing.WorkPhone);
+            existing.WhatsappNumber = FirstNonEmpty(incoming.WhatsappNumber, existing.WhatsappNumber);
+            existing.LinkedInUrl = FirstNonEmpty(incoming.LinkedInUrl, existing.LinkedInUrl);
+            existing.FacebookUrl = FirstNonEmpty(incoming.FacebookUrl, existing.FacebookUrl);
+            existing.TwitterUrl = FirstNonEmpty(incoming.TwitterUrl, existing.TwitterUrl);
+            existing.InstagramUrl = FirstNonEmpty(incoming.InstagramUrl, existing.InstagramUrl);
+            existing.PostalCode = FirstNonEmpty(incoming.PostalCode, existing.PostalCode);
+            existing.CompanySize = FirstNonEmpty(incoming.CompanySize, existing.CompanySize);
+            existing.ReferredBy = FirstNonEmpty(incoming.ReferredBy, existing.ReferredBy);
+            existing.Owner = FirstNonEmpty(incoming.Owner, existing.Owner);
             if (incoming.EngagementScore.HasValue)
                 existing.EngagementScore = incoming.EngagementScore;
             // Tags accumulate across imports rather than being replaced.

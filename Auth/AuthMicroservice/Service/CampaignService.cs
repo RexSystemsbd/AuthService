@@ -31,6 +31,8 @@ namespace AuthMicroservice.Service
         private readonly IWhatsappConfigService _whatsappConfigService;
         private readonly IFacebookService _facebookService;
         private readonly IWhatsappService _whatsappService;
+        private readonly ISegmentService _segmentService;
+        private readonly ISubscriberRepository _subscriberRepository;
 
         public CampaignService(
             ICampaignRepository campaignRepository,
@@ -42,7 +44,9 @@ namespace AuthMicroservice.Service
             IFacebookConfigService facebookConfigService,
             IWhatsappConfigService whatsappConfigService,
             IFacebookService facebookService,
-            IWhatsappService whatsappService)
+            IWhatsappService whatsappService,
+            ISegmentService segmentService,
+            ISubscriberRepository subscriberRepository)
         {
             _campaignRepository = campaignRepository;
             _subscriberService = subscriberService;
@@ -54,6 +58,43 @@ namespace AuthMicroservice.Service
             _whatsappConfigService = whatsappConfigService;
             _facebookService = facebookService;
             _whatsappService = whatsappService;
+            _segmentService = segmentService;
+            _subscriberRepository = subscriberRepository;
+        }
+
+        private static bool TargetsFilter(Campaign campaign) =>
+            string.Equals(campaign.TargetGroup, "filter", StringComparison.OrdinalIgnoreCase);
+
+        private static bool TargetsSegment(Campaign campaign) =>
+            string.Equals(campaign.TargetGroup, "segment", StringComparison.OrdinalIgnoreCase);
+
+        // Keeps only the audience settings the chosen TargetGroup actually uses.
+        private static void NormalizeAudience(Campaign campaign)
+        {
+            if (!TargetsSegment(campaign)) campaign.SegmentId = null;
+            if (!TargetsFilter(campaign)) campaign.AudienceFilter = null;
+        }
+
+        // Contacts picked by tag/category/status/... filter or by a saved segment, for every
+        // channel. Null when the campaign targets the subscriber list or a user role instead.
+        // A deleted segment resolves to nobody, so the send fails with 0 recipients.
+        private async Task<List<Contact>> ResolveContactAudienceAsync(Campaign campaign, Guid applicationId)
+        {
+            if (TargetsFilter(campaign))
+                return await _segmentService.GetMatchingContactsAsync(_segmentService.ParseFilter(campaign.AudienceFilter), applicationId);
+            if (TargetsSegment(campaign))
+                return await _segmentService.ResolveAudienceAsync("segment", campaign.SegmentId, applicationId) ?? new List<Contact>();
+            return null;
+        }
+
+        private async Task<HashSet<string>> GetUnsubscribedEmailsAsync(Guid applicationId)
+        {
+            var appId = applicationId.ToString();
+            var unsubscribed = await _subscriberRepository.FindAsync(s => s.ApplicationId == appId && !s.IsSubscribed);
+            return unsubscribed
+                .Where(s => !string.IsNullOrWhiteSpace(s.Email))
+                .Select(s => s.Email.Trim().ToLowerInvariant())
+                .ToHashSet();
         }
 
         private async Task<Dictionary<string, Contact>> GetContactsByEmailAsync(Guid applicationId)
@@ -76,6 +117,7 @@ namespace AuthMicroservice.Service
         public async Task<Campaign> CreateCampaignAsync(Campaign campaign, Guid applicationId)
         {
             campaign.ApplicationId = applicationId;
+            NormalizeAudience(campaign);
             campaign.Status = IsFutureSchedule(campaign.ScheduledDate) ? "scheduled" : "draft";
             campaign.RecurrenceInterval = NormalizeRecurrence(campaign.ScheduledDate, campaign.RecurrenceInterval);
             await _campaignRepository.AddAsync(campaign);
@@ -106,6 +148,9 @@ namespace AuthMicroservice.Service
             existing.Channel = string.IsNullOrWhiteSpace(campaign.Channel) ? existing.Channel : campaign.Channel;
             existing.Body = campaign.Body;
             existing.TargetGroup = campaign.TargetGroup;
+            existing.SegmentId = campaign.SegmentId;
+            existing.AudienceFilter = campaign.AudienceFilter;
+            NormalizeAudience(existing);
             existing.VerifiedOnly = campaign.VerifiedOnly;
             existing.ScheduledDate = campaign.ScheduledDate;
             existing.RecurrenceInterval = NormalizeRecurrence(existing.ScheduledDate, campaign.RecurrenceInterval);
@@ -211,7 +256,22 @@ namespace AuthMicroservice.Service
         private async Task<Campaign> SendEmailCampaignAsync(Campaign campaign, Guid applicationId)
         {
             List<EmailRecipient> recipients;
-            if (!string.IsNullOrWhiteSpace(campaign.TargetGroup) && campaign.TargetGroup != "all")
+            var audience = await ResolveContactAudienceAsync(campaign, applicationId);
+            if (audience != null)
+            {
+                // Same opt-out rule as feedback surveys: skip anyone who unsubscribed, either
+                // from the subscriber list or on the contact itself.
+                var unsubscribed = await GetUnsubscribedEmailsAsync(applicationId);
+                recipients = audience
+                    .Where(c => !campaign.VerifiedOnly || c.IsVerified)
+                    .Where(c => !string.IsNullOrWhiteSpace(c.Email))
+                    .Where(c => !unsubscribed.Contains(c.Email.Trim().ToLowerInvariant()) && !(!c.IsSubscribed && c.UnsubscribedDate.HasValue))
+                    .GroupBy(c => c.Email.Trim().ToLowerInvariant())
+                    .Select(g => g.First())
+                    .Select(c => new EmailRecipient { Email = c.Email, FirstName = c.FirstName, LastName = c.LastName, Company = c.Company })
+                    .ToList();
+            }
+            else if (!string.IsNullOrWhiteSpace(campaign.TargetGroup) && campaign.TargetGroup != "all")
             {
                 var users = await _userService.GetUsersByGroupAsync(campaign.TargetGroup, applicationId);
                 recipients = users
@@ -270,7 +330,7 @@ namespace AuthMicroservice.Service
         // Facebook Page Send API can only reach contacts who have previously messaged the Page
         // (Facebook does not allow cold-messaging arbitrary users), so recipients are contacts
         // with a stored FacebookPsid — not the role-based TargetGroup used for email, since that
-        // identifier only exists on Contact, not User.
+        // identifier only exists on Contact, not User. A filter/segment audience narrows them.
         private async Task<Campaign> SendFacebookCampaignAsync(Campaign campaign, Guid applicationId)
         {
             var config = await _facebookConfigService.GetFacebookConfigByApplicationIdAsync(applicationId);
@@ -285,7 +345,8 @@ namespace AuthMicroservice.Service
                 return campaign;
             }
 
-            var contacts = await _contactRepository.FindAsync(c => c.ApplicationId == applicationId);
+            var contacts = await ResolveContactAudienceAsync(campaign, applicationId)
+                ?? await _contactRepository.FindAsync(c => c.ApplicationId == applicationId);
             var recipients = contacts
                 .Where(c => !campaign.VerifiedOnly || c.IsVerified)
                 .Where(c => !string.IsNullOrWhiteSpace(c.FacebookPsid))
@@ -324,6 +385,7 @@ namespace AuthMicroservice.Service
 
         // WhatsApp recipients are drawn from Contact.Phone directly, same reasoning as Facebook:
         // the channel identifier lives on Contact, not on the role-based User group used for email.
+        // A filter/segment audience narrows them.
         private async Task<Campaign> SendWhatsappCampaignAsync(Campaign campaign, Guid applicationId)
         {
             var config = await _whatsappConfigService.GetWhatsappConfigByApplicationIdAsync(applicationId);
@@ -338,7 +400,8 @@ namespace AuthMicroservice.Service
                 return campaign;
             }
 
-            var contacts = await _contactRepository.FindAsync(c => c.ApplicationId == applicationId);
+            var contacts = await ResolveContactAudienceAsync(campaign, applicationId)
+                ?? await _contactRepository.FindAsync(c => c.ApplicationId == applicationId);
             var recipients = contacts
                 .Where(c => !campaign.VerifiedOnly || c.IsVerified)
                 .Where(c => !string.IsNullOrWhiteSpace(c.Phone))

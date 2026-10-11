@@ -59,7 +59,11 @@ namespace AuthMicroservice.Service
             if (!string.IsNullOrWhiteSpace(Search))
             {
                 var term = Search.Trim();
-                var haystack = new[] { contact.FirstName, contact.LastName, contact.Email, contact.Phone, contact.Company, contact.Notes };
+                var haystack = new[]
+                {
+                    contact.FirstName, contact.LastName, contact.Email, contact.WorkEmail, contact.PersonalEmail,
+                    contact.Phone, contact.AlternatePhone, contact.WorkPhone, contact.WhatsappNumber, contact.Company, contact.Notes,
+                };
                 if (!haystack.Any(v => v != null && v.Contains(term, StringComparison.OrdinalIgnoreCase)))
                     return false;
             }
